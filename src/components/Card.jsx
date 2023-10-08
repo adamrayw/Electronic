@@ -1,9 +1,16 @@
-import React, { useState } from "react";
 // import items from "../data/Item";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addItemToCart } from "../features/CartSlice";
 
 const Card = () => {
-  const {products, total, amount} = useSelector((store) => store.cart);
+  const {products} = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (item) => {
+    dispatch(addItemToCart(item));
+  };
+
 
   return (
     <div className="container mx-auto py-[100px]">
@@ -26,6 +33,7 @@ const Card = () => {
               <button
                 className="py-1 px-2 font-bold rounded bg-slate-500 text-white transition 
               duration-300 hover:bg-slate-200 hover:text-black"
+              onClick={() => handleAddToCart(item)}
               >
                 tambahkan
               </button>

@@ -1,91 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const Checkout = ({ isCheckedOut }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-
-  useEffect(() => {
-    // Memuat item dari local storage saat komponen dipasang
-    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(savedCart);
-
-    // Menghitung total harga dan total kuantitas
-    const total = savedCart.reduce(
-      (acc, item) => acc + item.harga * (item.quantity || 1),
-      0
-    );
-    const quantity = savedCart.reduce(
-      (acc, item) => acc + (item.quantity || 1),
-      0
-    );
-
-    setTotalPrice(total);
-    setTotalQuantity(quantity);
-    console.log(cartItems);
-  }, []);
+  const {cartItems} = useSelector((store) => store.cart);
 
   const checkoutClassName = isCheckedOut ? "right-0 inline-block" : "hidden";
 
-  const tambahSatu = (itemId) => {
-    const updatedCart = cartItems.map((item) => {
-      if (item.id === itemId) {
-        return {
-          ...item,
-          quantity: (item.quantity || 0) + 1,
-        };
-      }
-      return item;
-    });
-
-    setCartItems(updatedCart);
-    updateTotal(updatedCart);
-  };
-
-  const kurangiSatu = (itemId) => {
-    const updatedCart = cartItems.map((item) => {
-      if (item.id === itemId) {
-        const newQuantity = (item.quantity || 1) - 1;
-        if (newQuantity <= 0) {
-          return null; // Menghapus item jika kuantitasnya menjadi 0
-        }
-        return {
-          ...item,
-          quantity: newQuantity,
-        };
-      }
-      return item;
-    });
-
-    // Memfilter nilai null (item yang dihapus)
-    const filteredCart = updatedCart.filter((item) => item !== null);
-
-    setCartItems(filteredCart);
-    updateTotal(filteredCart);
-  };
-
-  const hapusItem = (itemId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== itemId);
-    setCartItems(updatedCart);
-    updateTotal(updatedCart);
-  };
-
-  const updateTotal = (updatedCart) => {
-    const total = updatedCart.reduce(
-      (acc, item) => acc + item.harga * (item.quantity || 1),
-      0
-    );
-    const quantity = updatedCart.reduce(
-      (acc, item) => acc + (item.quantity || 1),
-      0
-    );
-
-    setTotalPrice(total);
-    setTotalQuantity(quantity);
-
-    // Memperbarui local storage dengan keranjang yang diperbarui
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
+  console.log(cartItems);
 
   return (
     <div
@@ -120,20 +41,17 @@ const Checkout = ({ isCheckedOut }) => {
                   </p>
                   <div className="flex">
                     <button
-                      className="bg-blue-500 p-1 rounded"
-                      onClick={() => tambahSatu(item.id)}
+                      className="bg-blue-300 p-1 rounded"
                     >
                       tambah 1
                     </button>
                     <button
-                      className="bg-blue-500 p-1 mx-2 rounded"
-                      onClick={() => kurangiSatu(item.id)}
+                      className="bg-blue-300 p-1 mx-2 rounded"
                     >
                       kurangi 1
                     </button>
                     <button
-                      className="bg-blue-500 p-1 rounded"
-                      onClick={() => hapusItem(item.id)}
+                      className="bg-blue-300 p-1 rounded"
                     >
                       hapus
                     </button>
@@ -144,8 +62,8 @@ const Checkout = ({ isCheckedOut }) => {
             <div className="totalharga pb-5 flex flex-col items-end">
               <div className="text-center">
                 <h3 className="font-bold">Total Harga</h3>
-                <p className="my-2">Rp {totalPrice.toLocaleString()}</p>
-                <button className="px-3 py-2 bg-blue-500 rounded">
+                <p className="my-2">Rp ???</p>
+                <button className="px-3 py-2 bg-blue-300 rounded">
                   Checkout
                 </button>
               </div>
