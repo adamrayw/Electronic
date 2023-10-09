@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { addOneItem, deleteOneItem } from "../features/CartSlice";
+import { addOneQuantity, deleteOneQuantity,deleteOneProduct } from "../features/CartSlice";
 
 const Checkout = ({ isCheckedOut }) => {
   const {cartItems} = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
-  const handleAddOneItem = (item) => {
-    dispatch(addOneItem(item));
+  const handleAddOneQuantity = (item) => {
+    dispatch(addOneQuantity(item));
   };
 
-  const handleDeleteOneItem = (item) => {
-    dispatch(deleteOneItem(item));
+  const handleDeleteOneQuantity = (item) => {
+    dispatch(deleteOneQuantity(item));
   };
+  const handleDeleteOneItem = (item) => {
+    dispatch(deleteOneProduct(item));
+  };
+
+  // const handleUpdateCartItem = (item, quantity) => {
+  //   dispatch(updateCartItem({ id: item.id, quantity }));
+  // };
 
   const checkoutClassName = isCheckedOut ? "right-0 inline-block" : "hidden";
 
@@ -53,19 +60,22 @@ const Checkout = ({ isCheckedOut }) => {
                   <div className="flex">
                     <button
                       className="bg-blue-300 p-1 rounded"
-                      onClick={() => handleAddOneItem(item)}
+                      onClick={() => handleAddOneQuantity(item)}
+                      //onClick={() => handleUpdateCartItem(item, 1)}
                     >
                       tambah 1
                     </button>
                     <button
                       className="bg-blue-300 p-1 mx-2 rounded"
-                      
-                      onClick={() => handleDeleteOneItem(item)}
+                      onClick={() => handleDeleteOneQuantity(item)}
+                      //onClick={() => handleUpdateCartItem(item, 1)}
                     >
                       kurangi 1
                     </button>
                     <button
                       className="bg-blue-300 p-1 rounded"
+                      onClick={() => handleDeleteOneItem(item)}
+                      //onClick={() => handleUpdateCartItem(item, -item.quantity)}
                     >
                       hapus
                     </button>

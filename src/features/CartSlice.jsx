@@ -21,17 +21,17 @@ const cartSlice = createSlice({
         state.cartItems.push({ ...newItem, quantity: 1 });
       }
     },
-    addOneItem: (state,action) => {
-      const addOneSpecificItem = action.payload;
-      const existingItem = state.cartItems.find((item) => item.id === addOneSpecificItem.id);
+    addOneQuantity: (state,action) => {
+      const newItem = action.payload;
+      const existingItem = state.cartItems.find((item) => item.id === newItem.id);
       
       if (existingItem){
         existingItem.quantity +=1;
       }
     },
-    deleteOneItem: (state,action) => {
-      const deleteOneSpecificItem = action.payload;
-      const existingItem = state.cartItems.find((item) => item.id === deleteOneSpecificItem.id);
+    deleteOneQuantity: (state,action) => {
+      const newItem = action.payload;
+      const existingItem = state.cartItems.find((item) => item.id === newItem.id);
       
       if (existingItem){
         existingItem.quantity -=1;
@@ -40,9 +40,29 @@ const cartSlice = createSlice({
         }
       }
     },
+    deleteOneProduct: (state,action) => {
+      const newItem = action.payload;
+      const existingItem = state.cartItems.find((item) => item.id === newItem.id);
+      
+      if (existingItem){
+        state.cartItems = state.cartItems.filter((item) => item.id !== deleteOneSpecificProduct.id);
+      }
+    },
+    // dibawah code yang lebih efektif 
+    // updateCartItem: (state, action) => {
+    //   const { id, quantity } = action.payload;
+    //   const existingItem = state.cartItems.find((item) => item.id === id);
+
+    //   if (existingItem) {
+    //     existingItem.quantity += quantity;
+    //     if (existingItem.quantity < 1) {
+    //       state.cartItems = state.cartItems.filter((item) => item.id !== id);
+    //     }
+    //   }
+    // },
   },
 });
 
-export const { addItemToCart,addOneItem,deleteOneItem } = cartSlice.actions;
+export const { addItemToCart,addOneQuantity,deleteOneQuantity,deleteOneProduct } = cartSlice.actions;
 export default cartSlice.reducer;
 
