@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { addOneItem, deleteOneItem } from "../features/CartSlice";
+
 const Checkout = ({ isCheckedOut }) => {
   const {cartItems} = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
+
+  const handleAddOneItem = (item) => {
+    dispatch(addOneItem(item));
+  };
+
+  const handleDeleteOneItem = (item) => {
+    dispatch(deleteOneItem(item));
+  };
 
   const checkoutClassName = isCheckedOut ? "right-0 inline-block" : "hidden";
 
@@ -34,19 +45,22 @@ const Checkout = ({ isCheckedOut }) => {
                   <p>Harga: Rp {item.harga.toLocaleString()}</p>
                 </div>
                 <div className="totalbarang ms-auto">
-                  <p>Total Barang: {item.quantity || 1}</p>
+                  <p>Total Barang: {item.quantity}</p>
                   <p>
                     Total Harga: Rp{" "}
-                    {(item.harga * (item.quantity || 1)).toLocaleString()}
+                    {(item.harga * (item.quantity)).toLocaleString()}
                   </p>
                   <div className="flex">
                     <button
                       className="bg-blue-300 p-1 rounded"
+                      onClick={() => handleAddOneItem(item)}
                     >
                       tambah 1
                     </button>
                     <button
                       className="bg-blue-300 p-1 mx-2 rounded"
+                      
+                      onClick={() => handleDeleteOneItem(item)}
                     >
                       kurangi 1
                     </button>
