@@ -35,8 +35,8 @@ const cartSlice = createSlice({
       
       if (existingItem){
         existingItem.quantity -=1;
-        if (existingItem.quantity <1){
-          state.cartItems.splice(state.cartItems.id,1)
+        if (existingItem.quantity < 1){
+          state.cartItems = state.cartItems.filter((item) => item.id !== deleteOneSpecificItem.id);
         }
       }
     },
