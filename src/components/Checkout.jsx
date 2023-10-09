@@ -22,6 +22,12 @@ const Checkout = ({ isCheckedOut }) => {
   //   dispatch(updateCartItem({ id: item.id, quantity }));
   // };
 
+  const calculateTotalPrice = () => {
+    return cartItems.reduce((total, item) => {
+      return total + item.harga * item.quantity;
+    }, 0);
+  };
+
   const checkoutClassName = isCheckedOut ? "right-0 inline-block" : "hidden";
 
   console.log(cartItems);
@@ -86,7 +92,7 @@ const Checkout = ({ isCheckedOut }) => {
             <div className="totalharga pb-5 flex flex-col items-end">
               <div className="text-center">
                 <h3 className="font-bold">Total Harga</h3>
-                <p className="my-2">Rp ???</p>
+                <p className="my-2">Rp {calculateTotalPrice().toLocaleString()}</p>
                 <button className="px-3 py-2 bg-blue-300 rounded">
                   Checkout
                 </button>
