@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { addOneQuantity, deleteOneQuantity,deleteOneProduct } from "../features/CartSlice";
@@ -24,7 +23,7 @@ const Checkout = ({ isCheckedOut }) => {
 
   const calculateTotalPrice = () => {
     return cartItems.reduce((total, item) => {
-      return total + item.harga * item.quantity;
+      return total + item.hargaBarang * item.quantity;
     }, 0);
   };
 
@@ -49,19 +48,19 @@ const Checkout = ({ isCheckedOut }) => {
                 key={item.id}
               >
                 <img
-                  className="object-cover w-[30%] h-[30%]"
+                  className="object-cover w-[30%] h-32"
                   src={item.img}
-                  alt={item.barang}
+                  alt={item.namaBarang}
                 />
                 <div className="bodycard ms-3">
-                  <h3 className="font-bold">{item.barang}</h3>
-                  <p>Harga: Rp {item.harga.toLocaleString()}</p>
+                  <h3 className="font-bold">{item.namaBarang}</h3>
+                  <p>Harga: Rp {item.hargaBarang.toLocaleString()}</p>
                 </div>
                 <div className="totalbarang ms-auto">
                   <p>Total Barang: {item.quantity}</p>
                   <p>
                     Total Harga: Rp{" "}
-                    {(item.harga * (item.quantity)).toLocaleString()}
+                    {(item.hargaBarang * (item.quantity)).toLocaleString()}
                   </p>
                   <div className="flex">
                     <button
