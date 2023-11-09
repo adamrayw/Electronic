@@ -1,6 +1,6 @@
 // src/components/Card.jsx
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 import { addItemToCart } from "../features/CartSlice";
 import { allProducts } from "../data/Item";
 import ProductCard from "./ProductCard";
