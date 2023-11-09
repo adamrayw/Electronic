@@ -1,6 +1,8 @@
+// src/components/Checkout.jsx
 import { useSelector, useDispatch } from "react-redux";
 
 import { addOneQuantity, deleteOneQuantity,deleteOneProduct } from "../features/CartSlice";
+import ProductCheckout from "./ProductCheckout";
 
 const Checkout = ({ isCheckedOut }) => {
   const {cartItems} = useSelector((store) => store.cart);
@@ -43,50 +45,13 @@ const Checkout = ({ isCheckedOut }) => {
         ) : (
           <>
             {cartItems.map((item) => (
-              <div
-                className="card mb-4 p-3 flex items-center bg-slate-200 rounded"
-                key={item.id}
-              >
-                <img
-                  className="object-cover w-[30%] h-32"
-                  src={item.img}
-                  alt={item.namaBarang}
-                />
-                <div className="bodycard ms-3">
-                  <h3 className="font-bold">{item.namaBarang}</h3>
-                  <p>Harga: Rp {item.hargaBarang.toLocaleString()}</p>
-                </div>
-                <div className="totalbarang ms-auto">
-                  <p>Total Barang: {item.quantity}</p>
-                  <p>
-                    Total Harga: Rp{" "}
-                    {(item.hargaBarang * (item.quantity)).toLocaleString()}
-                  </p>
-                  <div className="flex">
-                    <button
-                      className="bg-blue-300 p-1 rounded"
-                      onClick={() => handleAddOneQuantity(item)}
-                      //onClick={() => handleUpdateCartItem(item, 1)}
-                    >
-                      tambah 1
-                    </button>
-                    <button
-                      className="bg-blue-300 p-1 mx-2 rounded"
-                      onClick={() => handleDeleteOneQuantity(item)}
-                      //onClick={() => handleUpdateCartItem(item, 1)}
-                    >
-                      kurangi 1
-                    </button>
-                    <button
-                      className="bg-blue-300 p-1 rounded"
-                      onClick={() => handleDeleteOneItem(item)}
-                      //onClick={() => handleUpdateCartItem(item, -item.quantity)}
-                    >
-                      hapus
-                    </button>
-                  </div>
-                </div>
-              </div>
+               <ProductCheckout
+               key={item.id}
+               item={item}
+               handleAddOneQuantity={() => handleAddOneQuantity(item)}
+               handleDeleteOneQuantity={() => handleDeleteOneQuantity(item)}
+               handleDeleteOneItem={() => handleDeleteOneItem(item)}
+             />
             ))}
             <div className="totalharga pb-5 flex flex-col items-end">
               <div className="text-center">
