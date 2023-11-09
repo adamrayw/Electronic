@@ -7,12 +7,12 @@ import ProductCard from "./ProductCard";
 
 const Card = () => {
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
+  const [product, setProduct] = useState([]);
 
   const fetchData = async () => {
     try {
       const products = await allProducts();
-      setData(products);
+      setProduct(products);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -29,7 +29,7 @@ const Card = () => {
   return (
     <div className="container mx-auto py-[100px]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
-        {data.map((item) => (
+        {product.map((item) => (
           <ProductCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} />
         ))}
       </div>
