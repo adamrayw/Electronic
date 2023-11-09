@@ -15,7 +15,7 @@ const ProductCard = ({ item, onAddToCart }) => {
           <button
             className="py-1 px-2 font-bold rounded bg-slate-500 text-white transition 
                 duration-300 hover:bg-slate-200 hover:text-black"
-            onClick={() => onAddToCart(item)}
+            onClick={onAddToCart}
           >
             tambahkan
           </button>

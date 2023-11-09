@@ -30,7 +30,7 @@ const Card = () => {
     <div className="container mx-auto py-[100px]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
         {data.map((item) => (
-          <ProductCard key={item.id} item={item} onAddToCart={handleAddToCart} />
+          <ProductCard key={item.id} item={item} onAddToCart={() => handleAddToCart(item)} />
         ))}
       </div>
     </div>
