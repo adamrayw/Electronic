@@ -1,7 +1,9 @@
+// src/components/Card.jsx
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../features/CartSlice";
 import { allProducts } from "../data/Item";
+import ProductCard from "./ProductCard";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -9,7 +11,7 @@ const Card = () => {
 
   const fetchData = async () => {
     try {
-      const products = await allProducts(); // Use await to fetch data
+      const products = await allProducts();
       setData(products);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -17,7 +19,6 @@ const Card = () => {
   };
   
   useEffect(() => {
-
     fetchData(); 
   }, []); 
 
@@ -29,29 +30,7 @@ const Card = () => {
     <div className="container mx-auto py-[100px]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
         {data.map((item) => (
-          <div
-            key={item.id}
-            className="card max-w-sm rounded overflow-hidden shadow-lg mx-auto"
-          >
-            <img
-              className="w-[300px] h-64 object-cover"
-              src={item.img}
-              alt={item.namaBarang}
-            />
-            <div className="px-6 py-4 text-center">
-              <div className="font-bold text-xl">{item.namaBarang}</div>
-              <p className="text-gray-700 text-base my-2">
-                Harga: Rp {item.hargaBarang.toLocaleString()}
-              </p>
-              <button
-                className="py-1 px-2 font-bold rounded bg-slate-500 text-white transition 
-              duration-300 hover-bg-slate-200 hover-text-black"
-                onClick={() => handleAddToCart(item)}
-              >
-                tambahkan
-              </button>
-            </div>
-          </div>
+          <ProductCard key={item.id} item={item} onAddToCart={handleAddToCart} />
         ))}
       </div>
     </div>
