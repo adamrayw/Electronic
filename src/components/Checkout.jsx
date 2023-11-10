@@ -1,11 +1,11 @@
 // src/components/Checkout.jsx
 import { useSelector, useDispatch } from "react-redux";
 
-import { addOneQuantity, deleteOneQuantity,deleteOneProduct } from "../features/CartSlice";
+import { addOneQuantity, deleteOneQuantity, deleteOneProduct, updateQuantity } from "../features/CartSlice";
 import ProductCheckout from "./ProductCheckout";
 
 const Checkout = ({ isCheckedOut }) => {
-  const {cartItems} = useSelector((store) => store.cart);
+  const { cartItems } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
   const handleAddOneQuantity = (item) => {
@@ -22,6 +22,12 @@ const Checkout = ({ isCheckedOut }) => {
   // const handleUpdateCartItem = (item, quantity) => {
   //   dispatch(updateCartItem({ id: item.id, quantity }));
   // };
+
+  const handleUpdateQuantity = (item, newQuantity) => {
+    if (newQuantity >= 0) {
+      dispatch(updateQuantity({ id: item.id, quantity: newQuantity }));
+    }
+  };
 
   const calculateTotalPrice = () => {
     return cartItems.reduce((total, item) => {
@@ -45,13 +51,14 @@ const Checkout = ({ isCheckedOut }) => {
         ) : (
           <>
             {cartItems.map((item) => (
-               <ProductCheckout
-               key={item.id}
-               item={item}
-               handleAddOneQuantity={() => handleAddOneQuantity(item)}
-               handleDeleteOneQuantity={() => handleDeleteOneQuantity(item)}
-               handleDeleteOneItem={() => handleDeleteOneItem(item)}
-             />
+              <ProductCheckout
+                key={item.id}
+                item={item}
+                handleAddOneQuantity={() => handleAddOneQuantity(item)}
+                handleDeleteOneQuantity={() => handleDeleteOneQuantity(item)}
+                handleDeleteOneItem={() => handleDeleteOneItem(item)}
+                handleUpdateQuantity={handleUpdateQuantity}
+              />
             ))}
             <div className="totalharga pb-5 flex flex-col items-end">
               <div className="text-center">

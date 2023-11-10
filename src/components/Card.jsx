@@ -1,6 +1,6 @@
 // src/components/Card.jsx
 import React, { useEffect, useState } from "react";
-import {useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItemToCart } from "../features/CartSlice";
 import { allProducts } from "../data/Item";
 import ProductCard from "./ProductCard";
@@ -17,10 +17,10 @@ const Card = () => {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   useEffect(() => {
-    fetchData(); 
-  }, []); 
+    fetchData();
+  }, []);
 
   const handleAddToCart = (item) => {
     dispatch(addItemToCart(item));

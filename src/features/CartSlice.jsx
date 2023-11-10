@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], 
+  cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
 };
 
 const cartSlice = createSlice({
@@ -20,32 +20,32 @@ const cartSlice = createSlice({
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
-    addOneQuantity: (state,action) => {
+    addOneQuantity: (state, action) => {
       const newItem = action.payload;
       const existingItem = state.cartItems.find((item) => item.id === newItem.id);
-      
-      if (existingItem){
-        existingItem.quantity +=1;
+
+      if (existingItem) {
+        existingItem.quantity += 1;
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
-    deleteOneQuantity: (state,action) => {
+    deleteOneQuantity: (state, action) => {
       const newItem = action.payload;
       const existingItem = state.cartItems.find((item) => item.id === newItem.id);
-      
-      if (existingItem){
-        existingItem.quantity -=1;
-        if (existingItem.quantity < 1){
+
+      if (existingItem) {
+        existingItem.quantity -= 1;
+        if (existingItem.quantity < 1) {
           state.cartItems = state.cartItems.filter((item) => item.id !== newItem.id);
         }
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
-    deleteOneProduct: (state,action) => {
+    deleteOneProduct: (state, action) => {
       const newItem = action.payload;
       const existingItem = state.cartItems.find((item) => item.id === newItem.id);
-      
-      if (existingItem){
+
+      if (existingItem) {
         state.cartItems = state.cartItems.filter((item) => item.id !== newItem.id);
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -62,9 +62,16 @@ const cartSlice = createSlice({
     //     }
     //   }
     // },
+    updateQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+      const itemToUpdate = state.cartItems.find((item) => item.id === id);
+
+      if (itemToUpdate) {
+        itemToUpdate.quantity = quantity;
+      }
+    },
   },
 });
 
-export const { addItemToCart,addOneQuantity,deleteOneQuantity,deleteOneProduct } = cartSlice.actions;
+export const { addItemToCart, addOneQuantity, deleteOneQuantity, deleteOneProduct, updateQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
-
