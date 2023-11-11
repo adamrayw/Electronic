@@ -43,7 +43,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
         </p>
         <div className="flex">
           <button
-            className="bg-blue-300 p-1 rounded"
+            className="bg-blue-300 me-2 p-1 rounded"
             onClick={handleAddOneQuantity}
           //onClick={() => handleUpdateCartItem(item, 1)}
           >
@@ -51,12 +51,12 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
           </button>
           <input
             type="number"
-            className="w-10"
+            className="w-10 me-2"
             value={quantityInput}
             onChange={handleQuantityInputChange}
           />
           <button
-            className="bg-blue-300 p-1 mx-2 rounded"
+            className="bg-blue-300 p-1 me-2 rounded"
             onClick={handleDeleteOneQuantity}
           //onClick={() => handleUpdateCartItem(item, 1)}
           >
