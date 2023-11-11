@@ -5,11 +5,12 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
   const [quantityInput, setQuantityInput] = useState(item.quantity);
 
   const handleQuantityInputChange = (e) => {
-    const newQuantity = parseInt(e.target.value, 10);
+    const inputText = e.target.value.trim();
+    const newQuantity = parseInt(inputText, 10);
 
-    if (e.target.value === "" || isNaN(newQuantity) || newQuantity < 1) {
+    if (inputText === "" || isNaN(newQuantity) || newQuantity < 1) {
       setQuantityInput("");
-      handleUpdateQuantity(item, 0);
+      handleUpdateQuantity(item, 1);
 
       if (newQuantity < 1) {
         handleDeleteOneItem(item);
@@ -19,7 +20,6 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
       handleUpdateQuantity(item, newQuantity);
     }
   }
-
 
   return (
     <div
