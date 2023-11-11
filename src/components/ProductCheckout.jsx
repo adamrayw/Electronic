@@ -1,8 +1,12 @@
 // src/components/ProductCheckout.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, handleDeleteOneItem, handleUpdateQuantity }) => {
   const [quantityInput, setQuantityInput] = useState(item.quantity);
+
+  useEffect(() => {
+    setQuantityInput(item.quantity);
+  }, [item.quantity]);
 
   const handleQuantityInputChange = (e) => {
     const inputText = e.target.value.trim();
