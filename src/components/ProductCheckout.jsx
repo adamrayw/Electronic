@@ -20,6 +20,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
     }
   }
 
+
   return (
     <div
       className="card mb-4 p-3 flex items-center bg-slate-200 rounded"
