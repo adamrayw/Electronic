@@ -70,8 +70,17 @@ const cartSlice = createSlice({
         itemToUpdate.quantity = quantity;
       }
     },
+    toggleCheckbox: (state, action) => {
+      const { id } = action.payload;
+      const itemToUpdate = state.cartItems.find((item) => item.id === id);
+
+      if (itemToUpdate) {
+        itemToUpdate.checked = !itemToUpdate.checked;
+      }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
   },
 });
 
-export const { addItemToCart, addOneQuantity, deleteOneQuantity, deleteOneProduct, updateQuantity } = cartSlice.actions;
+export const { addItemToCart, addOneQuantity, deleteOneQuantity, deleteOneProduct, updateQuantity, toggleCheckbox } = cartSlice.actions;
 export default cartSlice.reducer;
