@@ -30,7 +30,8 @@ const Checkout = ({ isCheckedOut }) => {
   };
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => {
+    const checkedItems = cartItems.filter(item => item.checked === true);
+    return checkedItems.reduce((total, item) => {
       return total + item.hargaBarang * item.quantity;
     }, 0);
   };
