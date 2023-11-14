@@ -58,10 +58,12 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
       />
       <div className="bodycard ms-3">
         <h3 className="font-bold">{item.namaBarang}</h3>
-        <p>Harga: Rp {item.hargaBarang.toLocaleString()}</p>
+        <div className='text-xs'>
+          <p>Harga: Rp {item.hargaBarang.toLocaleString()}</p>
+          <ConditionalDetails />
+        </div>
       </div>
       <div className="totalbarang ms-auto">
-        <ConditionalDetails />
         <div className="flex">
           <button
             className="bg-blue-300 me-2 px-2 rounded"
