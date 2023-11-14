@@ -31,24 +31,13 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
   }
 
   const ConditionalDetails = () => {
+    const totalBarang = item.checked ? item.quantity : "0";
+    const totalHarga = item.checked ? (item.hargaBarang * item.quantity).toLocaleString() : "Rp 0";
+
     return (
       <>
-        {item.checked ? (
-          <>
-            <p>Total Barang: {item.quantity}</p>
-            <p>
-              Total Harga: Rp{" "}
-              {(item.hargaBarang * item.quantity).toLocaleString()}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>Total Barang: 0</p>
-            <p>
-              Total Harga: Rp 0
-            </p>
-          </>
-        )}
+        <p>Total Barang: {totalBarang}</p>
+        <p>Total Harga: {totalHarga}</p>
       </>
     );
   };
