@@ -40,7 +40,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
       />
       {/* Render the quantity and price based on the checked property */}
       <img
-        className="object-cover w-[20%]"
+        className="object-cover w-20 h-20"
         src={item.img}
         alt={item.namaBarang}
       />
