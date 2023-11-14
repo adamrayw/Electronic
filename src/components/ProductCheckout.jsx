@@ -52,12 +52,12 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
       />
       {/* Render the quantity and price based on the checked property */}
       <img
-        className="object-cover w-20 h-20"
+        className="object-cover w-24 h-24"
         src={item.img}
         alt={item.namaBarang}
       />
       <div className="bodycard ms-3">
-        <h3 className="font-bold">{item.namaBarang}</h3>
+        <p className="font-bold text-xl">{item.namaBarang}</p>
         <div className='text-xs'>
           <p>Harga: Rp {item.hargaBarang.toLocaleString()}</p>
           <ConditionalDetails />
