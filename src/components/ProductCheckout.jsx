@@ -30,6 +30,29 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
     }
   }
 
+  const ConditionalDetails = () => {
+    return (
+      <>
+        {item.checked ? (
+          <>
+            <p>Total Barang: {item.quantity}</p>
+            <p>
+              Total Harga: Rp{" "}
+              {(item.hargaBarang * item.quantity).toLocaleString()}
+            </p>
+          </>
+        ) : (
+          <>
+            <p>Total Barang: 0</p>
+            <p>
+              Total Harga: Rp 0
+            </p>
+          </>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="card mb-4 p-3 flex items-center bg-slate-200 rounded" key={item.id}>
       <input
@@ -49,22 +72,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
         <p>Harga: Rp {item.hargaBarang.toLocaleString()}</p>
       </div>
       <div className="totalbarang ms-auto">
-        {item.checked ? (
-          <>
-            <p>Total Barang: {item.quantity}</p>
-            <p>
-              Total Harga: Rp{" "}
-              {(item.hargaBarang * item.quantity).toLocaleString()}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>Total Barang: 0</p>
-            <p>
-              Total Harga: Rp 0
-            </p>
-          </>
-        )}
+        <ConditionalDetails />
         <div className="flex">
           <button
             className="bg-blue-300 me-2 px-2 rounded"
