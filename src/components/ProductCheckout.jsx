@@ -21,7 +21,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
       setQuantityInput("");
       handleUpdateQuantity(item, 1);
 
-      if (newQuantity < 1) {
+      if (newQuantity < 0) {
         handleDeleteOneItem(item);
       }
     } else {
