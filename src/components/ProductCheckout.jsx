@@ -36,7 +36,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
 
     return (
       <>
-        <p>Total Barang: {totalBarang}</p>
+        <p>Total Barang: <span className='font-semibold'>{totalBarang}</span></p>
         <p>Total Harga: {totalHarga}</p>
       </>
     );
