@@ -25,8 +25,9 @@ const Card = () => {
   }, []);
 
   const filteredProducts = products.filter((item) =>
-    item.namaBarang.toLowerCase().includes(searchInput.toLowerCase())
+    item.namaBarang.toLowerCase().startsWith(searchInput.toLowerCase())
   );
+
 
   const handleAddToCart = (item) => {
     dispatch(addItemToCart(item));
