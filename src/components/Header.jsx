@@ -1,17 +1,26 @@
 import { useState } from "react";
 import Checkout from "./Checkout";
+import { useDispatch } from "react-redux";
+import { setSearchInput } from "../features/searchSlice"; // Check this import statement
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isCheckedOut, setIsCheckedOut] = useState(false);
+  const [searchValue, setSearchValue] = useState(''); // Add local state for search input
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   const handleCheckoutClick = () => {
-    // Toggle nilai isCheckedOut saat link "Checkout" diklik
     setIsCheckedOut(!isCheckedOut);
+  };
+
+  const handleSearchChange = (e) => {
+    const inputValue = e.target.value;
+    setSearchValue(inputValue);
+    dispatch(setSearchInput(inputValue)); // Dispatch setSearchInput action
   };
 
   return (
@@ -26,6 +35,8 @@ const Header = () => {
             <input
               type="text"
               placeholder="Cari..."
+              value={searchValue}
+              onChange={handleSearchChange}
               className="border border-gray-300 px-2 py-1 rounded-md ml-4"
             />
           </div>
