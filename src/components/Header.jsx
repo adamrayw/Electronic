@@ -22,6 +22,14 @@ const Header = () => {
             <div className="text-white font-bold text-xl">Electronic</div>
           </div>
 
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Cari..."
+              className="border border-gray-300 px-2 py-1 rounded-md ml-4"
+            />
+          </div>
+
           <div className="hidden md:flex space-x-4">
             <a href="#" className="text-white hover:text-gray-200">
               Home
