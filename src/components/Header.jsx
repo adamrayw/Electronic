@@ -104,7 +104,10 @@ const Header = () => {
             </a>
           </div>
         )}
-        <Checkout isCheckedOut={isCheckedOut} />
+
+        {isCheckedOut &&
+          <Checkout isCheckedOut={handleCheckoutClick} />
+        }
       </nav>
     </header>
   );

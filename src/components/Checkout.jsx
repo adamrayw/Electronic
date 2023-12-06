@@ -41,11 +41,15 @@ const Checkout = ({ isCheckedOut }) => {
 
   console.log(cartItems);
 
+  const closeModal = () => {
+    isCheckedOut()
+  }
+
   return (
     <div
       className={`sectionCheckout overflow-scroll absolute top-full ${checkoutClassName} h-[500px] lg:w-1/2 md:w-full sm:w-full bg-slate-300 transition-right duration-500 ease-in-out`}
     >
-      <div className="lg:hidden md:hidden sm:block absolute right-0">
+      <div className="lg:hidden md:hidden sm:block absolute right-0" onClick={closeModal}>
         <BiX size={40} />
       </div>
       <div className="container mx-auto p-5 h-full mt-5">
