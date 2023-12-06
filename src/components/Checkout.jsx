@@ -1,5 +1,6 @@
 // src/components/Checkout.jsx
 import { useSelector, useDispatch } from "react-redux";
+import { BiX } from "react-icons/bi";
 
 import { addOneQuantity, deleteOneQuantity, deleteOneProduct, updateQuantity } from "../features/CartSlice";
 import ProductCheckout from "./ProductCheckout";
@@ -44,7 +45,10 @@ const Checkout = ({ isCheckedOut }) => {
     <div
       className={`sectionCheckout overflow-scroll absolute top-full ${checkoutClassName} h-[500px] lg:w-1/2 md:w-full sm:w-full bg-slate-300 transition-right duration-500 ease-in-out`}
     >
-      <div className="container p-5 h-full">
+      <div className="lg:hidden md:hidden sm:block absolute right-0">
+        <BiX size={40} />
+      </div>
+      <div className="container mx-auto p-5 h-full mt-5">
         {cartItems.length === 0 ? (
           <div className="h-[50%] flex justify-center items-end">
             <p className="text-center font-bold text-xl">Cart masih kosong</p>
