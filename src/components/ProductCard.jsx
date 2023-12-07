@@ -1,27 +1,35 @@
-// src/components/ProductCard.jsx
-const ProductCard = ({ item, onAddToCart }) => {
-  return (
-    <div className="card max-w-sm rounded overflow-hidden shadow-lg mx-auto">
-      <img
-        className="w-[300px] h-64 object-cover"
-        src={item.img}
-        alt={item.namaBarang}
-      />
-      <div className="px-6 py-4 text-center">
-        <div className="font-bold text-xl">{item.namaBarang}</div>
-        <p className="text-gray-700 text-base my-2">
-          Harga: Rp {item.hargaBarang.toLocaleString()}
-        </p>
-        <button
-          className="py-1 px-2 font-bold rounded bg-slate-500 text-white transition 
-              duration-300 hover:bg-slate-200 hover:text-black"
-          onClick={onAddToCart}
-        >
-          tambahkan
-        </button>
-      </div>
-    </div>
-  );
-};
+import React, { useState, useEffect } from 'react';
+import { allProducts } from '../data/Item';
 
-export default ProductCard;
+const Hero = () => {
+  const [products, setProducts] = useState([]);
+  const [backgroundImage, setBackgroundImage] = useState('');
+
+  const fetchData = async () => {
+    try {
+      const allProductsData = await allProducts();
+      setProducts(allProductsData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      // Assuming products is an array and the first item has the image URL
+      setBackgroundImage(`url(${products[0].img})`);
+    }
+  }, [products]);
+
+  return (
+    <div className='w-full m-auto relative h-screen top-20'>
+      <div style={{ backgroundImage }} className='w-full h-full rounded-2xl bg-cover bg-center'></div>
+    </div>
+  )
+}
+
+export default Hero;
