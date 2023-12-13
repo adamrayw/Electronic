@@ -7,3 +7,7 @@
     @apply w-full;
   }
 }
+
+.swiper {
+  @apply h-[39em];
+}
