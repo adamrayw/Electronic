@@ -13,7 +13,8 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleCheckoutClick = () => {
+  const handleCheckoutClick = (e) => {
+    e.preventDefault();
     setIsCheckedOut(!isCheckedOut);
   };
 
