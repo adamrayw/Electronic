@@ -2,6 +2,7 @@ import { useState } from "react";
 import Checkout from "./Checkout";
 import { useDispatch } from "react-redux";
 import { setSearchInput } from "../features/searchSlice"; // Check this import statement
+import { BsCart4 } from "react-icons/bs";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Header = () => {
               className="text-white hover:text-gray-200"
               onClick={handleCheckoutClick}
             >
-              Checkout
+              <BsCart4 size={25} />
             </a>
           </div>
 
@@ -101,7 +102,7 @@ const Header = () => {
               className="block py-2 px-4 text-white hover:text-gray-200"
               onClick={handleCheckoutClick}
             >
-              Checkout
+              <BsCart4 size={25} />
             </a>
           </div>
         )}
