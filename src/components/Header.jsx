@@ -3,6 +3,7 @@ import Checkout from "./Checkout";
 import { useDispatch } from "react-redux";
 import { setSearchInput } from "../features/searchSlice"; // Check this import statement
 import { BsCart4 } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -44,12 +45,15 @@ const Header = () => {
           </div>
 
           <div className="hidden md:flex space-x-4">
-            <a href="#" className="text-white hover:text-gray-200">
+            <Link
+              to="/"
+              className="block py-2 px-4 text-white hover:text-gray-200"
+            >
               Home
-            </a>
+            </Link>
             <a
               href="#"
-              className="text-white hover:text-gray-200"
+              className="text-white hover:text-gray-200 my-auto"
               onClick={handleCheckoutClick}
             >
               <BsCart4 size={25} />
@@ -91,15 +95,15 @@ const Header = () => {
         {/* Responsive Navbar */}
         {isOpen && (
           <div className="md:hidden mt-4">
-            <a
-              href="#"
+            <Link
+              to="/"
               className="block py-2 px-4 text-white hover:text-gray-200"
             >
               Home
-            </a>
+            </Link>
             <a
               href="#"
-              className="block py-2 px-4 text-white hover:text-gray-200"
+              className="block py-2 px-4 text-white hover:text-gray-200 my-auto"
               onClick={handleCheckoutClick}
             >
               <BsCart4 size={25} />
