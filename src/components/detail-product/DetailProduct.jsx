@@ -1,14 +1,41 @@
-import React from 'react'
+import { useState, useRef } from 'react'
 import { BsCart4 } from "react-icons/bs";
 import { MdFavoriteBorder } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 
 const DetailProduct = () => {
+
+    const [zoomStyle, setZoomStyle] = useState({ transform: 'scale(1)' });
+    const imgRef = useRef(null);
+
+    const handleMouseMove = (e) => {
+        const img = imgRef.current;
+        const x = e.clientX - img.offsetLeft;
+        const y = e.clientY - img.offsetTop;
+
+        if (window.innerWidth > 1023) {
+            setZoomStyle({
+                transformOrigin: `${x}px ${y}px`,
+                transform: 'scale(2)',
+            });
+        }
+
+    };
+
+    const handleMouseLeave = () => {
+        setZoomStyle({ transform: 'scale(1)' });
+    };
     return (
         <>
             <div className="container lg:mx-10 max-w-[73rem]  grid lg:grid-cols-3 md:grid-cols-1 gap-4 mt-[5rem] pb-20">
-                <div className="img-detail">
-                    <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+                <div className="img-detail overflow-hidden lg:h-60"
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    ref={imgRef}>
+                    <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="gambar product"
+                        className='object-cover cursor-zoom-in'
+                        style={zoomStyle} />
                 </div>
                 <div className="detail-spec">
                     <h2 className='font-bold'>Mouse Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, possimus veritatis?</h2>

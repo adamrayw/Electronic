@@ -8,6 +8,13 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .img-detail img {
+      cursor: default;
+      transform: scale(1); /* Menetapkan skala kembali ke 1 */
+  }
+}
+
 .swiper {
   @apply h-[39em];
 }
