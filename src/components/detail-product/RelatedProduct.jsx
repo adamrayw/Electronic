@@ -44,7 +44,7 @@ const RelatedProduct = () => {
             <Slider {...settings}>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>
@@ -55,7 +55,7 @@ const RelatedProduct = () => {
                 </div>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>
@@ -66,7 +66,7 @@ const RelatedProduct = () => {
                 </div>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1588815158313-b7f7f90c1c2e?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>
@@ -77,7 +77,7 @@ const RelatedProduct = () => {
                 </div>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>
@@ -88,7 +88,7 @@ const RelatedProduct = () => {
                 </div>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>
@@ -99,7 +99,7 @@ const RelatedProduct = () => {
                 </div>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>
@@ -110,7 +110,7 @@ const RelatedProduct = () => {
                 </div>
                 <div className='border border-gray-600 rounded overflow-hidden'>
                     <div>
-                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
+                        <img className='related-img' src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
                     </div>
                     <div className='p-1'>
                         <p>Nama barang Lorem, ipsum dolor.</p>

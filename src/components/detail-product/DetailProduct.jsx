@@ -29,8 +29,8 @@ const DetailProduct = () => {
 
     return (
         <>
-            <div className="container lg:mx-10 max-w-[73rem] mt-[5rem] pb-20">
-                <div className='grid lg:grid-cols-3 md:grid-cols-1 gap-4'>
+            <div className="container lg:mx-10 max-w-[73rem] mt-[6rem] pb-20">
+                <div className='grid lg:grid-cols-3 md:grid-cols-1 gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60"
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
@@ -74,7 +74,7 @@ const DetailProduct = () => {
                         </div>
                     </div>
                 </div>
-                <div className='font-bold'>Produk Terkait</div>
+                <div className='font-bold mb-2'>Produk Terkait</div>
                 <RelatedProduct />
             </div>
         </>
