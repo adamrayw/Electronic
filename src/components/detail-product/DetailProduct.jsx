@@ -31,7 +31,7 @@ const DetailProduct = () => {
     return (
         <>
             <div className="container lg:mx-10 max-w-[73rem] mt-[6rem] pb-20">
-                <div className='grid lg:grid-cols-3 md:grid-cols-1 gap-4 mb-10'>
+                <div className='grid lg:grid-cols-4 md:grid-cols-1 gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60"
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
@@ -41,7 +41,7 @@ const DetailProduct = () => {
                             className='object-cover cursor-zoom-in'
                             style={zoomStyle} />
                     </div>
-                    <div className="detail-spec">
+                    <div className="detail-spec w-full col-span-2">
                         <h2 className='font-bold'>Mouse Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, possimus veritatis?</h2>
                         <p className='text-slate-500'>bababoey</p>
                         <p>Terjual 200+</p>
