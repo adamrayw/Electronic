@@ -31,3 +31,9 @@
   height: 150px;
   object-fit: cover;
 }
+
+@media (max-width: 1024px){
+  .detail-cart{
+    display: none;
+  }
+}
