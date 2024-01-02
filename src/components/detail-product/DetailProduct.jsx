@@ -44,7 +44,7 @@ const DetailProduct = () => {
                         ref={imgRef}>
                         <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="gambar product"
-                            className='object-cover cursor-zoom-in'
+                            className='object-cover lg:h-60 cursor-zoom-in'
                             style={zoomStyle} />
                     </div>
                     <div className="detail-spec w-full col-span-2">
