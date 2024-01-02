@@ -8,6 +8,26 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .img-detail img {
+      cursor: default;
+      transform: scale(1); /* Menetapkan skala kembali ke 1 */
+  }
+}
+
 .swiper {
   @apply h-[39em];
+}
+
+.slick-list {
+  margin: 0 -5px;
+}
+.slick-slide>div {
+  padding: 0 5px;
+}
+
+.related-img{
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
 }
