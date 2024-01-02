@@ -1,6 +1,6 @@
 # Shopping cart
 
-website sederhana untuk keperluan pembelajaran pembuatan shopping cart menggunakan redux toolkit
+website untuk penjualan barang-barang elektronik
 
 ## Getting Started
 
