@@ -13,8 +13,8 @@ const ProductCard = ({ item, onAddToCart }) => {
           Harga: Rp {item.hargaBarang.toLocaleString()}
         </p>
         <button
-          className="py-1 px-2 font-bold rounded bg-slate-500 text-white transition 
-              duration-300 hover:bg-slate-200 hover:text-black"
+          className="py-1 px-2 font-bold rounded bg-slate-600 text-white transition 
+              duration-300 hover:bg-slate-500"
           onClick={onAddToCart}
         >
           tambahkan
