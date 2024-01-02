@@ -36,15 +36,15 @@ const DetailProduct = () => {
 
     return (
         <>
-            <div className="container lg:mx-10 max-w-[73rem] mt-[6rem] pb-20">
-                <div className='grid lg:grid-cols-4 md:grid-cols-1 gap-4 mb-10'>
-                    <div className="img-detail overflow-hidden lg:h-60"
+            <div className="container lg:mx-10 max-w-[73rem] mt-[6rem] pb-20 overflow-hidden">
+                <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-4 mb-10'>
+                    <div className="img-detail overflow-hidden lg:h-60 w-full"
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
                         ref={imgRef}>
                         <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="gambar product"
-                            className='object-cover lg:h-60 cursor-zoom-in'
+                            className='object-cover lg:h-60 w-full cursor-zoom-in'
                             style={zoomStyle} />
                     </div>
                     <div className="detail-spec w-full col-span-2">
