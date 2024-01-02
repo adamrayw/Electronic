@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { BsCart4 } from "react-icons/bs";
 import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 import RelatedProduct from './RelatedProduct';
 import CheckoutFooter from './CheckoutFooter';
@@ -9,6 +10,11 @@ const DetailProduct = () => {
 
     const [zoomStyle, setZoomStyle] = useState({ transform: 'scale(1)' });
     const imgRef = useRef(null);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const toggleFavorite = () => {
+        setIsFavorite(!isFavorite);
+    };
 
     const handleMouseMove = (e) => {
         const img = imgRef.current;
@@ -70,7 +76,7 @@ const DetailProduct = () => {
                             </button>
                             <button className='bg-slate-600 text-white w-full p-1 rounded mb-2'>Beli</button>
                             <div className='flex justify-around p-1'>
-                                <button className='flex items-center'><MdFavoriteBorder className='me-2' size={20} /> Wishlist</button>
+                                <button onClick={toggleFavorite} className='flex items-center'> {isFavorite ? <MdFavorite className='me-2' size={20} /> : <MdFavoriteBorder className='me-2' size={20} />} Wishlist</button>
                                 <button className='flex items-center'><CiShare2 className='me-2' size={20} /> Share</button>
                             </div>
                         </div>
@@ -79,7 +85,7 @@ const DetailProduct = () => {
                 <div className='font-bold mb-2'>Produk Terkait</div>
                 <RelatedProduct />
                 <div className='lg:hidden md:static mt-5'>
-                    <CheckoutFooter />
+                    <CheckoutFooter toggleFavorite={toggleFavorite} isFavorite={isFavorite} />
                 </div>
             </div>
         </>
