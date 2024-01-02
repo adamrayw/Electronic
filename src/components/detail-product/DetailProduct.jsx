@@ -3,6 +3,7 @@ import { BsCart4 } from "react-icons/bs";
 import { MdFavoriteBorder } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 import RelatedProduct from './RelatedProduct';
+import CheckoutFooter from './CheckoutFooter';
 
 const DetailProduct = () => {
 
@@ -42,23 +43,24 @@ const DetailProduct = () => {
                     </div>
                     <div className="detail-spec">
                         <h2 className='font-bold'>Mouse Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, possimus veritatis?</h2>
+                        <p className='text-slate-500'>bababoey</p>
                         <p>Terjual 200+</p>
-                        <p className='mt-3 border-t-2 text-slate-700'>Rp. 500.000</p>
-                        <p><span className='line-through mr-2'>Rp. 1.000.000</span>
+                        <p className='mt-3 border-t-2 text-slate-700 font-bold text-2xl mb-2'>Rp. 500.000</p>
+                        <p><span className='line-through mr-2 font-semibold'>Rp. 1.000.000</span>
                             <span className='p-1 bg-sky-300 rounded-sm text-sky-700 font-semibold'>diskon 50%</span></p>
                         <p className='mt-3 border-t-2 mb-2'><span className='border-solid border-b-2 border-slate-700 text-slate-700 font-semibold'>Spesifikasi</span></p>
                         <p className='font-bold'>UMUM</p>
-                        <p>Size: </p>
-                        <p>Color:</p>
-                        <p>Berat: </p>
-                        <p>Features: </p>
-                        <p>Capacity: </p>
-                        <p>Power Consumption: </p>
-                        <p>Voltase: </p>
+                        <p className='text-slate-500'>Size: </p>
+                        <p className='text-slate-500'>Color:</p>
+                        <p className='text-slate-500'>Berat: </p>
+                        <p className='text-slate-500'>Features: </p>
+                        <p className='text-slate-500'>Capacity: </p>
+                        <p className='text-slate-500'>Power Consumption: </p>
+                        <p className='text-slate-500'>Voltase: </p>
                         <p className='font-bold mt-2'>DIMENSI</p>
-                        <p>29.4cm X 84.8cm X 20.4cm</p>
+                        <p className='text-slate-500'>29.4cm X 84.8cm X 20.4cm</p>
                         <p className='font-bold mt-2'>BERAT</p>
-                        <p>10000 gr</p>
+                        <p className='text-slate-500'>10000 gr</p>
                     </div>
                     <div className="detail-cart justify-self-center w-full">
                         <div className='p-5 rounded border-solid border-2 border-slate-600'>
@@ -76,6 +78,9 @@ const DetailProduct = () => {
                 </div>
                 <div className='font-bold mb-2'>Produk Terkait</div>
                 <RelatedProduct />
+                <div className='lg:hidden md:static mt-5'>
+                    <CheckoutFooter />
+                </div>
             </div>
         </>
     )
