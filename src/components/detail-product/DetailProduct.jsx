@@ -36,7 +36,7 @@ const DetailProduct = () => {
 
     return (
         <>
-            <div className="container lg:mx-10 max-w-[73rem] mt-[6rem] pb-20 overflow-hidden">
+            <div className="container mx-auto max-w-[73rem] mt-[6rem] pb-20 overflow-hidden">
                 <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60 w-full"
                         onMouseMove={handleMouseMove}
