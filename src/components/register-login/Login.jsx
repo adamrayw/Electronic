@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
     return (
@@ -12,7 +13,7 @@ const Login = () => {
                 <form className='w-full border-2 rounded-xl border-slate-600 mx-auto p-5 shadow-2xl'>
                     <div className='text-center mb-3'>
                         <p className='font-bold text-2xl'>Login</p>
-                        <p>belum punya akun? <a className='text-blue-500 font-semibold' href="">daftar</a></p>
+                        <p>belum punya akun? <Link className='text-blue-500 font-semibold' to='/register'>daftar</Link></p>
                     </div>
                     <div className='mb-2'>
                         <label htmlFor='email' className='block font-semibold'>Email</label>
