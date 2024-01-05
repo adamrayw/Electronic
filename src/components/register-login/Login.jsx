@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Register = () => {
+const Login = () => {
     return (
         <>
             <div className="container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 h-screen items-center w-full mx-auto mt-10">
@@ -11,8 +11,8 @@ const Register = () => {
                 </div>
                 <form className='w-full border-2 rounded-xl border-slate-600 mx-auto p-5 shadow-2xl'>
                     <div className='text-center mb-3'>
-                        <p className='font-bold text-2xl'>Daftar Sekarang</p>
-                        <p>sudah punya akun? <a className='text-blue-500 font-semibold' href="">masuk</a></p>
+                        <p className='font-bold text-2xl'>Login</p>
+                        <p>belum punya akun? <a className='text-blue-500 font-semibold' href="">daftar</a></p>
                     </div>
                     <div className='mb-2'>
                         <label htmlFor='email' className='block font-semibold'>Email</label>
@@ -34,4 +34,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Login
