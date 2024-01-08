@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { register } from '../../services/apiServices';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleResetInput = () => {
         setEmail('')
@@ -38,6 +39,10 @@ const Register = () => {
             const response = await register(formData);
             handleResetInput()
             console.log('Registration successful:', response);
+
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
         } catch (error) {
             handleResetInput()
             console.error('Registration failed:', error);
