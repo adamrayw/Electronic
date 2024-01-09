@@ -68,22 +68,26 @@ const Header = () => {
             >
               <BsCart4 size={25} />
             </a>
-
-            <Link
-              to="/register"
-              className="block py-2 px-4 text-white hover:text-gray-200"
-            >
-              Register
-            </Link>
-            <Link
-              to="/login"
-              className="block py-2 px-4 text-white hover:text-gray-200"
-            >
-              Login
-            </Link>
-            {login ? (
+            {login ? (<>
               <p className="block py-2 px-4 text-white hover:text-gray-200">sedang login</p>
-            ) : (<p className="block py-2 px-4 text-white hover:text-gray-200">belum login</p>)}
+            </>
+            ) : (
+              <>
+                <Link
+                  to="/register"
+                  className="block py-2 px-4 text-white hover:text-gray-200"
+                >
+                  Register
+                </Link>
+                <Link
+                  to="/login"
+                  className="block py-2 px-4 text-white hover:text-gray-200"
+                >
+                  Login
+                </Link>
+                <p className="block py-2 px-4 text-white hover:text-gray-200">belum login</p>
+              </>
+            )}
           </div>
 
           <div className="md:hidden flex items-center">
@@ -134,18 +138,26 @@ const Header = () => {
             >
               <BsCart4 size={25} />
             </a>
-            <Link
-              to="/register"
-              className="block py-2 px-4 text-white hover:text-gray-200"
-            >
-              Register
-            </Link>
-            <Link
-              to="/login"
-              className="block py-2 px-4 text-white hover:text-gray-200"
-            >
-              Login
-            </Link>
+            {login ? (<>
+              <p className="block py-2 px-4 text-white hover:text-gray-200">sedang login</p>
+            </>
+            ) : (
+              <>
+                <Link
+                  to="/register"
+                  className="block py-2 px-4 text-white hover:text-gray-200"
+                >
+                  Register
+                </Link>
+                <Link
+                  to="/login"
+                  className="block py-2 px-4 text-white hover:text-gray-200"
+                >
+                  Login
+                </Link>
+                <p className="block py-2 px-4 text-white hover:text-gray-200">belum login</p>
+              </>
+            )}
           </div>
         )}
 
