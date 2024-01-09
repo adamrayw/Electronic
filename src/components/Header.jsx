@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Checkout from "./Checkout";
 import { useDispatch } from "react-redux";
 import { setSearchInput } from "../features/searchSlice"; // Check this import statement
@@ -9,7 +9,17 @@ const Header = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isCheckedOut, setIsCheckedOut] = useState(false);
-  const [searchValue, setSearchValue] = useState(''); // Add local state for search input
+  const [searchValue, setSearchValue] = useState('');
+  const [login, setLogin] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  }, []);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -58,6 +68,22 @@ const Header = () => {
             >
               <BsCart4 size={25} />
             </a>
+
+            <Link
+              to="/register"
+              className="block py-2 px-4 text-white hover:text-gray-200"
+            >
+              Register
+            </Link>
+            <Link
+              to="/login"
+              className="block py-2 px-4 text-white hover:text-gray-200"
+            >
+              Login
+            </Link>
+            {login ? (
+              <p className="block py-2 px-4 text-white hover:text-gray-200">sedang login</p>
+            ) : (<p className="block py-2 px-4 text-white hover:text-gray-200">belum login</p>)}
           </div>
 
           <div className="md:hidden flex items-center">
@@ -108,6 +134,18 @@ const Header = () => {
             >
               <BsCart4 size={25} />
             </a>
+            <Link
+              to="/register"
+              className="block py-2 px-4 text-white hover:text-gray-200"
+            >
+              Register
+            </Link>
+            <Link
+              to="/login"
+              className="block py-2 px-4 text-white hover:text-gray-200"
+            >
+              Login
+            </Link>
           </div>
         )}
 
