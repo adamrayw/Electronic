@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { register } from '../../services/apiServices';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
 
     const handleResetInput = () => {
         setEmail('')
@@ -22,26 +21,16 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        if (email.trim() === '' || password.trim() === '') {
-            console.error('Email dan password tidak boleh kosong');
-            return;
-        }
-
-        // Validasi email tidak mengandung simbol aneh
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            console.error('Format email tidak valid');
-            return;
-        }
 
         try {
             const formData = { email, password };
             const response = await register(formData);
+            localStorage.setItem('user', response.data.token);
             handleResetInput()
             console.log('Registration successful:', response);
 
             setTimeout(() => {
-                navigate('/');
+                window.location.href = '/';
             }, 1000);
         } catch (error) {
             handleResetInput()
