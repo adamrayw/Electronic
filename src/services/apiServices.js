@@ -11,3 +11,18 @@ export const register = async (newUser) => {
         throw error
    }
   };
+
+  export const login = async (user) => {
+    try {
+      const response = await axios.post(`${API_URL}/login`, user);
+      return response
+    } catch (error) {
+        console.error("login Failed", error);
+        throw error
+    }
+  }
+
+  export const handleLogout = () => {
+    localStorage.removeItem('user');
+        window.location.href = '/';
+  }

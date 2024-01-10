@@ -1,12 +1,18 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 
-const ProtectRegisterRoute = () => {
-    const user = localStorage.getItem('user');
+const user = localStorage.getItem('user');
+
+export const ProtectRegisterRoute = () => {
     if (user) {
-        return <Navigate to='/' />;
+        return <Navigate to="/" />;
     }
     return <Outlet />;
 };
 
-export default ProtectRegisterRoute;
+export const ProtectRoutes = () => {
+    if (!user) {
+        return <Navigate to="/register" />;
+    }
+    return <Outlet />;
+};
