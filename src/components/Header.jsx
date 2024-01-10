@@ -12,6 +12,7 @@ const Header = () => {
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [login, setLogin] = useState(false);
+  const [profileClicked, setProfileClicked] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -36,6 +37,10 @@ const Header = () => {
     setSearchValue(inputValue);
     dispatch(setSearchInput(inputValue)); // Dispatch setSearchInput action
   };
+
+  const handleProfileClick = () => {
+    setProfileClicked(!profileClicked);
+  }
 
   return (
     <header>
@@ -70,7 +75,22 @@ const Header = () => {
               <BsCart4 size={25} />
             </a>
             {login ? (<>
-              <p className="block py-2 px-4 text-white hover:text-gray-200">sedang login</p>
+              <div className="relative profile" onClick={handleProfileClick}>
+                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""
+                  className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer" />
+                <div className={`${profileClicked ? 'absolute' : 'hidden'} bg-slate-300 mt-1 p-2 w-24`} >
+                  <div className="mb-3">
+                    <Link>tes</Link>
+                  </div>
+                  <div className="mb-3">
+                    <Link>tes</Link>
+                  </div>
+                  <div className="mb-3">
+                    <Link>tes</Link>
+                  </div>
+                  <Logout />
+                </div>
+              </div>
             </>
             ) : (
               <>
@@ -86,10 +106,9 @@ const Header = () => {
                 >
                   Login
                 </Link>
-                <p className="block py-2 px-4 text-white hover:text-gray-200">belum login</p>
+
               </>
             )}
-            <Logout />
           </div>
 
           <div className="md:hidden flex items-center">

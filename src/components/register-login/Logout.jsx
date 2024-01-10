@@ -5,7 +5,7 @@ const Logout = () => {
 
     return (
         <>
-            <button onClick={handleLogout} className="block py-2 px-4 text-white hover:text-gray-200">Logout</button>
+            <button onClick={handleLogout} className="logout">Logout</button>
         </>
     )
 }
