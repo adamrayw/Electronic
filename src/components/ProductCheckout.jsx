@@ -43,7 +43,7 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
   };
 
   return (
-    <div className="card mb-4 p-3 flex items-center bg-slate-200 rounded" key={item.id}>
+    <div className="card mb-4 p-3 flex border-2 border-slate-400 items-center bg-white rounded" key={item.id}>
       <input
         className='me-2'
         type="checkbox"
@@ -66,25 +66,25 @@ const ProductCheckout = ({ item, handleAddOneQuantity, handleDeleteOneQuantity, 
       <div className="totalbarang ms-auto">
         <div className="flex">
           <button
-            className="bg-blue-300 me-2 px-2 rounded"
+            className="bg-slate-600 me-2 px-2 rounded"
             onClick={handleAddOneQuantity}
           >
             +
           </button>
           <input
             type="number"
-            className="w-10 me-2"
+            className="w-10 me-2 border-2 border-slate-600 rounded"
             value={quantityInput}
             onChange={handleQuantityInputChange}
           />
           <button
-            className="bg-blue-300 me-2 px-2 rounded"
+            className="bg-slate-600 me-2 px-2 rounded"
             onClick={handleDeleteOneQuantity}
           >
             -
           </button>
           <button
-            className="bg-blue-300 px-2 rounded"
+            className="bg-slate-600 px-2 rounded"
             onClick={handleDeleteOneItem}
           >
             <BsFillTrash3Fill />

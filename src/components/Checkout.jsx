@@ -47,7 +47,7 @@ const Checkout = ({ isCheckedOut }) => {
 
   return (
     <div
-      className={`sectionCheckout overflow-scroll absolute top-full ${checkoutClassName} h-[500px] lg:w-1/2 md:w-full sm:w-full bg-slate-300 transition-right duration-500 ease-in-out`}
+      className={`sectionCheckout overflow-scroll absolute top-full ${checkoutClassName} h-[500px] lg:w-1/2 md:w-full sm:w-full bg-slate-600 transition-right duration-500 ease-in-out`}
     >
       <div className="lg:hidden md:hidden sm:block absolute right-0" onClick={closeModal}>
         <BiX size={40} />
@@ -55,7 +55,7 @@ const Checkout = ({ isCheckedOut }) => {
       <div className="container mx-auto p-5 h-full mt-5">
         {cartItems.length === 0 ? (
           <div className="h-[50%] flex justify-center items-end">
-            <p className="text-center font-bold text-xl">Cart masih kosong</p>
+            <p className="text-center text-white font-bold text-xl">Cart masih kosong</p>
           </div>
         ) : (
           <>
@@ -69,11 +69,11 @@ const Checkout = ({ isCheckedOut }) => {
                 handleUpdateQuantity={handleUpdateQuantity}
               />
             ))}
-            <div className="totalharga pb-5 flex flex-col items-end">
+            <div className="totalharga pb-5 flex flex-col items-end text-white">
               <div className="text-center">
                 <h3 className="font-bold">Total Harga</h3>
                 <p className="my-2">Rp {calculateTotalPrice().toLocaleString()}</p>
-                <button className="px-3 py-2 bg-blue-300 rounded">
+                <button className="px-3 py-2 text-black bg-white rounded">
                   Checkout
                 </button>
               </div>

@@ -59,7 +59,7 @@ const Login = () => {
                         <input type="password" className='w-full py-1 border-2 border-slate-300' value={password} onChange={handlePasswordChange} />
                     </div>
                     <div className='mt-8 mb-2'>
-                        <button className='w-full py-2 bg-slate-600 rounded text-white font-semibold'>Register</button>
+                        <button className='w-full py-2 bg-slate-600 rounded text-white font-semibold'>Login</button>
                     </div>
                     <div className='mx-2 text-end'>
                         <p>Lupa akun? <a href='' className='text-blue-500 font-semibold'>reset password</a></p>
