@@ -27,8 +27,7 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleCheckoutClick = (e) => {
-    e.preventDefault();
+  const handleCheckoutClick = () => {
     setIsCheckedOut(!isCheckedOut);
   };
 
