@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Checkout from "./Checkout";
 import { useDispatch } from "react-redux";
 import { setSearchInput } from "../features/searchSlice"; // Check this import statement
@@ -13,6 +13,7 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const [login, setLogin] = useState(false);
   const [profileClicked, setProfileClicked] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -22,13 +23,23 @@ const Header = () => {
       setLogin(false);
     }
   }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleCheckoutClick = (e) => {
-    e.preventDefault();
+  const handleCheckoutClick = () => {
     setIsCheckedOut(!isCheckedOut);
   };
 
@@ -41,6 +52,9 @@ const Header = () => {
   const handleProfileClick = () => {
     setProfileClicked(!profileClicked);
   }
+
+
+
 
   return (
     <header>
@@ -74,7 +88,7 @@ const Header = () => {
             >
               <BsCart4 size={25} />
             </a>
-            {login ? (<>
+            {login ? (
               <div className="relative profile" onClick={handleProfileClick}>
                 <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""
                   className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer" />
@@ -91,9 +105,9 @@ const Header = () => {
                   <Logout />
                 </div>
               </div>
-            </>
+
             ) : (
-              <>
+              <Fragment>
                 <Link
                   to="/register"
                   className="bg-white my-auto p-2 block font-semibold text-slate-600 rounded hover:text-slate-300 transition"
@@ -106,12 +120,32 @@ const Header = () => {
                 >
                   Login
                 </Link>
-
-              </>
+              </Fragment>
             )}
           </div>
 
           <div className="md:hidden flex items-center">
+            {isMobile && login && (
+              <div className="relative profile me-2" onClick={handleProfileClick}>
+                <img
+                  src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt=""
+                  className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer"
+                />
+                <div className={`${profileClicked ? 'absolute' : 'hidden'} border-2 border-slate-400 bg-white mt-1 p-2 w-32`}>
+                  <div className="mb-3">
+                    <Link>tes</Link>
+                  </div>
+                  <div className="mb-3">
+                    <Link>tes</Link>
+                  </div>
+                  <div className="mb-3">
+                    <Link>tes</Link>
+                  </div>
+                  <Logout />
+                </div>
+              </div>
+            )}
             <button
               onClick={toggleNavbar}
               className="text-white hover:text-gray-200 focus:outline-none"
@@ -159,40 +193,21 @@ const Header = () => {
             >
               <BsCart4 size={25} />
             </a>
-            {login ? (<>
-              <div className="relative profile" onClick={handleProfileClick}>
-                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""
-                  className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer" />
-                <div className={`${profileClicked ? 'absolute' : 'hidden'} border-2 border-slate-400 bg-white mt-1 p-2 w-32`} >
-                  <div className="mb-3">
-                    <Link>tes</Link>
-                  </div>
-                  <div className="mb-3">
-                    <Link>tes</Link>
-                  </div>
-                  <div className="mb-3">
-                    <Link>tes</Link>
-                  </div>
-                  <Logout />
-                </div>
-              </div>
-            </>
-            ) : (
-              <>
-                <Link
-                  to="/register"
-                  className="bg-white block py-2 px-4 mb-2 text-center font-semibold text-slate-600 rounded hover:text-slate-300 transition"
-                >
-                  Register
-                </Link>
-                <Link
-                  to="/login"
-                  className="bg-white block py-2 px-4 text-center font-semibold text-slate-600 rounded hover:text-slate-300 transition"
-                >
-                  Login
-                </Link>
+            {!login && (<Fragment>
+              <Link
+                to="/register"
+                className="bg-white block py-2 px-4 mb-2 text-center font-semibold text-slate-600 rounded hover:text-slate-300 transition"
+              >
+                Register
+              </Link>
+              <Link
+                to="/login"
+                className="bg-white block py-2 px-4 text-center font-semibold text-slate-600 rounded hover:text-slate-300 transition"
+              >
+                Login
+              </Link>
 
-              </>
+            </Fragment>
             )}
           </div>
         )}
