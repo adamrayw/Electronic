@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { login } from '../../services/apiServices'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -26,19 +28,26 @@ const Login = () => {
             const formData = { email, password };
             const response = await login(formData);
             localStorage.setItem('user', response.data.token);
-            handleResetInput()
+            handleResetInput();
             console.log('login successful:', response);
+
+            // Display success toast
+            toast.success('Login successful!', { autoClose: 2000 });
 
             setTimeout(() => {
                 window.location.href = '/';
-            }, 1000);
+            }, 2000);
         } catch (error) {
-            handleResetInput()
+            handleResetInput();
             console.error('login failed:', error);
+
+            // Display error toast
+            toast.error('Login failed. Please make sure your email and password correct.');
         }
     };
     return (
         <>
+            <ToastContainer />
             <div className="container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 h-screen items-center w-full mx-auto mt-10">
                 <div className='mx-auto'>
                     <div className='p-8 flex justify-center items-center rounded-lg bg-slate-600 text-center'>
