@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { register } from '../../services/apiServices';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -29,17 +31,24 @@ const Register = () => {
             handleResetInput()
             console.log('Registration successful:', response);
 
+            toast.success('Registration successful!', { autoClose: 2000 });
+
             setTimeout(() => {
                 window.location.href = '/';
-            }, 1000);
+            }, 2000);
         } catch (error) {
             handleResetInput()
             console.error('Registration failed:', error);
+
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(`Registration failed. ${error.response.data.error}`);
+            }
         }
     };
 
     return (
         <>
+            <ToastContainer />
             <div className="container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 h-screen items-center w-full mx-auto mt-10">
                 <div className='mx-auto'>
                     <div className='p-8 flex justify-center items-center rounded-lg bg-slate-600 text-center'>

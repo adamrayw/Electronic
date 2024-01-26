@@ -42,7 +42,9 @@ const Login = () => {
             console.error('login failed:', error);
 
             // Display error toast
-            toast.error('Login failed. Please make sure your email and password correct.');
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(`Login failed. ${error.response.data.error}`);
+            }
         }
     };
     return (
