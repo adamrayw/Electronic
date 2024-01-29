@@ -82,7 +82,7 @@ const Register = () => {
                         <button className='w-full py-2 bg-slate-600 rounded text-white font-semibold'>Register</button>
                     </div>
                     <div className='mx-2 text-end'>
-                        <p>Lupa akun? <a href='' className='text-blue-500 font-semibold'>reset password</a></p>
+                        <p>Lupa akun? <Link to='/forget-password' className='text-blue-500 font-semibold'>reset password</Link></p>
                     </div>
                 </form>
             </div>
