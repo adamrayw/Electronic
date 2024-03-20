@@ -92,9 +92,12 @@ const Header = () => {
               <div className="relative profile" onClick={handleProfileClick}>
                 <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""
                   className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer" />
-                <div className={`${profileClicked ? 'absolute' : 'hidden'} border-2 border-slate-400 bg-white mt-1 p-2 w-32`} >
+                <div className={`${profileClicked ? 'absolute' : 'hidden'} rounded border-2 border-slate-400 bg-white mt-1 p-2 w-32`} >
                   <div className="mb-3">
-                    <Link>tes</Link>
+                    <p>halo user</p>
+                  </div>
+                  <div className="mb-3">
+                    <Link>edit profile</Link>
                   </div>
                   <div className="mb-3">
                     <Link>tes</Link>
@@ -134,7 +137,10 @@ const Header = () => {
                 />
                 <div className={`${profileClicked ? 'absolute' : 'hidden'} border-2 border-slate-400 bg-white mt-1 p-2 w-32`}>
                   <div className="mb-3">
-                    <Link>tes</Link>
+                    <p>halo user</p>
+                  </div>
+                  <div className="mb-3">
+                    <Link>edit profile</Link>
                   </div>
                   <div className="mb-3">
                     <Link>tes</Link>
