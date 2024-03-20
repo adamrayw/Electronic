@@ -7,6 +7,7 @@ import { ProtectRegisterRoute, ProtectRoutes } from "./utils/ProtectRegisterRout
 import RegisterPages from "./pages/RegisterPages";
 import LoginPages from "./pages/LoginPages";
 import ResetPasswordPages from "./pages/ResetPasswordPages";
+import UpdatePasswordPages from "./pages/updatePasswordPages";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<RegisterPages />} />
           <Route path="/login" element={<LoginPages />} />
           <Route path="/forget-password" element={<ResetPasswordPages />} />
+          <Route path="/update-password" element={<UpdatePasswordPages />} />
         </Route>
       </Routes>
 
