@@ -36,3 +36,13 @@ export const handleLogout = () => {
   localStorage.removeItem('user');
   window.location.href = '/';
 }
+
+export const updatePassword = async (token, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/update-password/${token}`, { password });
+    return response;
+  } catch (error) {
+    console.error("failed", error);
+    throw error;
+  }
+}

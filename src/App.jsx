@@ -7,11 +7,13 @@ import { ProtectRegisterRoute, ProtectRoutes } from "./utils/ProtectRegisterRout
 import RegisterPages from "./pages/RegisterPages";
 import LoginPages from "./pages/LoginPages";
 import ResetPasswordPages from "./pages/ResetPasswordPages";
-import UpdatePasswordPages from "./pages/updatePasswordPages";
+import UpdatePasswordPage from "./pages/UpdatePasswordPage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
+      <ToastContainer />
       <Header />
 
       <Routes>
@@ -27,7 +29,7 @@ function App() {
           <Route path="/register" element={<RegisterPages />} />
           <Route path="/login" element={<LoginPages />} />
           <Route path="/forget-password" element={<ResetPasswordPages />} />
-          <Route path="/update-password" element={<UpdatePasswordPages />} />
+          <Route path="/update-password/:token" element={<UpdatePasswordPage />} />
         </Route>
       </Routes>
 
