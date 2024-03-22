@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { forgotPassword } from '../../services/apiServices';
+import { toast } from 'react-toastify';
 
 const ResetPassword = () => {
     const { register, handleSubmit, reset } = useForm(); // Perbaikan pada penulisan 'handleSubmit'
@@ -10,9 +11,11 @@ const ResetPassword = () => {
             const response = await forgotPassword(data); // Panggil forgotPassword dengan data email
             console.log(response); // Tampilkan data dari respon
             reset();
+            toast.success(response.data.message, { autoClose: 2000 });
         } catch (error) {
             console.error("Failed", error);
             // Tindakan lain yang dapat diambil jika gagal
+            toast.error(`failed. ${error.response.data.error}`);
         }
     }
 
