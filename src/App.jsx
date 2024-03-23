@@ -9,6 +9,7 @@ import LoginPages from "./pages/LoginPages";
 import ResetPasswordPages from "./pages/ResetPasswordPages";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage";
 import { ToastContainer } from "react-toastify";
+import CheckoutPage from "./pages/checkout-pages/CheckoutPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" element={<LoginPages />} />
           <Route path="/forget-password" element={<ResetPasswordPages />} />
           <Route path="/update-password/:token" element={<UpdatePasswordPage />} />
+          <Route path="/checkout-barang" element={<CheckoutPage />} />
         </Route>
       </Routes>
 
