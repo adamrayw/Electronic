@@ -6,7 +6,7 @@ import { Table } from 'flowbite-react';
 const CheckoutBarang = () => {
     return (
         <div className='py-[100px] container mx-auto'>
-            <div className='alamat bg-slate-50 rounded p-5 mb-4'>
+            <div className='alamat-checkout bg-slate-50 rounded p-5 mb-4'>
                 <div className='flex mb-4'>
                     <IoLocationOutline size={25} />
                     <p className='font-bold'>Alamat Pengiriman</p>
@@ -15,7 +15,8 @@ const CheckoutBarang = () => {
                     <button className=' text-blue-400 rounded p-1 font-semibold'>tambah alamat</button>
                 </div>
             </div>
-            <div className='produk-dipesan bg-slate-50 rounded mb-4'>
+
+            <div className='produk-checkout bg-slate-50 rounded mb-4'>
                 <div className='p-6'>
                     <p className='font-bold mb-3'>Produk Dipesan</p>
                     <div className='flex'>
@@ -23,7 +24,7 @@ const CheckoutBarang = () => {
                         <span className='flex text-blue-400'><TiMessage size={25} /> <p className='font-semibold'>chat sekarang</p></span>
                     </div>
                 </div>
-                <div className="overflow-x-hidden">
+                <div className="overflow-x-scroll">
                     <Table>
                         <Table.Head className='text-left'>
                             <Table.HeadCell>Produk</Table.HeadCell>
@@ -62,7 +63,8 @@ const CheckoutBarang = () => {
                     </Table>
                 </div>
             </div>
-            <div className='catatan-pelanggan bg-slate-50 rounded p-5'>
+
+            <div className='catatan-pelanggan bg-slate-50 rounded p-5 mb-4'>
                 <div className='grid grid-cols-3 mb-10'>
                     <div className='pesan'>
                         <form>
@@ -74,7 +76,7 @@ const CheckoutBarang = () => {
                         <div className='flex justify-between'>
                             <p className='font-semibold'>Opsi Pengiriman:</p>
                             <p>Hemat</p>
-                            <button>Ubah</button>
+                            <button className='text-blue-400 font-semibold'>Ubah</button>
                             <p>$2</p>
                         </div>
                     </div>
@@ -82,6 +84,43 @@ const CheckoutBarang = () => {
                 <div className='flex justify-end'>
                     <p className='me-4'>Total Pesanan (3 produk):</p>
                     <p className='text-slate-600 font-semibold'>$99999</p>
+                </div>
+            </div>
+
+            <div className='metode-pembayaran p-5 rounded bg-slate-50'>
+                <div className='flex justify-between mb-7'>
+                    <p className='font-semibold'>Metode Pembayaran</p>
+                    <div className='flex'>
+                        <p> COD (bayar ditempat)</p>
+                        <button className='text-blue-400 font-semibold ms-3'>Ubah</button>
+                    </div>
+                </div>
+                <hr />
+                <br />
+                <div className='total-perhitungan flex justify-end mb-16'>
+                    <div className='pembungkus'>
+                        <div className='flex mb-3 text-gray-600 justify-between'>
+                            <p className='me-16'>Subtotal untuk produk</p>
+                            <p>$999</p>
+                        </div>
+                        <div className='flex mb-3 text-gray-600 justify-between'>
+                            <p className='me-16'>Total ongkos kirim</p>
+                            <p>$999</p>
+                        </div>
+                        <div className='flex mb-3 text-gray-600 justify-between'>
+                            <p className='me-16'>Biaya penanganan</p>
+                            <p>$999</p>
+                        </div>
+                        <div className='flex justify-between'>
+                            <p className='text-gray-600 me-16'>Total Pembayaran</p>
+                            <p className='font-bold text-2xl text-slate-600'>$999</p>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <br />
+                <div className='flex justify-end'>
+                    <button className='p-3 bg-slate-600 text-white font-semibold rounded px-8'>Buat Pesanan</button>
                 </div>
             </div>
         </div>
