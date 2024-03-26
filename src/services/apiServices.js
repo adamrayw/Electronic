@@ -37,6 +37,16 @@ export const handleLogout = () => {
   window.location.href = '/';
 }
 
+export const checkToken = async (token) => {
+  try {
+    const response = await axios.post(`${API_URL}/check-token`, { token }); // Assuming '/check-token' is your endpoint to check token validity
+    return response;
+  } catch (error) {
+    console.error("failed", error);
+    throw error;
+  }
+};
+
 export const updatePassword = async (token, password) => {
   try {
     const response = await axios.post(`${API_URL}/update-password/${token}`, { password });
