@@ -23,6 +23,7 @@ function App() {
         {/* must login first to access */}
         <Route element={<ProtectRoutes />}>
           <Route path="/detail" element={<DetailProductPage />} />
+          <Route path="/checkout-barang" element={<CheckoutPage />} />
         </Route>
 
         {/* if already login then cant access register and login again, must logout first */}
@@ -31,7 +32,6 @@ function App() {
           <Route path="/login" element={<LoginPages />} />
           <Route path="/forget-password" element={<ResetPasswordPages />} />
           <Route path="/update-password/:token" element={<UpdatePasswordPage />} />
-          <Route path="/checkout-barang" element={<CheckoutPage />} />
         </Route>
       </Routes>
 

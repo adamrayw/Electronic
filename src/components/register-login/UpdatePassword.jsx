@@ -1,7 +1,7 @@
-import React from 'react'
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'; // Import useParams to get the token from the URL
-import { updatePassword } from '../../services/apiServices';
+import { checkToken, updatePassword } from '../../services/apiServices';
 import { toast } from 'react-toastify';
 
 const UpdatePassword = () => {
@@ -9,9 +9,34 @@ const UpdatePassword = () => {
     const { token } = useParams(); // Get the token from the URL
     const password = watch("password"); // Get the value of the password field
 
+    const [validToken, setValidToken] = useState(true);
+
+    useEffect(() => {
+        const validateToken = async () => {
+            try {
+                const response = await checkToken(token); // Send request to backend to validate token
+                if (response.data.status) {
+                    setValidToken(true); // Token is valid
+                } else {
+                    setValidToken(false); // Token is invalid
+                    toast.error('Invalid or expired token');
+                }
+            } catch (error) {
+                setValidToken(false); // Token is invalid
+                toast.error('Invalid or expired token');
+            }
+        };
+
+        validateToken();
+
+        return () => {
+            // Cleanup function
+        };
+    }, [token]);
+
     const onSubmit = async (data) => {
         try {
-            const response = await updatePassword(token, data.password); // Pass token and password to the updatePassword function
+            const response = await updatePassword(token, data.password);
             console.log(response);
             reset();
             toast.success(response.data.message, { autoClose: 2000 });
@@ -22,6 +47,14 @@ const UpdatePassword = () => {
             console.error("Failed", error);
             toast.error(`Failed. ${error.response.data.error}`);
         }
+    };
+
+    if (!validToken) {
+        return (
+            <div className='h-screen flex justify-center items-center'>
+                <p>Invalid or expired token</p>
+            </div>
+        );
     }
 
     return (
