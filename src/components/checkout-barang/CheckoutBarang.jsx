@@ -65,8 +65,8 @@ const CheckoutBarang = () => {
             </div>
 
             <div className='catatan-pelanggan bg-slate-50 rounded p-5 mb-4'>
-                <div className='grid grid-cols-3 mb-10'>
-                    <div className='pesan'>
+                <div className='grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 mb-10'>
+                    <div className='pesan mb-6'>
                         <form>
                             <label htmlFor="text" className='me-3 font-semibold'>Pesan:</label>
                             <input type="text" placeholder='(opsional)' className='rounded-sm' />
