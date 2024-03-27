@@ -39,3 +39,7 @@
     display: none;
   }
 }
+
+.transform-text-profile{
+  @apply font-bold text-slate-600 
+}

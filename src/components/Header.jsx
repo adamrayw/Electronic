@@ -94,16 +94,10 @@ const Header = () => {
                   className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer" />
                 <div className={`${profileClicked ? 'absolute' : 'hidden'} rounded border-2 border-slate-400 bg-white mt-1 p-2 w-32`} >
                   <div className="mb-3">
-                    <p>halo user</p>
+                    <p className="transform-text-profile">halo user</p>
                   </div>
                   <div className="mb-3">
-                    <Link>edit profile</Link>
-                  </div>
-                  <div className="mb-3">
-                    <Link>tes</Link>
-                  </div>
-                  <div className="mb-3">
-                    <Link>tes</Link>
+                    <Link className="transform-text-profile">edit profile</Link>
                   </div>
                   <Logout />
                 </div>
@@ -137,16 +131,10 @@ const Header = () => {
                 />
                 <div className={`${profileClicked ? 'absolute' : 'hidden'} border-2 border-slate-400 bg-white mt-1 p-2 w-32`}>
                   <div className="mb-3">
-                    <p>halo user</p>
+                    <p className="transform-text-profile">halo user</p>
                   </div>
                   <div className="mb-3">
-                    <Link>edit profile</Link>
-                  </div>
-                  <div className="mb-3">
-                    <Link>tes</Link>
-                  </div>
-                  <div className="mb-3">
-                    <Link>tes</Link>
+                    <Link className="transform-text-profile">edit profile</Link>
                   </div>
                   <Logout />
                 </div>
