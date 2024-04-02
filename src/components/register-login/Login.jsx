@@ -34,9 +34,9 @@ const Login = () => {
             // Display success toast
             toast.success('Login successful!', { autoClose: 2000 });
 
-            // setTimeout(() => {
-            //     window.location.href = '/';
-            // }, 2000);
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
         } catch (error) {
             handleResetInput();
             console.error('login failed:', error);
