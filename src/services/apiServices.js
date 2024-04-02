@@ -2,11 +2,11 @@ import axios from "axios";
 
 const apiUrl = 'http://localhost:2000';
 // Membuat instance axios dengan konfigurasi tertentu
-const apiService = axios.create({
+export const apiService = axios.create({
   baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem('user')}`,
+    "Authorization": `Bearer ${localStorage.getItem('user')}`,
   },
 });
 

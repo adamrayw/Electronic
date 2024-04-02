@@ -14,7 +14,8 @@ const Card = () => {
   const fetchData = async () => {
     try {
       const allProductsData = await allProducts();
-      setProducts(allProductsData);
+      setProducts(allProductsData.data);
+      console.log(allProductsData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
