@@ -10,6 +10,7 @@ import ResetPasswordPages from "./pages/ResetPasswordPages";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage";
 import { ToastContainer } from "react-toastify";
 import CheckoutPage from "./pages/checkout-pages/CheckoutPage";
+import SearchProductPages from "./pages/search-product-pages/SearchProductPages";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/search-product" element={<SearchProductPages />} />
 
         {/* must login first to access */}
         <Route element={<ProtectRoutes />}>
