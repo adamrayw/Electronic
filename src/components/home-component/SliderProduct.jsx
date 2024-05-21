@@ -1,0 +1,82 @@
+import { useEffect, useState } from 'react';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { allProducts } from '../../services/apiServices';
+
+const SliderProduct = () => {
+    const [products, setProducts] = useState([]);
+
+    const fetchData = async () => {
+        try {
+            const response = await allProducts();
+            setProducts(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        initialSlide: 0,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    };
+
+    return (
+        <div className='my-14'>
+            <p className='text-lg font-bold'>Produk Untuk Kamu</p>
+            <div className='bg-slate-600 py-5 px-6 rounded-md'>
+                <Slider {...settings}>
+                    {products.map((product) => (
+                        <div key={product.id} className='border bg-white border-gray-600 rounded overflow-hidden'>
+                            <div>
+                                <img className='related-img' src={product.img} alt={product.namaBarang} />
+                            </div>
+                            <div className='p-1'>
+                                <p className='font-bold'>{product.namaBarang}</p>
+                                <p className='font-semibold'>{product.deskripsiBarang}</p>
+                                <p className='text-slate-600'>Rp {product.hargaBarang - product.hargaBarang * 10 / 100}</p>
+                                <p className='text-sm'><span className='text-red-500'>10%</span> <span className='line-through text-slate-400'>Rp {product.hargaBarang}</span></p>
+                            </div>
+                        </div>
+                    ))}
+                </Slider>
+            </div>
+        </div>
+    );
+}
+
+export default SliderProduct;

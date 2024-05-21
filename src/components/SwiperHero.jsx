@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState, useEffect } from 'react';
-import { allProducts } from '../data/Item';
+import { allProducts } from '../services/apiServices';
 
 // Import Swiper styles
 import 'swiper/css';
