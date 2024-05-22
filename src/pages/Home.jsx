@@ -1,12 +1,16 @@
 import React from "react";
-import Card from "../components/Card";
 import SwiperHero from "../components/SwiperHero";
+import SliderProduct from "../components/home-component/SliderProduct";
+import SliderFlashSale from "../components/home-component/SliderFlashSale";
 
 const Home = () => {
   return (
     <>
       <SwiperHero />
-      <Card />
+      <div className="container px-3 mx-auto">
+        <SliderProduct />
+        <SliderFlashSale />
+      </div>
     </>
   );
 };

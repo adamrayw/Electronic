@@ -10,6 +10,15 @@ export const apiService = axios.create({
   },
 });
 
+export const allProducts = async () => {
+  try {
+    const response = await apiService.get(`/products`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export const register = async (newUser) => {
   try {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dropdown } from "flowbite-react";
-import { allProducts } from '../../data/Item';
+import { allProducts } from '../../services/apiServices';
 import { useState, useEffect } from 'react';
 
 const SearchProduct = () => {

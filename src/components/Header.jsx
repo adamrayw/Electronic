@@ -12,7 +12,6 @@ const Header = () => {
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [login, setLogin] = useState(false);
-  const [profileClicked, setProfileClicked] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -48,10 +47,6 @@ const Header = () => {
     setSearchValue(inputValue);
     dispatch(setSearchInput(inputValue)); // Dispatch setSearchInput action
   };
-
-  const handleProfileClick = () => {
-    setProfileClicked(!profileClicked);
-  }
 
 
 
@@ -89,18 +84,17 @@ const Header = () => {
               <BsCart4 size={25} />
             </a>
             {login ? (
-              <div className="relative profile" onClick={handleProfileClick}>
-                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""
-                  className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer" />
-                <div className={`${profileClicked ? 'absolute' : 'hidden'} rounded border-2 border-slate-400 bg-white mt-1 p-2 w-32`} >
-                  <div className="mb-3">
-                    <p className="transform-text-profile">halo user</p>
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                   </div>
-                  <div className="mb-3">
-                    <Link className="transform-text-profile">edit profile</Link>
-                  </div>
-                  <Logout />
                 </div>
+                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                  <li><a>Profile</a></li>
+                  <li><a>Settings</a></li>
+                  <li><Logout /></li>
+                </ul>
               </div>
 
             ) : (
@@ -123,21 +117,17 @@ const Header = () => {
 
           <div className="md:hidden flex items-center">
             {isMobile && login && (
-              <div className="relative profile me-2" onClick={handleProfileClick}>
-                <img
-                  src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt=""
-                  className="object-cover h-12 w-12 border-2 border-gray-400 rounded-full cursor-pointer"
-                />
-                <div className={`${profileClicked ? 'absolute' : 'hidden'} border-2 border-slate-400 bg-white mt-1 p-2 w-32`}>
-                  <div className="mb-3">
-                    <p className="transform-text-profile">halo user</p>
+              <div className="dropdown dropdown-end me-2">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                   </div>
-                  <div className="mb-3">
-                    <Link className="transform-text-profile">edit profile</Link>
-                  </div>
-                  <Logout />
                 </div>
+                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                  <li><a>Profile</a></li>
+                  <li><a>Settings</a></li>
+                  <li><Logout /></li>
+                </ul>
               </div>
             )}
             <button
