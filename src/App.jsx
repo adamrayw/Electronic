@@ -24,7 +24,7 @@ function App() {
 
         {/* must login first to access */}
         <Route element={<ProtectRoutes />}>
-          <Route path="/detail" element={<DetailProductPage />} />
+          <Route path="/detail/:id" element={<DetailProductPage />} />
           <Route path="/checkout-barang" element={<CheckoutPage />} />
         </Route>
 

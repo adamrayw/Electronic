@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { allProducts } from '../../services/apiServices';
+import { Link } from 'react-router-dom';
 
 const SliderProduct = () => {
     const [products, setProducts] = useState([]);
@@ -61,7 +62,7 @@ const SliderProduct = () => {
             <div className='bg-slate-600 py-5 px-6 rounded-md'>
                 <Slider {...settings}>
                     {products.map((product) => (
-                        <div key={product.id} className='border bg-white border-gray-600 rounded overflow-hidden'>
+                        <Link to={`/detail/${product.id}`} key={product.id} className='border bg-white border-gray-600 rounded overflow-hidden'>
                             <div>
                                 <img className='related-img' src={product.img} alt={product.namaBarang} />
                             </div>
@@ -71,7 +72,7 @@ const SliderProduct = () => {
                                 <p className='text-slate-600'>Rp {product.hargaBarang - product.hargaBarang * product.diskon / 100}</p>
                                 <p className='text-sm'><span className='text-red-500'>{product.diskon}%</span> <span className='line-through text-slate-400'>Rp {product.hargaBarang}</span></p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </Slider>
             </div>

@@ -1,16 +1,35 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useParams } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 import RelatedProduct from './RelatedProduct';
 import CheckoutFooter from './CheckoutFooter';
+import { getDetailProduct } from '../../services/apiServices';
 
 const DetailProduct = () => {
-
+    const { id } = useParams();
+    const [detailProduct, SetDetailProduct] = useState(null);
     const [zoomStyle, setZoomStyle] = useState({ transform: 'scale(1)' });
     const imgRef = useRef(null);
     const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await getDetailProduct(id)
+                console.log(response);
+                SetDetailProduct(response.data.data)
+            } catch (error) {
+                console.error("error fetching detail product", error)
+            }
+        }
+
+        fetchProduct();
+    }, [id])
+
+
 
     const toggleFavorite = () => {
         setIsFavorite(!isFavorite);
@@ -34,6 +53,10 @@ const DetailProduct = () => {
         setZoomStyle({ transform: 'scale(1)' });
     };
 
+    if (!detailProduct) {
+        return <div>Loading...</div>; // or a placeholder UI
+    }
+
     return (
         <>
             <div className="container mx-auto max-w-[73rem] mt-[6rem] pb-20 overflow-hidden">
@@ -42,13 +65,12 @@ const DetailProduct = () => {
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
                         ref={imgRef}>
-                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="gambar product"
+                        <img src={detailProduct.img}
                             className='object-cover lg:h-60 w-full cursor-zoom-in'
                             style={zoomStyle} />
                     </div>
                     <div className="detail-spec w-full col-span-2">
-                        <h2 className='font-bold'>Mouse Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, possimus veritatis?</h2>
+                        <h2 className='font-bold'>{detailProduct.namaBarang}</h2>
                         <p className='text-slate-500'>bababoey</p>
                         <p>Terjual 200+</p>
                         <p className='mt-3 border-t-2 text-slate-700 font-bold text-2xl mb-2'>Rp. 500.000</p>

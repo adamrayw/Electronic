@@ -19,6 +19,15 @@ export const allProducts = async () => {
   }
 };
 
+export const getDetailProduct = async (id) => {
+  try {
+    const response = await apiService.get(`/products/${id}`)
+    return response
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 export const register = async (newUser) => {
   try {
