@@ -59,7 +59,7 @@ const DetailProduct = () => {
 
     return (
         <>
-            <div className="container mx-auto max-w-[73rem] mt-[6rem] pb-20 overflow-hidden">
+            <div className="container mx-auto px-5 mt-[6rem] pb-20 overflow-hidden">
                 <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60 w-full"
                         onMouseMove={handleMouseMove}
@@ -70,25 +70,24 @@ const DetailProduct = () => {
                             style={zoomStyle} />
                     </div>
                     <div className="detail-spec w-full col-span-2">
-                        <h2 className='font-bold'>{detailProduct.namaBarang}</h2>
-                        <p className='text-slate-500'>bababoey</p>
+                        <h2 className='font-bold text-2xl'>{detailProduct.namaBarang}</h2>
+                        <p className='text-slate-500'>{detailProduct.kategori}</p>
                         <p>Terjual 200+</p>
-                        <p className='mt-3 border-t-2 text-slate-700 font-bold text-2xl mb-2'>Rp. 500.000</p>
-                        <p><span className='line-through mr-2 font-semibold'>Rp. 1.000.000</span>
-                            <span className='p-1 bg-sky-300 rounded-sm text-sky-700 font-semibold'>diskon 50%</span></p>
+                        <p className='mt-3 border-t-2 text-slate-700 font-bold text-2xl mb-2'>Rp{detailProduct.hargaBarang * detailProduct.diskon / 100}</p>
+                        <p><span className='line-through mr-2 font-semibold'>Rp{detailProduct.hargaBarang}</span>
+                            <span className='p-1 bg-sky-300 rounded-sm text-sky-700 font-semibold'>diskon {detailProduct.diskon}%</span></p>
                         <p className='mt-3 border-t-2 mb-2'><span className='border-solid border-b-2 border-slate-700 text-slate-700 font-semibold'>Spesifikasi</span></p>
                         <p className='font-bold'>UMUM</p>
-                        <p className='text-slate-500'>Size: </p>
-                        <p className='text-slate-500'>Color:</p>
-                        <p className='text-slate-500'>Berat: </p>
-                        <p className='text-slate-500'>Features: </p>
-                        <p className='text-slate-500'>Capacity: </p>
-                        <p className='text-slate-500'>Power Consumption: </p>
-                        <p className='text-slate-500'>Voltase: </p>
+                        <p className='text-slate-500'>Size: {detailProduct.size}</p>
+                        <p className='text-slate-500'>Color: {detailProduct.color}</p>
+                        <p className='text-slate-500'>Berat: {detailProduct.berat}</p>
+                        <p className='text-slate-500'>Features: {detailProduct.features}</p>
+                        <p className='text-slate-500'>Capacity: {detailProduct.capacity}</p>
+                        <p className='text-slate-500'>Power Consumption: {detailProduct.powerConsumption}</p>
                         <p className='font-bold mt-2'>DIMENSI</p>
-                        <p className='text-slate-500'>29.4cm X 84.8cm X 20.4cm</p>
+                        <p className='text-slate-500'>{detailProduct.dimensi}</p>
                         <p className='font-bold mt-2'>BERAT</p>
-                        <p className='text-slate-500'>10000 gr</p>
+                        <p className='text-slate-500'>{detailProduct.berat}</p>
                     </div>
                     <div className="detail-cart justify-self-center w-full">
                         <div className='p-5 rounded border-solid border-2 border-slate-600'>
@@ -104,8 +103,12 @@ const DetailProduct = () => {
                         </div>
                     </div>
                 </div>
+                <div className='my-10'>
+                    <p className='font-bold'>Deskripsi Barang:</p>
+                    <p>{detailProduct.deskripsiBarang}</p>
+                </div>
                 <div className='font-bold mb-2'>Produk Terkait</div>
-                <RelatedProduct />
+                <RelatedProduct category={detailProduct.kategori} />
                 <div className='lg:hidden md:static mt-5'>
                     <CheckoutFooter toggleFavorite={toggleFavorite} isFavorite={isFavorite} />
                 </div>
