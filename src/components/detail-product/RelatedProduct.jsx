@@ -1,11 +1,29 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { allProducts } from '../../services/apiServices';
+import { Link } from 'react-router-dom';
 
+const RelatedProduct = ({ category }) => {
+    const [products, setProducts] = useState([]);
 
-const RelatedProduct = () => {
-    let settings = {
+    const fetchData = async () => {
+        try {
+            const response = await allProducts();
+            const filteredProducts = response.data.filter(product => product.kategori === category);
+            setProducts(filteredProducts);
+            console.log(filteredProducts);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [category]);
+
+    const settings = {
         dots: false,
         infinite: false,
         speed: 500,
@@ -38,89 +56,29 @@ const RelatedProduct = () => {
             }
         ]
     };
+
     return (
-        <div>
-            <Slider {...settings}>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1504707748692-419802cf939d?auto=format&fit=crop&q=80&w=2047&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1588815158313-b7f7f90c1c2e?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&q=80&w=1770&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=1765&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-                <div className='border border-gray-600 rounded overflow-hidden'>
-                    <div>
-                        <img className='related-img' src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=1767&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="related-product" />
-                    </div>
-                    <div className='p-1'>
-                        <p>Nama barang Lorem, ipsum dolor.</p>
-                        <p>tipe barang</p>
-                        <p>harga Rp000000</p>
-                        <p>diskon</p>
-                    </div>
-                </div>
-            </Slider>
+        <div className='my-14'>
+            <p className='text-lg font-bold'>Produk Sesuai Kategori</p>
+            <div className='bg-slate-500 py-5 px-6 rounded-md'>
+                <Slider {...settings}>
+                    {products.map((product) => (
+                        <Link to={`/detail/${product.id}`} key={product.id} className='border bg-white border-gray-600 rounded overflow-hidden'>
+                            <div>
+                                <img className='related-img' src={product.img} alt={product.namaBarang} />
+                            </div>
+                            <div className='p-1'>
+                                <p className='font-bold'>{product.namaBarang}</p>
+                                <p className='font-semibold'>{product.deskripsiBarang}</p>
+                                <p className='text-slate-600'>Rp {product.hargaBarang - product.hargaBarang * product.diskon / 100}</p>
+                                <p className='text-sm'><span className='text-red-500'>{product.diskon}%</span> <span className='line-through text-slate-400'>Rp {product.hargaBarang}</span></p>
+                            </div>
+                        </Link>
+                    ))}
+                </Slider>
+            </div>
         </div>
-    )
+    );
 }
 
-export default RelatedProduct
+export default RelatedProduct;

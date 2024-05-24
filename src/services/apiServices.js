@@ -19,6 +19,24 @@ export const allProducts = async () => {
   }
 };
 
+export const getDetailProduct = async (id) => {
+  try {
+    const response = await apiService.get(`/products/${id}`)
+    return response
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const addOneCartProduct = async (data) => {
+  try {
+    const response = await apiService.post(`/addToCart`, data)
+    return response
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 export const register = async (newUser) => {
   try {
@@ -42,6 +60,7 @@ export const login = async (user) => {
 
 export const handleLogout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("userid");
   window.location.href = "/";
 };
 export const forgotPassword = async (email) => {
