@@ -6,7 +6,7 @@ import { MdFavorite } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 import RelatedProduct from './RelatedProduct';
 import CheckoutFooter from './CheckoutFooter';
-import { getDetailProduct } from '../../services/apiServices';
+import { addOneCartProduct, getDetailProduct } from '../../services/apiServices';
 
 const DetailProduct = () => {
     const { id } = useParams();
@@ -53,6 +53,17 @@ const DetailProduct = () => {
         setZoomStyle({ transform: 'scale(1)' });
     };
 
+    const handleAddToCart = async () => {
+        try {
+            const userId = localStorage.getItem('userid');
+            const productId = detailProduct.id;
+            const response = await addOneCartProduct({ userId, productId });
+            console.log(response);
+        } catch (error) {
+            console.error("error fetching addOneCartProduct api", error)
+        }
+    }
+
     if (!detailProduct) {
         return <div>Loading...</div>; // or a placeholder UI
     }
@@ -91,7 +102,8 @@ const DetailProduct = () => {
                     </div>
                     <div className="detail-cart justify-self-center w-full">
                         <div className='p-5 rounded border-solid border-2 border-slate-600'>
-                            <button className='text-slate-700 flex justify-center items-center my-auto w-full mb-2 border-solid border-2 border-slate-600 p-1 rounded'>
+                            <button onClick={handleAddToCart}
+                                className='text-slate-700 flex justify-center items-center my-auto w-full mb-2 border-solid border-2 border-slate-600 p-1 rounded'>
                                 <BsCart4 className='me-2' />
                                 Keranjang
                             </button>
