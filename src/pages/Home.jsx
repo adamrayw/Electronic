@@ -2,6 +2,7 @@ import React from "react";
 import SwiperHero from "../components/SwiperHero";
 import SliderProduct from "../components/home-component/SliderProduct";
 import SliderFlashSale from "../components/home-component/SliderFlashSale";
+import Checkout from "../components/Checkout";
 
 const Home = () => {
   return (

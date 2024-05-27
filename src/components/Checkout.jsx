@@ -1,85 +1,50 @@
-// src/components/Checkout.jsx
-import { useSelector, useDispatch } from "react-redux";
-import { BiX } from "react-icons/bi";
+import { useEffect, useState } from 'react';
+import { getOneCart } from '../services/apiServices';
+import { BsCart4 } from "react-icons/bs";
 
-import { addOneQuantity, deleteOneQuantity, deleteOneProduct, updateQuantity } from "../features/CartSlice";
-import ProductCheckout from "./ProductCheckout";
+const Checkout = () => {
+  const [carts, setCarts] = useState([]);
+  const userid = localStorage.getItem('userid');
 
-const Checkout = ({ isCheckedOut }) => {
-  const { cartItems } = useSelector((store) => store.cart);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchCarts = async () => {
+      try {
+        const response = await getOneCart();
+        console.log(response);
+        setCarts(response.data.cart);
+      } catch (error) {
+        console.error('error fetching data', error);
+      }
+    };
 
-  const handleAddOneQuantity = (item) => {
-    dispatch(addOneQuantity(item));
-  };
+    fetchCarts();
+  }, []);
 
-  const handleDeleteOneQuantity = (item) => {
-    dispatch(deleteOneQuantity(item));
-  };
-  const handleDeleteOneItem = (item) => {
-    dispatch(deleteOneProduct(item));
-  };
-
-  // const handleUpdateCartItem = (item, quantity) => {
-  //   dispatch(updateCartItem({ id: item.id, quantity }));
-  // };
-
-  const handleUpdateQuantity = (item, newQuantity) => {
-    if (newQuantity >= 0) {
-      dispatch(updateQuantity({ id: item.id, quantity: newQuantity }));
-    }
-  };
-
-  const calculateTotalPrice = () => {
-    const checkedItems = cartItems.filter(item => item.checked === true);
-    return checkedItems.reduce((total, item) => {
-      return total + item.hargaBarang * item.quantity;
-    }, 0);
-  };
-
-  const checkoutClassName = isCheckedOut ? "right-0 inline-block" : "hidden";
-
-  console.log(cartItems);
-
-  const closeModal = () => {
-    isCheckedOut()
-  }
+  // Filter carts berdasarkan userId
+  const userCarts = carts.filter(cart => cart.userId === userid);
+  console.log(userCarts);
 
   return (
-    <div
-      className={`sectionCheckout overflow-scroll absolute top-full ${checkoutClassName} h-[500px] lg:w-1/2 md:w-full sm:w-full bg-slate-600 transition-right duration-500 ease-in-out`}
-    >
-      <div className="lg:hidden md:hidden sm:block absolute right-0" onClick={closeModal}>
-        <BiX size={40} />
-      </div>
-      <div className="container mx-auto p-5 h-full mt-5">
-        {cartItems.length === 0 ? (
-          <div className="h-[50%] flex justify-center items-end">
-            <p className="text-center text-white font-bold text-xl">Cart masih kosong</p>
-          </div>
-        ) : (
-          <>
-            {cartItems.map((item) => (
-              <ProductCheckout
-                key={item.id}
-                item={item}
-                handleAddOneQuantity={() => handleAddOneQuantity(item)}
-                handleDeleteOneQuantity={() => handleDeleteOneQuantity(item)}
-                handleDeleteOneItem={() => handleDeleteOneItem(item)}
-                handleUpdateQuantity={handleUpdateQuantity}
-              />
-            ))}
-            <div className="totalharga pb-5 flex flex-col items-end text-white">
-              <div className="text-center">
-                <h3 className="font-bold">Total Harga</h3>
-                <p className="my-2">Rp {calculateTotalPrice().toLocaleString()}</p>
-                <button className="px-3 py-2 text-black bg-white rounded">
-                  Checkout
-                </button>
-              </div>
+    <div>
+      <div className="drawer drawer-end z-20">
+        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content">
+          {/* Page content here */}
+          <label htmlFor="my-drawer-4" className="drawer-button"><BsCart4 size={30} /></label>
+        </div>
+        <div className="drawer-side">
+          <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
+          {userCarts.map((carts) => (
+            <div className=''>
+              <ul key={carts.id} className="menu p-4 w-80 min-h-full bg-slate-300 text-slate-800">
+                {/* Sidebar content here */}
+                <li>{carts.product.namaBarang}</li>
+                <li>{carts.product.hargaBarang}</li>
+              </ul>
             </div>
-          </>
-        )}
+          ))
+          }
+        </div>
       </div>
     </div>
   );

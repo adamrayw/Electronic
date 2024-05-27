@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { allProducts } from '../../services/apiServices';
 import { Link } from 'react-router-dom';
+import { formatter } from '../../utils/formatIDR';
 
 const SliderFlashSale = () => {
     const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ const SliderFlashSale = () => {
         try {
             const response = await allProducts();
             setProducts(response.data);
-            console.log(response.data);
+            console.log(response);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -69,8 +70,8 @@ const SliderFlashSale = () => {
                             <div className='p-1'>
                                 <p className='font-bold'>{product.namaBarang}</p>
                                 <p className='font-semibold'>{product.deskripsiBarang}</p>
-                                <p className='text-slate-600'>Rp {product.hargaBarang - product.hargaBarang * product.diskon / 100}</p>
-                                <p className='text-sm'><span className='text-red-500'>{product.diskon}%</span> <span className='line-through text-slate-400'>Rp {product.hargaBarang}</span></p>
+                                <p className='text-slate-600'>{formatter.format(product.hargaBarang - product.hargaBarang * product.diskon / 100)}</p>
+                                <p className='text-sm'><span className='text-red-500'>{product.diskon}%</span> <span className='line-through text-slate-400'>Rp {formatter.format(product.hargaBarang)}</span></p>
                             </div>
                         </Link>
                     ))}
