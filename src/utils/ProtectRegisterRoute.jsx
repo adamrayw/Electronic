@@ -27,6 +27,7 @@ export const ProtectRoutes = () => {
                 // Token has expired
                 console.log('Token expired');
                 localStorage.removeItem('user');
+                localStorage.removeItem('userid');
                 return <Navigate to='/login' />
             }
         } else {

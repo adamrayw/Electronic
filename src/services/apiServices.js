@@ -37,6 +37,15 @@ export const addOneCartProduct = async (data) => {
   }
 }
 
+export const getOneCart = async () => {
+  try {
+    const response = await apiService.get(`/getcarts`)
+    return response
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 export const register = async (newUser) => {
   try {
