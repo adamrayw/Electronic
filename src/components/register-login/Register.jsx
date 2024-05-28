@@ -50,7 +50,7 @@ const Register = () => {
     return (
         <>
             <ToastContainer />
-            <div className="container grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 h-screen items-center w-full mx-auto mt-10">
+            <div className="container grid px-1 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 h-screen items-center w-full mx-auto mt-16">
                 <div className='mx-auto'>
                     <div className='p-8 flex justify-center items-center rounded-lg bg-slate-600 text-center'>
                         <p className='text-6xl text-white font-bold my-auto'>Electronic</p>
@@ -59,7 +59,7 @@ const Register = () => {
                 <form className='w-full border-2 rounded-xl border-slate-600 mx-auto p-5 shadow-2xl' onSubmit={handleRegister}>
                     <div className='text-center mb-3'>
                         <p className='font-bold text-2xl'>Daftar Sekarang</p>
-                        <p>sudah punya akun? <Link className='text-blue-500 font-semibold' to='/login'>masuk</Link></p>
+                        <p>sudah punya akun? <Link className='text-blue-500 font-semibold' to='/login'>Login</Link></p>
                     </div>
                     <div className='mb-2'>
                         <label htmlFor='email' className='block font-semibold'>Email</label>

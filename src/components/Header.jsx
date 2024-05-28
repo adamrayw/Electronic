@@ -3,6 +3,7 @@ import Checkout from "./Checkout";
 import { Link } from "react-router-dom";
 import Logout from "./register-login/Logout";
 import { BsCart4 } from "react-icons/bs";
+import { IoHomeOutline } from "react-icons/io5";
 
 const Header = () => {
   const [login, setLogin] = useState(false);
@@ -19,23 +20,20 @@ const Header = () => {
   return (
     <header>
       <nav className="z-50 fixed top-0 bg-slate-600 w-full p-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mx-auto flex justify-between">
           <div className="flex items-center">
-            <div className="text-white font-bold text-2xl">Electronic</div>
+            <Link to='/' className="text-white logo-header font-bold text-2xl hidden lg:inline-block me-1">Electronic</Link>
           </div>
-          <div className="form-control">
+          <div className="form-control mx-1 w-full">
             <input type="text" placeholder="Search" className="input input-bordered w-auto" />
           </div>
 
-          <div className="flex space-x-4">
-            <Link
-              to="/"
-              className="py-2 px-4 text-white hover:text-gray-200 text-xl font-bold"
-            >
-              Home
-            </Link>
-            <div className="text-white py-2 px-4 hover:text-gray-200 my-auto mx-2">
-              <BsCart4 size={30} />
+          <div className="flex">
+            <div className="text-white py-2 px-4 hover:text-gray-200 my-auto mx-1 flex">
+              <Link to='/'>
+                <IoHomeOutline size={25} className="me-4" />
+              </Link>
+              <BsCart4 size={25} />
             </div>
             {login ? (
               <div className="dropdown dropdown-end">
@@ -51,20 +49,14 @@ const Header = () => {
                 </ul>
               </div>
             ) : (
-              <Fragment>
+              <div className="flex gap-3">
                 <Link
                   to="/register"
                   className="bg-white my-auto p-2 font-semibold text-slate-600 rounded hover:text-slate-300 transition"
                 >
-                  Register
+                  Masuk
                 </Link>
-                <Link
-                  to="/login"
-                  className="bg-white my-auto p-2 font-semibold text-slate-600 rounded hover:text-slate-300 transition"
-                >
-                  Login
-                </Link>
-              </Fragment>
+              </div>
             )}
           </div>
         </div>
