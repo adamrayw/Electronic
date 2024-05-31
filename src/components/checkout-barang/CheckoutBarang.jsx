@@ -6,7 +6,7 @@ import { Table } from 'flowbite-react';
 const CheckoutBarang = () => {
     return (
         <div className='py-[100px] container mx-auto'>
-            <div className='alamat-checkout bg-slate-50 rounded p-5 mb-4'>
+            <div className='alamat-checkout bg-white rounded p-5 mb-4'>
                 <div className='flex mb-4'>
                     <IoLocationOutline size={25} />
                     <p className='font-bold'>Alamat Pengiriman</p>
@@ -16,7 +16,7 @@ const CheckoutBarang = () => {
                 </div>
             </div>
 
-            <div className='produk-checkout bg-slate-50 rounded mb-4'>
+            <div className='produk-checkout bg-white rounded mb-4'>
                 <div className='p-6'>
                     <p className='font-bold mb-3'>Produk Dipesan</p>
                     <div className='flex'>
@@ -64,7 +64,7 @@ const CheckoutBarang = () => {
                 </div>
             </div>
 
-            <div className='catatan-pelanggan bg-slate-50 rounded p-5 mb-4'>
+            <div className='catatan-pelanggan bg-white rounded p-5 mb-4'>
                 <div className='grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 mb-10'>
                     <div className='pesan mb-6'>
                         <form>
@@ -87,7 +87,7 @@ const CheckoutBarang = () => {
                 </div>
             </div>
 
-            <div className='metode-pembayaran p-5 rounded bg-slate-50'>
+            <div className='metode-pembayaran p-5 rounded bg-white'>
                 <div className='flex justify-between mb-7'>
                     <p className='font-semibold'>Metode Pembayaran</p>
                     <div className='flex'>
