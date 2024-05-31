@@ -75,7 +75,7 @@ const DetailProduct = () => {
 
     return (
         <>
-            <div className="container mx-auto px-5 mt-[6rem] pb-20 overflow-hidden">
+            <div className="container mx-auto px-5 pt-[6rem] pb-20 overflow-hidden">
                 <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60 w-full"
                         onMouseMove={handleMouseMove}
@@ -124,7 +124,6 @@ const DetailProduct = () => {
                     <p className='font-bold'>Deskripsi Barang:</p>
                     <p>{detailProduct.deskripsiBarang}</p>
                 </div>
-                <div className='font-bold mb-2'>Produk Terkait</div>
                 <RelatedProduct category={detailProduct.kategori} />
                 <div className='lg:hidden md:static mt-5'>
                     <CheckoutFooter toggleFavorite={toggleFavorite} isFavorite={isFavorite} />

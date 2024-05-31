@@ -33,7 +33,9 @@ const Header = () => {
               <Link to='/'>
                 <IoHomeOutline size={25} className="me-4" />
               </Link>
-              <BsCart4 size={25} />
+              <Link to='/cart'>
+                <BsCart4 size={25} />
+              </Link>
             </div>
             {login ? (
               <div className="dropdown dropdown-end">

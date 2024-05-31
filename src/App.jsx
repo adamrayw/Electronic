@@ -11,10 +11,11 @@ import UpdatePasswordPage from "./pages/UpdatePasswordPage";
 import { ToastContainer } from "react-toastify";
 import CheckoutPage from "./pages/checkout-pages/CheckoutPage";
 import SearchProductPages from "./pages/search-product-pages/SearchProductPages";
+import CartPages from "./pages/cart-pages/CartPages";
 
 function App() {
   return (
-    <>
+    <div className="bg-slate-100">
       <ToastContainer />
       <Header />
 
@@ -26,6 +27,7 @@ function App() {
         <Route element={<ProtectRoutes />}>
           <Route path="/detail/:id" element={<DetailProductPage />} />
           <Route path="/checkout-barang" element={<CheckoutPage />} />
+          <Route path="/cart" element={<CartPages />} />
         </Route>
 
         {/* if already login then cant access register and login again, must logout first */}
@@ -38,7 +40,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </>
+    </div>
   );
 }
 
