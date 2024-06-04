@@ -27,7 +27,7 @@ const Login = () => {
         try {
             const formData = { email, password };
             const response = await login(formData);
-            localStorage.setItem('user', response.data.token);
+            localStorage.setItem('token', response.data.token);
             localStorage.setItem('userid', response.data.checkUser.id);
             handleResetInput();
             console.log('login successful:', response);

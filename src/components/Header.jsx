@@ -9,7 +9,7 @@ const Header = () => {
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('token');
     if (user) {
       setLogin(true);
     } else {

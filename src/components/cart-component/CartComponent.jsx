@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const CartComponent = () => {
+    const [favorite, setFavorite] = useState(false)
+
+    const handlefavorite = () => {
+        setFavorite(!favorite)
+    }
     return (
         <div className='container mx-auto px-8'>
             <div className='py-[6rem]'>
@@ -38,7 +44,9 @@ const CartComponent = () => {
                                             <button class="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
                                         </div>
                                         <div className='gap-3 flex'>
-                                            <MdOutlineFavoriteBorder size={20} />
+                                            <button onClick={handlefavorite}>
+                                                {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
+                                            </button>
                                             <FaRegTrashAlt size={20} />
                                         </div>
                                     </div>

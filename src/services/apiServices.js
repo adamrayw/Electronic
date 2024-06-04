@@ -68,7 +68,7 @@ export const login = async (user) => {
 };
 
 export const handleLogout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("token");
   localStorage.removeItem("userid");
   window.location.href = "/";
 };
