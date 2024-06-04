@@ -2,7 +2,7 @@ import { jwtDecode } from 'jwt-decode';
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 
-const user = localStorage.getItem('user');
+const user = localStorage.getItem('token');
 
 export const ProtectRegisterRoute = () => {
     if (user) {
@@ -26,9 +26,9 @@ export const ProtectRoutes = () => {
             } else {
                 // Token has expired
                 console.log('Token expired');
-                localStorage.removeItem('user');
+                localStorage.removeItem('token');
                 localStorage.removeItem('userid');
-                return <Navigate to='/login' />
+                location.reload()
             }
         } else {
             // Token does not have an 'exp' claim

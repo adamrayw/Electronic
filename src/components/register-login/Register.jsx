@@ -27,7 +27,7 @@ const Register = () => {
         try {
             const formData = { email, password };
             const response = await register(formData);
-            localStorage.setItem('user', response.data.token);
+            localStorage.setItem('token', response.data.token);
             localStorage.setItem('userid', response.data.user.id);
             handleResetInput()
             console.log('Registration successful:', response);
