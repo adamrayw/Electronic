@@ -1,10 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { getOneCart } from '../../services/apiServices';
+import { formatter } from '../../utils/formatIDR';
 
 const CartComponent = () => {
     const [favorite, setFavorite] = useState(false)
+    const [products, setProducts] = useState([])
+
+    const userid = localStorage.getItem('userid')
+
+    const fetchData = async () => {
+        try {
+            const response = await getOneCart()
+            console.log(response);
+            const cartItems = response.data.cart;
+            const filteredCart = cartItems.filter(item => item.userId === userid);
+            setProducts(filteredCart);
+        } catch (error) {
+            console.error('error fetching data. ', error)
+        }
+    }
+
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
 
     const handlefavorite = () => {
         setFavorite(!favorite)
@@ -19,72 +42,42 @@ const CartComponent = () => {
                             <input type="checkbox" name="" id="" />
                             <p className='font-semibold'>Pilih Semua</p>
                         </div>
-                        <div className='flex flex-col gap-3 bg-white py-3 px-5 rounded-md my-4'>
-                            <div className='flex items-center gap-3'>
-                                <input type="checkbox" name="" id="" />
-                                <p className='font-semibold'>Toko Cihuy</p>
-                            </div>
-                            <div className='flex gap-3'>
-                                <input type="checkbox" name="" id="" />
-                                <div className=''>
-                                    <img className='max-w-[120px] rounded' src="src\assets\camera.jpg" alt="" />
+                        {products.map((item) => (
+                            <div key={item.id} className='flex flex-col gap-3 bg-white py-3 px-5 rounded-md my-4'>
+                                <div className='flex items-center gap-3'>
+                                    <input type="checkbox" name="" id="" />
+                                    <p className='font-semibold'>{item.product.namaBarang}</p>
                                 </div>
-                                <div className='flex flex-col w-full'>
-                                    <div className='flex flex-row-reverse justify-between w-full gap-3'>
-                                        <p>$99</p>
-                                        <p>camera Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, error.</p>
+                                <div className='flex gap-3'>
+                                    <input type="checkbox" name="" id="" />
+                                    <div className=''>
+                                        <img className='max-w-[120px] rounded' src={item.product.img} alt="" />
                                     </div>
-                                    <div className='flex flex-row-reverse my-3'>
-                                        <p className='line-through'>$80</p>
-                                    </div>
-                                    <div className='flex flex-row-reverse items-center gap-8'>
-                                        <div class="flex items-center rounded-md border-2 border-slate-500">
-                                            <button class="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
-                                            <input id="number-input" type="number" class="text-center w-16 border border-gray-300 py-2" />
-                                            <button class="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
+                                    <div className='flex flex-col w-full'>
+                                        <div className='flex flex-row-reverse justify-between w-full gap-3'>
+                                            <p>{formatter.format(item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100)}</p>
+                                            <p>{item.product.deskripsiBarang}</p>
                                         </div>
-                                        <div className='gap-3 flex'>
-                                            <button onClick={handlefavorite}>
-                                                {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
-                                            </button>
-                                            <FaRegTrashAlt size={20} />
+                                        <div className='flex flex-row-reverse my-3'>
+                                            <p className='line-through'>{formatter.format(item.product.hargaBarang)}</p>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='flex flex-col gap-3 bg-white py-3 px-5 rounded-md my-4'>
-                            <div className='flex items-center gap-3'>
-                                <input type="checkbox" name="" id="" />
-                                <p className='font-semibold'>Mafia Elektronik</p>
-                            </div>
-                            <div className='flex gap-3'>
-                                <input type="checkbox" name="" id="" />
-                                <div className=''>
-                                    <img className='max-w-[120px] rounded' src="src\assets\laptop.jpg" alt="" />
-                                </div>
-                                <div className='flex flex-col w-full'>
-                                    <div className='flex flex-row-reverse justify-between gap-3'>
-                                        <p>$99</p>
-                                        <p>laptop Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, error.</p>
-                                    </div>
-                                    <div className='flex flex-row-reverse my-3'>
-                                        <p className='line-through'>$80</p>
-                                    </div>
-                                    <div className='flex flex-row-reverse items-center gap-8'>
-                                        <div class="flex items-center rounded-md border-2 border-slate-500">
-                                            <button class="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
-                                            <input id="number-input" type="number" class="text-center w-16 border border-gray-300 py-2" />
-                                            <button class="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
-                                        </div>
-                                        <div className='gap-3 flex'>
-                                            <MdOutlineFavoriteBorder size={20} />
-                                            <FaRegTrashAlt size={20} />
+                                        <div className='flex flex-row-reverse items-center gap-8'>
+                                            <div className="flex items-center rounded-md border-2 border-slate-500">
+                                                <button className="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
+                                                <input id="number-input" type="number" className="text-center w-16 border border-gray-300 py-2" />
+                                                <button className="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
+                                            </div>
+                                            <div className='gap-3 flex'>
+                                                <button onClick={handlefavorite}>
+                                                    {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
+                                                </button>
+                                                <FaRegTrashAlt size={20} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                     <div className='kanan my-4'>
                         <div className='bg-white sticky top-[7rem] p-3 rounded-md'>
