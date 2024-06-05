@@ -45,6 +45,13 @@ const CartComponent = () => {
         ));
     }
 
+    const calculateTotal = () => {
+        return products.reduce((total, item) => {
+            const itemTotal = (item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity;
+            return total + itemTotal;
+        }, 0);
+    }
+
     return (
         <div className='container mx-auto px-8'>
             <div className='py-[6rem]'>
@@ -97,7 +104,7 @@ const CartComponent = () => {
                             <p className='font-semibold'>Ringkasan Belanja</p>
                             <div className='flex justify-between my-5'>
                                 <p className='text-slate-600 font-semibold'>Total</p>
-                                <p className=''>$900</p>
+                                <p className=''>{formatter.format(calculateTotal())}</p>
                             </div>
                             <div className='text-center'>
                                 <button className='text-white bg-slate-600 w-full py-1 rounded-md'>Beli</button>
