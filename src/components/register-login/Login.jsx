@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../../services/apiServices'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleResetInput = () => {
         setEmail('')
@@ -35,9 +36,12 @@ const Login = () => {
             // Display success toast
             toast.success('Login successful!', { autoClose: 2000 });
 
+            const redirectTo = localStorage.getItem('redirectAfterLogin') || '/';
+
             setTimeout(() => {
-                window.location.href = '/';
+                window.location.href = redirectTo;
             }, 2000);
+            localStorage.removeItem('redirectAfterLogin');
         } catch (error) {
             handleResetInput();
             console.error('login failed:', error);

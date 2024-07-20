@@ -1,9 +1,17 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 import { TiMessage } from "react-icons/ti";
 import { Table } from 'flowbite-react';
+import { getOneCart } from '../../services/apiServices';
 
 const CheckoutBarang = () => {
+    const [products, setProducts] = useState([])
+
+    const fetchData = async () => {
+        const response = await getOneCart();
+        console.log(response);
+    }
+
     return (
         <div className='py-[100px] container mx-auto'>
             <div className='alamat-checkout bg-white rounded p-5 mb-4'>
