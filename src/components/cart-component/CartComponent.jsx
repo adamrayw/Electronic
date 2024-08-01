@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { getOneCart } from '../../services/apiServices';
+import { getOneCart, incrementCartItemQuantity } from '../../services/apiServices';
 import { formatter } from '../../utils/formatIDR';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ const CartComponent = () => {
     const fetchData = async () => {
         try {
             const response = await getOneCart()
-            console.log(response);
+            console.log(`getonecart =`, response);
             const cartItems = response.data.cart;
             const filteredCart = cartItems.filter(item => item.userId === userid);
             setProducts(filteredCart);
@@ -35,11 +35,17 @@ const CartComponent = () => {
         setFavorite(!favorite)
     }
 
-    const handleIncrement = (id) => {
-        setProducts(products.map(product =>
-            product.id === id ? { ...product, quantity: product.quantity + 1 } : product
-        ));
-    }
+    const handleIncrement = async (id) => {
+        try {
+            await incrementCartItemQuantity(id);
+            // code dibawah dilakukan agar angka langsung berubah
+            setProducts(products.map(product =>
+                product.id === id ? { ...product, quantity: product.quantity + 1 } : product
+            ));
+        } catch (error) {
+            console.error('Error incrementing quantity', error);
+        }
+    };
 
     const handleDecrement = (id) => {
         setProducts(products.map(product =>

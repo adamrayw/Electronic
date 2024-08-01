@@ -19,6 +19,15 @@ export const allProducts = async () => {
   }
 };
 
+export const getProductCart = async () => {
+  try {
+    const response = await apiService.get(`/getcarts`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const getDetailProduct = async (id) => {
   try {
     const response = await apiService.get(`/products/${id}`)
@@ -46,6 +55,14 @@ export const getOneCart = async () => {
   }
 }
 
+export const incrementCartItemQuantity = async (id) => {
+  try {
+    const response = await apiService.patch(`/cart/increment/${id}`)
+    return response
+  } catch (error) {
+    throw error;
+  }
+}
 
 export const register = async (newUser) => {
   try {
@@ -102,3 +119,14 @@ export const updatePassword = async (token, password) => {
     throw error;
   }
 };
+
+export const searchProduct = async (product) => {
+  try {
+    const response = await apiService.get(`/products/search?query=${encodeURIComponent(product)}`)
+    console.log("res : " + response)
+    return response
+  } catch (error) {
+    console.error('failed get searched product', error)
+    throw error
+  }
+}
