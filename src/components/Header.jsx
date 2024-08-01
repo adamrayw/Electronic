@@ -1,12 +1,34 @@
 import { useState, useEffect, Fragment } from "react";
 import Checkout from "./Checkout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logout from "./register-login/Logout";
 import { BsCart4 } from "react-icons/bs";
 import { IoHomeOutline } from "react-icons/io5";
+import { getOneCart, getProductCart } from "../services/apiServices";
 
 const Header = () => {
   const [login, setLogin] = useState(false);
+  const [query, setQuery] = useState("");
+  const [product, setProduct] = useState([])
+
+
+  const navigate = useNavigate()
+
+  const fetchData = async () => {
+    try {
+      const response = await getProductCart();
+      console.log(`GET PRODUCT CART =`, response);
+      const userId = localStorage.getItem('userid');
+      if (userId && response.data.cart) {
+        // Filter the cart items based on the user ID
+        const userCart = response.data.cart.filter(item => item.userId === userId);
+        console.log(`User Cart:`, userCart);
+        setProduct(userCart);
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  }
 
   useEffect(() => {
     const user = localStorage.getItem('token');
@@ -15,7 +37,18 @@ const Header = () => {
     } else {
       setLogin(false);
     }
+
+    fetchData()
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search-product?query=${encodeURIComponent(query)}`)
+    }
+  }
+
+  const totalQuantity = product.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header>
@@ -25,16 +58,19 @@ const Header = () => {
             <Link to='/' className="text-white logo-header font-bold text-2xl hidden lg:inline-block me-1">Electronic</Link>
           </div>
           <div className="form-control mx-1 w-full">
-            <input type="text" placeholder="Search" className="input input-bordered w-auto" />
+            <form onSubmit={handleSearch}>
+              <input type="text" placeholder="Search" value={query} onChange={(e) => setQuery(e.target.value)} className="input input-bordered w-full" />
+            </form>
           </div>
 
           <div className="flex">
-            <div className="text-white py-2 px-4 hover:text-gray-200 my-auto mx-1 flex">
+            <div className="text-white py-2 px-4  my-auto mx-1 flex">
               <Link to='/'>
-                <IoHomeOutline size={25} className="me-4" />
+                <IoHomeOutline size={25} className="hover:text-gray-200 me-4 z-[100]" />
               </Link>
-              <Link to='/cart'>
-                <BsCart4 size={25} />
+              <Link className='relative' to='/cart'>
+                <BsCart4 size={25} className="hover:text-gray-200" />
+                <div className="absolute -top-2 -right-4 bg-red-700 text-white rounded-full px-2 ">{totalQuantity}</div>
               </Link>
             </div>
             {login ? (

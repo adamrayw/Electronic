@@ -35,9 +35,12 @@ const Login = () => {
             // Display success toast
             toast.success('Login successful!', { autoClose: 2000 });
 
+            const redirectTo = localStorage.getItem('redirectAfterLogin') || '/';
+
             setTimeout(() => {
-                window.location.href = '/';
+                window.location.href = redirectTo;
             }, 2000);
+            localStorage.removeItem('redirectAfterLogin');
         } catch (error) {
             handleResetInput();
             console.error('login failed:', error);
