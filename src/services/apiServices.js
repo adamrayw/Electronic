@@ -64,6 +64,15 @@ export const incrementCartItemQuantity = async (id) => {
   }
 }
 
+export const decrementCartItemQuantity = async (id) => {
+  try {
+    const response = await apiService.patch(`/cart/decrement/${id}`)
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const register = async (newUser) => {
   try {
     const response = await apiService.post("/register", newUser);
