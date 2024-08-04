@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { getOneCart, incrementCartItemQuantity } from '../../services/apiServices';
+import { decrementCartItemQuantity, getOneCart, incrementCartItemQuantity } from '../../services/apiServices';
 import { formatter } from '../../utils/formatIDR';
 import { Link } from 'react-router-dom';
 
@@ -47,10 +47,16 @@ const CartComponent = () => {
         }
     };
 
-    const handleDecrement = (id) => {
-        setProducts(products.map(product =>
-            product.id === id && product.quantity > 1 ? { ...product, quantity: product.quantity - 1 } : product
-        ));
+    const handleDecrement = async (id) => {
+        try {
+            await decrementCartItemQuantity(id);
+            // code dibawah dilakukan agar angka langsung berubah
+            setProducts(products.map(product =>
+                product.id === id ? { ...product, quantity: product.quantity - 1 } : product
+            ));
+        } catch (error) {
+            console.error('Error incrementing quantity', error);
+        }
     }
 
     const handleQuantityChange = (id, newQuantity) => {

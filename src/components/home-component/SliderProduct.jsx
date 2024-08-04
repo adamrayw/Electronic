@@ -5,12 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { allProducts } from '../../services/apiServices';
 import { Link } from 'react-router-dom';
 import { formatter } from '../../utils/formatIDR';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 const SliderProduct = () => {
     const [products, setProducts] = useState([]);
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const fetchData = async () => {
         try {

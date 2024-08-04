@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { searchProduct } from '../../services/apiServices';
 
 const SearchProduct = () => {
@@ -7,7 +7,7 @@ const SearchProduct = () => {
     const [jenisBarang, setJenisBarang] = useState(false);
     const [jenisToko, setJenisToko] = useState(false);
     const [jenisHarga, setJenisHarga] = useState(false);
-    const [nullProduct, setNullProduct] = useState([])
+    const [nullProduct, setNullProduct] = useState('')
     const location = useLocation();
     const query = new URLSearchParams(location.search).get('query');
 
@@ -18,7 +18,7 @@ const SearchProduct = () => {
             try {
                 const productData = await searchProduct(query);
                 setProducts(productData.data);
-                setNullProduct(productData.data.message);
+                setNullProduct(query)
                 console.log(productData);
             } catch (error) {
                 console.error("Error fetching data", error);
@@ -30,7 +30,7 @@ const SearchProduct = () => {
         }
 
         if (!query) {
-            setNullProduct("lu ga input nama produknya kocak")
+            setNullProduct("tolong input nama produk")
         }
     }, [query]);
 
@@ -112,7 +112,7 @@ const SearchProduct = () => {
                     <div className='container grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4'>
                         {products.length > 0 ? (
                             products.map((item) => (
-                                <div className="card-search-product mb-4 rounded" key={item.id}>
+                                <Link to={`/detail/${item.id}`} className="card-search-product mb-4 rounded" key={item.id}>
                                     <div>
                                         <img src={item.img} alt={item.namaBarang} className='w-full sm:h-[250px] lg:h-[140px] md:h-[150px] object-cover rounded' />
                                     </div>
@@ -121,11 +121,14 @@ const SearchProduct = () => {
                                         <p className='text-slate-600 font-semibold text-sm'>{item.deskripsiBarang}</p>
                                         <p>Rp. {Number(item.hargaBarang).toLocaleString('id-ID')}</p>
                                     </div>
-                                </div>
+                                </Link>
                             ))
                         ) : (
                             <div className='col-span-4'>
-                                <p>{nullProduct}</p>
+                                {query ?
+                                    (<p>tidak ditemukan produk bernama <span className='font-semibold'>{nullProduct}</span></p>) :
+                                    (<p className='font-semibold'>{nullProduct}</p>)
+                                }
                             </div>
                         )}
                     </div>
