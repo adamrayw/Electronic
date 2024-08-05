@@ -1,92 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { MdOutlineFavorite } from "react-icons/md";
+import React, { useContext, useState, useEffect } from 'react';
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { decrementCartItemQuantity, getOneCart, incrementCartItemQuantity } from '../../services/apiServices';
+import { CartContext } from "../../utils/CartContext";
 import { formatter } from '../../utils/formatIDR';
 import { Link } from 'react-router-dom';
 
 const CartComponent = () => {
-    const [favorite, setFavorite] = useState(false)
-    const [products, setProducts] = useState([])
-    const [checked, setChecked] = useState(false)
-    const [checkAllProduct, setCheckAllProduct] = useState(false)
-    const [checkOneProduct, setCheckOneProduct] = useState(false)
+    const {
+        products,
+        favorite,
+        handleFavorite,
+        handleIncrement,
+        handleDecrement,
+        handleDelete,
+        handleQuantityChange,
+        calculateTotal
+    } = useContext(CartContext);
 
-    const userid = localStorage.getItem('userid')
-
-    const fetchData = async () => {
-        try {
-            const response = await getOneCart()
-            console.log(`getonecart =`, response);
-            const cartItems = response.data.cart;
-            const filteredCart = cartItems.filter(item => item.userId === userid);
-            setProducts(filteredCart);
-        } catch (error) {
-            console.error('error fetching data. ', error)
-        }
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    const handleFavorite = () => {
-        setFavorite(!favorite)
-    }
-
-    const handleIncrement = async (id) => {
-        try {
-            await incrementCartItemQuantity(id);
-            // code dibawah dilakukan agar angka langsung berubah
-            setProducts(products.map(product =>
-                product.id === id ? { ...product, quantity: product.quantity + 1 } : product
-            ));
-        } catch (error) {
-            console.error('Error incrementing quantity', error);
-        }
-    };
-
-    const handleDecrement = async (id) => {
-        try {
-            await decrementCartItemQuantity(id);
-            // code dibawah dilakukan agar angka langsung berubah
-            setProducts(products.map(product =>
-                product.id === id ? { ...product, quantity: product.quantity - 1 } : product
-            ));
-        } catch (error) {
-            console.error('Error incrementing quantity', error);
-        }
-    }
-
-    const handleQuantityChange = (id, newQuantity) => {
-        setProducts(products.map(product =>
-            product.id === id ? { ...product, quantity: newQuantity } : product
-        ));
-    }
-
-
-    const calculateTotal = () => {
-        return products.reduce((total, item) => {
-            const itemTotal = (item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity;
-            return total + itemTotal;
-        }, 0);
-    }
+    const [checked, setChecked] = useState(false);
+    const [checkAllProduct, setCheckAllProduct] = useState(false);
 
     const handleChecked = () => {
-        setChecked(!checked)
-    }
-    console.log("isi checked", checked);
+        setChecked(!checked);
+    };
 
     const handleCheckedAll = () => {
-        setCheckAllProduct(!checkAllProduct)
-    }
-    console.log("isi checkall", checkAllProduct);
-
-    const handleCheckedOneProduct = () => {
-        setCheckOneProduct(!checkOneProduct)
-    }
-    console.log("isi checkAllProduct", checkAllProduct);
+        setCheckAllProduct(!checkAllProduct);
+    };
 
     return (
         <div className='container mx-auto px-8'>
@@ -95,17 +35,17 @@ const CartComponent = () => {
                 <div className='grid grid-cols-3 gap-5'>
                     <div className='kiri col-span-2'>
                         <div className='flex items-center gap-3 px-5 bg-white py-3 rounded-md my-4'>
-                            <input defaultChecked={checked} onChange={handleChecked} type="checkbox" name="" id="" />
+                            <input defaultChecked={checked} onChange={handleChecked} type="checkbox" />
                             <p className='font-semibold'>Pilih Semua</p>
                         </div>
                         {products.map((item) => (
                             <div key={item.id} className='flex flex-col gap-3 bg-white py-3 px-5 rounded-md my-4'>
                                 <div className='flex items-center gap-3'>
-                                    <input type="checkbox" name="" id="" defaultChecked={checkAllProduct} onChange={handleCheckedAll} />
+                                    <input type="checkbox" defaultChecked={checkAllProduct} onChange={handleCheckedAll} />
                                     <p className='font-semibold'>{item.product.user.username}</p>
                                 </div>
                                 <div className='flex gap-3'>
-                                    <input type="checkbox" name="" id="" />
+                                    <input type="checkbox" />
                                     <div className=''>
                                         <img className='max-w-[120px] rounded' src={item.product.img} alt="" />
                                     </div>
@@ -119,7 +59,7 @@ const CartComponent = () => {
                                         </div>
                                         <div className='flex flex-row-reverse items-center gap-8'>
                                             <div className="flex items-center rounded-md border-2 border-slate-500">
-                                                <button onClick={() => handleDecrement(item.id)} className="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
+                                                <button onClick={() => handleDecrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
                                                 <input
                                                     id="number-input"
                                                     type="number"
@@ -127,13 +67,13 @@ const CartComponent = () => {
                                                     className="text-center w-16 border border-gray-300 py-2"
                                                     onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
                                                 />
-                                                <button onClick={() => handleIncrement(item.id)} className="bg-gray-300 text-gray-700rounded-md hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
+                                                <button onClick={() => handleIncrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
                                             </div>
                                             <div className='gap-3 flex'>
                                                 <button onClick={handleFavorite}>
                                                     {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
                                                 </button>
-                                                <FaRegTrashAlt size={20} />
+                                                <FaRegTrashAlt size={20} onClick={() => handleDelete(item.id)} className='cursor-pointer' />
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +100,7 @@ const CartComponent = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CartComponent
+export default CartComponent;
