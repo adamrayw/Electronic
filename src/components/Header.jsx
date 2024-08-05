@@ -1,34 +1,17 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, useContext } from "react";
 import Checkout from "./Checkout";
 import { Link, useNavigate } from "react-router-dom";
 import Logout from "./register-login/Logout";
 import { BsCart4 } from "react-icons/bs";
 import { IoHomeOutline } from "react-icons/io5";
-import { getOneCart, getProductCart } from "../services/apiServices";
+import { CartContext } from "../utils/CartContext";
 
 const Header = () => {
   const [login, setLogin] = useState(false);
   const [query, setQuery] = useState("");
-  const [product, setProduct] = useState([])
-
+  const { totalQuantity } = useContext(CartContext);
 
   const navigate = useNavigate()
-
-  const fetchData = async () => {
-    try {
-      const response = await getProductCart();
-      console.log(`GET PRODUCT CART =`, response);
-      const userId = localStorage.getItem('userid');
-      if (userId && response.data.cart) {
-        // Filter the cart items based on the user ID
-        const userCart = response.data.cart.filter(item => item.userId === userId);
-        console.log(`User Cart:`, userCart);
-        setProduct(userCart);
-      }
-    } catch (error) {
-      console.error('Error fetching cart data:', error);
-    }
-  }
 
   useEffect(() => {
     const user = localStorage.getItem('token');
@@ -37,8 +20,6 @@ const Header = () => {
     } else {
       setLogin(false);
     }
-
-    fetchData()
   }, []);
 
   const handleSearch = (e) => {
@@ -47,8 +28,6 @@ const Header = () => {
       navigate(`/search-product?query=${encodeURIComponent(query)}`)
     }
   }
-
-  const totalQuantity = product.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header>

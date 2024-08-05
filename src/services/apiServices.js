@@ -73,6 +73,15 @@ export const decrementCartItemQuantity = async (id) => {
   }
 }
 
+export const deleteOneProduct = async (id) => {
+  try {
+    const response = await apiService.delete(`/cart/delete/${id}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const register = async (newUser) => {
   try {
     const response = await apiService.post("/register", newUser);

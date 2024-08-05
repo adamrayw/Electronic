@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import { useParams } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { MdFavoriteBorder } from "react-icons/md";
@@ -6,10 +6,11 @@ import { MdFavorite } from "react-icons/md";
 import { CiShare2 } from "react-icons/ci";
 import RelatedProduct from './RelatedProduct';
 import CheckoutFooter from './CheckoutFooter';
-import { addOneCartProduct, getDetailProduct } from '../../services/apiServices';
+import { getDetailProduct } from '../../services/apiServices';
 import { formatter } from '../../utils/formatIDR';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CartContext } from '../../utils/CartContext';
 
 const DetailProduct = () => {
     const { id } = useParams();
@@ -17,6 +18,7 @@ const DetailProduct = () => {
     const [zoomStyle, setZoomStyle] = useState({ transform: 'scale(1)' });
     const imgRef = useRef(null);
     const [isFavorite, setIsFavorite] = useState(false);
+    const { handleAddToCart } = useContext(CartContext);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -56,18 +58,15 @@ const DetailProduct = () => {
         setZoomStyle({ transform: 'scale(1)' });
     };
 
-    const handleAddToCart = async () => {
+    const handleAddToCartClick = async () => {
         try {
-            const userId = localStorage.getItem('userid');
-            const productId = detailProduct.id;
-            const response = await addOneCartProduct({ userId, productId });
-            console.log(response);
-            toast.success('berhasil ditambahkan', { autoClose: 2000 });
+            const message = await handleAddToCart(detailProduct);
+            toast.success(`${message}`, { autoClose: 2000 });
         } catch (error) {
-            console.error("error fetching addOneCartProduct api", error)
-            toast.error('gagalditambahkan', { autoClose: 2000 })
+            console.error("Error adding to cart", error);
+            toast.error('Failed to add to cart', { autoClose: 2000 });
         }
-    }
+    };
 
     if (!detailProduct) {
         return <div>Loading...</div>; // or a placeholder UI
@@ -107,7 +106,7 @@ const DetailProduct = () => {
                     </div>
                     <div className="detail-cart justify-self-center w-full">
                         <div className='p-5 rounded border-solid border-2 border-slate-600'>
-                            <button onClick={handleAddToCart}
+                            <button onClick={handleAddToCartClick}
                                 className='text-slate-700 flex justify-center items-center my-auto w-full mb-2 border-solid border-2 border-slate-600 p-1 rounded'>
                                 <BsCart4 className='me-2' />
                                 Keranjang
