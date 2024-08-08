@@ -86,7 +86,7 @@ export const CartProvider = ({ children }) => {
             const userId = localStorage.getItem('userid');
             const productId = detailProduct.id;
             const response = await addOneCartProduct({ userId, productId });
-            console.log(response);
+            console.log("handleAddToCart", response);
             fetchData();
             return response.data.message;
         } catch (error) {

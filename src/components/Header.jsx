@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import Checkout from "./Checkout";
 import { Link, useNavigate } from "react-router-dom";
 import Logout from "./register-login/Logout";
 import { BsCart4 } from "react-icons/bs";
