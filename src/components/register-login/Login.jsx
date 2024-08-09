@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { login } from '../../services/apiServices'
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
@@ -32,7 +32,6 @@ const Login = () => {
             handleResetInput();
             console.log('login successful:', response);
 
-            // Display success toast
             toast.success('Login successful!', { autoClose: 2000 });
 
             const redirectTo = localStorage.getItem('redirectAfterLogin') || '/';
@@ -53,7 +52,7 @@ const Login = () => {
     };
     return (
         <>
-
+            <ToastContainer />
             <div className="container px-1 grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 h-screen items-center w-full mx-auto mt-16">
                 <div className='mx-auto'>
                     <div className='p-8 flex justify-center items-center rounded-lg bg-slate-600 text-center'>

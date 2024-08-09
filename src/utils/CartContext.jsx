@@ -16,6 +16,8 @@ export const CartProvider = ({ children }) => {
             const filteredCart = cartItems.filter(item => item.userId === userid);
             setProducts(filteredCart);
             console.log('response', response);
+            console.log('filteredCart', filteredCart);
+
 
         } catch (error) {
             console.error('error fetching data.', error);
@@ -86,7 +88,7 @@ export const CartProvider = ({ children }) => {
             const userId = localStorage.getItem('userid');
             const productId = detailProduct.id;
             const response = await addOneCartProduct({ userId, productId });
-            console.log(response);
+            console.log("handleAddToCart", response);
             fetchData();
             return response.data.message;
         } catch (error) {
