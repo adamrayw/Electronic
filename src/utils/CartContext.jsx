@@ -16,6 +16,8 @@ export const CartProvider = ({ children }) => {
             const filteredCart = cartItems.filter(item => item.userId === userid);
             setProducts(filteredCart);
             console.log('response', response);
+            console.log('filteredCart', filteredCart);
+
 
         } catch (error) {
             console.error('error fetching data.', error);

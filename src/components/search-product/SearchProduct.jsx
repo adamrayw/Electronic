@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { searchProduct } from '../../services/apiServices';
+import { TfiAlert } from "react-icons/tfi";
 
 const SearchProduct = () => {
     const [products, setProducts] = useState([]);
@@ -126,7 +127,15 @@ const SearchProduct = () => {
                         ) : (
                             <div className='col-span-4'>
                                 {query ?
-                                    (<p>tidak ditemukan produk bernama <span className='font-semibold'>{nullProduct}</span></p>) :
+                                    (
+                                        <div className='px-10 py-5 bg-white rounded border-2 border-slate-600'>
+                                            <div className='flex items-center gap-1 mb-5'>
+                                                <TfiAlert size={50} />
+                                                <p className='text-3xl font-semibold'>Oooops</p>
+                                            </div>
+                                            <p className='text-xl'>tidak ditemukan nama produk bernama <span className='font-bold text-slate-500'>{nullProduct}</span></p>
+                                        </div>
+                                    ) :
                                     (<p className='font-semibold'>{nullProduct}</p>)
                                 }
                             </div>
