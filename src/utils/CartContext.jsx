@@ -7,16 +7,15 @@ export const CartProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [favorite, setFavorite] = useState(false);
 
-    const userid = localStorage.getItem('userid');
-
     const fetchData = async () => {
         try {
+            const userid = localStorage.getItem('userid');
             const response = await getOneCart();
             const cartItems = response.data.cart;
             const filteredCart = cartItems.filter(item => item.userId === userid);
             setProducts(filteredCart);
             console.log('response', response);
-            console.log('filteredCart', filteredCart);
+            console.log('cartItems', cartItems);
 
 
         } catch (error) {

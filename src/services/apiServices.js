@@ -55,6 +55,32 @@ export const getOneCart = async () => {
   }
 }
 
+export const getCheckout = async (userId, selectedItems) => {
+  try {
+    const response = await apiService.post('/getCheckout', {
+      userId,
+      items: selectedItems.map(item => ({
+        cartItemId: item.id,
+      })),
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Checkout failed', error);
+    throw error;
+  }
+}
+
+export const getCheckoutProducts = async () => {
+  const userId = localStorage.getItem('userid')
+  try {
+    const response = await apiService.get(`/getCheckoutProduct`, { userId })
+    return response;
+  } catch (error) {
+    console.error('Checkout failed', error);
+    throw error;
+  }
+}
+
 export const incrementCartItemQuantity = async (id) => {
   try {
     const response = await apiService.patch(`/cart/increment/${id}`)

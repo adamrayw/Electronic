@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 import { TiMessage } from "react-icons/ti";
 import { Table } from 'flowbite-react';
-import { getOneCart } from '../../services/apiServices';
+import { getCheckoutProducts, getOneCart } from '../../services/apiServices';
 
 const CheckoutBarang = () => {
     const [products, setProducts] = useState([])
 
     const fetchData = async () => {
-        const response = await getOneCart();
-        console.log(response);
+        const response = await getCheckoutProducts();
+        console.log('response checkout:', response);
     }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
 
     return (
         <div className='py-[100px] container mx-auto'>

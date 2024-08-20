@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { CartContext } from "../../utils/CartContext";
 import { formatter } from '../../utils/formatIDR';
 import { Link } from 'react-router-dom';
+import { getCheckout } from '../../services/apiServices';
 
 const CartComponent = () => {
     const {
@@ -16,82 +17,114 @@ const CartComponent = () => {
         handleQuantityChange,
         calculateTotal
     } = useContext(CartContext);
+    const [checkedCart, setCheckedCart] = useState(() => {
+        const savedCheckedCart = localStorage.getItem('checkedCart');
+        return savedCheckedCart ? JSON.parse(savedCheckedCart) : [];
+    });
+    const [selectAll, setSelectAll] = useState(false);
 
-    const [checked, setChecked] = useState(false);
-    const [checkAllProduct, setCheckAllProduct] = useState(false);
+    useEffect(() => {
+        localStorage.setItem('checkedCart', JSON.stringify(checkedCart));
+    }, [checkedCart]);
 
-    const handleChecked = () => {
-        setChecked(!checked);
+    const handleOneCart = (id) => {
+        setCheckedCart((prevChecked) => prevChecked.includes(id) ? prevChecked.filter((itemId) => itemId !== id) : [...prevChecked, id]);
     };
 
-    const handleCheckedAll = () => {
-        setCheckAllProduct(!checkAllProduct);
-    };
-
-    // Group products by store (user.username)
-    const groupedProducts = products.reduce((acc, item) => {
-        const username = item.product.user.username;
-        if (!acc[username]) {
-            acc[username] = [];
+    const handleSelectAllChange = () => {
+        if (selectAll) {
+            setCheckedCart([]);
+        } else {
+            setCheckedCart(products.map(item => item.id));
         }
-        acc[username].push(item);
-        console.log(acc);
-        return acc;
-    }, {});
+    };
 
+    console.log(checkedCart);
+
+
+    useEffect(() => {
+        setSelectAll(checkedCart.length === products.length);
+    }, [handleSelectAllChange]);
+
+    const handleCheckout = async () => {
+        const selectedItems = products.filter(item => checkedCart.includes(item.id));
+
+        const userId = selectedItems.length > 0 ? selectedItems[0].userId : null;
+
+        if (!userId || selectedItems.length === 0) {
+            return console.error('User ID is empty or no items selected');
+        }
+
+        try {
+            const response = await getCheckout(userId, selectedItems);
+            console.log('Success checkout', response);
+        } catch (error) {
+            console.error('Checkout failed', error);
+        }
+    };
+
+
+
+    console.log(selectAll)
 
     return (
-        <div className='container mx-auto px-8'>
+        <div className='container mx-auto px-8 h-screen'>
             <div className='py-[6rem]'>
                 <p className='font-bold text-2xl'>Keranjang</p>
                 <div className='grid grid-cols-3 gap-5'>
                     <div className='kiri col-span-2'>
-                        <div className='flex items-center gap-3 px-5 bg-white py-3 rounded-md my-4'>
-                            <input defaultChecked={checked} onChange={handleChecked} type="checkbox" />
-                            <p className='font-semibold'>Pilih Semua</p>
-                        </div>
-                        {Object.keys(groupedProducts).map((storeName) => (
-                            <div key={storeName} className='flex flex-col gap-3 bg-white py-3 px-5 rounded-md my-4'>
-                                <div className='flex items-center gap-3'>
-                                    <input type="checkbox" defaultChecked={checkAllProduct} onChange={handleCheckedAll} />
-                                    <p className='font-semibold nama-toko'>{storeName}</p>
+                        {products.length !== 0 ?
+                            (<div className='flex items-center gap-3 px-5 bg-white py-3 rounded-md my-4'>
+                                <input type="checkbox" checked={selectAll}
+                                    onChange={(handleSelectAllChange)} />
+                                <p className='font-semibold'>Pilih Semua</p>
+                            </div>)
+                            :
+                            (<div className='flex justify-center my-4'>
+                                <div className='flex justify-center font-semibold place-content-center h-[100px] w-full bg-slate-600 text-white rounded items-center'>
+                                    <p>Cart kamu masih kosong nih...</p>
                                 </div>
-                                {groupedProducts[storeName].map((item) => (
-                                    <div key={item.id} className='flex gap-3'>
-                                        <input type="checkbox" />
-                                        <div className=''>
-                                            <img className='max-w-[120px] rounded' src={item.product.img} alt="" />
+                            </div>)}
+                        {products.map((item) => (
+                            <div key={item.id} className='flex flex-col gap-3 bg-white py-3 px-5 rounded-md my-4'>
+                                <div className='flex items-center gap-3'>
+                                    <input type="checkbox" checked={checkedCart.includes(item.id)}
+                                        onChange={() => handleOneCart(item.id)} />
+                                    <p className='font-semibold'>{item.product.user.username}</p>
+                                </div>
+                                <div className='flex gap-3'>
+                                    <div className=''>
+                                        <img className='max-w-[120px] rounded' src={item.product.img} alt="" />
+                                    </div>
+                                    <div className='flex flex-col w-full'>
+                                        <div className='flex flex-row-reverse justify-between w-full gap-3'>
+                                            <p>{formatter.format((item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity)}</p>
+                                            <p>{item.product.deskripsiBarang}</p>
                                         </div>
-                                        <div className='flex flex-col w-full'>
-                                            <div className='flex flex-row-reverse justify-between w-full gap-3'>
-                                                <p>{formatter.format((item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity)}</p>
-                                                <p>{item.product.deskripsiBarang}</p>
+                                        <div className='flex flex-row-reverse my-3'>
+                                            <p className='line-through'>{formatter.format(item.product.hargaBarang)}</p>
+                                        </div>
+                                        <div className='flex flex-row-reverse items-center gap-8'>
+                                            <div className="flex items-center rounded-md border-2 border-slate-500">
+                                                <button onClick={() => handleDecrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
+                                                <input
+                                                    id="number-input"
+                                                    type="number"
+                                                    value={item.quantity}
+                                                    className="text-center w-16 border border-gray-300 py-2"
+                                                    onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                                                />
+                                                <button onClick={() => handleIncrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
                                             </div>
-                                            <div className='flex flex-row-reverse my-3'>
-                                                <p className='line-through'>{formatter.format(item.product.hargaBarang)}</p>
-                                            </div>
-                                            <div className='flex flex-row-reverse items-center gap-8'>
-                                                <div className="flex items-center rounded-md border-2 border-slate-500">
-                                                    <button onClick={() => handleDecrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-l">-</button>
-                                                    <input
-                                                        id="number-input"
-                                                        type="number"
-                                                        value={item.quantity}
-                                                        className="text-center w-16 border border-gray-300 py-2"
-                                                        onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
-                                                    />
-                                                    <button onClick={() => handleIncrement(item.id)} className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-r">+</button>
-                                                </div>
-                                                <div className='gap-3 flex'>
-                                                    <button onClick={handleFavorite}>
-                                                        {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
-                                                    </button>
-                                                    <FaRegTrashAlt size={20} onClick={() => handleDelete(item.id)} className='cursor-pointer' />
-                                                </div>
+                                            <div className='gap-3 flex'>
+                                                <button onClick={handleFavorite}>
+                                                    {favorite ? <MdOutlineFavorite size={20} /> : <MdOutlineFavoriteBorder size={20} />}
+                                                </button>
+                                                <FaRegTrashAlt size={20} onClick={() => handleDelete(item.id)} className='cursor-pointer' />
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -103,11 +136,9 @@ const CartComponent = () => {
                                 <p className=''>{formatter.format(calculateTotal())}</p>
                             </div>
                             <div className='text-center'>
-                                <Link to='/checkout'>
-                                    <button className='text-white bg-slate-600 w-full py-1 rounded-md'>
-                                        Beli
-                                    </button>
-                                </Link>
+                                <button onClick={handleCheckout} className='text-white bg-slate-600 w-full py-1 rounded-md'>
+                                    Beli
+                                </button>
                             </div>
                         </div>
                     </div>
