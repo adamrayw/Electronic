@@ -1,22 +1,29 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct } from '../services/apiServices';
+import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct, getCheckout } from '../services/apiServices';
+import { useNavigate } from 'react-router-dom';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [favorite, setFavorite] = useState(false);
-
-    const userid = localStorage.getItem('userid');
+    const [checkedCart, setCheckedCart] = useState(() => {
+        const savedCheckedCart = localStorage.getItem('checkedCart');
+        return savedCheckedCart ? JSON.parse(savedCheckedCart) : [];
+    });
+    const [selectAll, setSelectAll] = useState(false);
 
     const fetchData = async () => {
         try {
+            const userid = localStorage.getItem('userid');
             const response = await getOneCart();
             const cartItems = response.data.cart;
             const filteredCart = cartItems.filter(item => item.userId === userid);
             setProducts(filteredCart);
             console.log('response', response);
-            console.log('filteredCart', filteredCart);
+            console.log('cartItems', cartItems);
+
 
 
         } catch (error) {
@@ -75,7 +82,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const calculateTotal = () => {
-        return products.reduce((total, item) => {
+        return products.filter(item => checkedCart.includes(item.id)).reduce((total, item) => {
             const itemTotal = (item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity;
             return total + itemTotal;
         }, 0);
@@ -97,15 +104,57 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+    // checkout
+    useEffect(() => {
+        localStorage.setItem('checkedCart', JSON.stringify(checkedCart));
+        setSelectAll(checkedCart.length === products.length);
+    }, [checkedCart, products]);
+
+    const handleOneCart = (id) => {
+        setCheckedCart((prevChecked) => prevChecked.includes(id) ? prevChecked.filter((itemId) => itemId !== id) : [...prevChecked, id]);
+    };
+
+    const handleSelectAllChange = () => {
+        if (selectAll) {
+            setCheckedCart([]);
+        } else {
+            setCheckedCart(products.map(item => item.id));
+        }
+    };
+
+    const handleCheckout = async () => {
+        const selectedItems = products.filter(item => checkedCart.includes(item.id));
+        const userId = selectedItems.length > 0 ? selectedItems[0].userId : null;
+
+        if (!userId || selectedItems.length === 0) {
+            return console.error('User ID is empty or no items selected');
+        }
+
+        try {
+            const response = await getCheckout(userId, selectedItems);
+            console.log('Success checkout', response);
+            setTimeout(() => {
+                window.location.href = '/checkout'
+            }, 1000)
+        } catch (error) {
+            console.error('Checkout failed', error);
+        }
+    };
+
     return (
         <CartContext.Provider value={{
             products,
             favorite,
+            checkedCart,
+            selectAll,
             handleFavorite,
             handleIncrement,
             handleDecrement,
             handleDelete,
             handleQuantityChange,
+            handleOneCart,
+            handleSelectAllChange,
+            handleCheckout,
             calculateTotal,
             totalQuantity,
             handleAddToCart

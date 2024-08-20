@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 import { TiMessage } from "react-icons/ti";
 import { Table } from 'flowbite-react';
-import { getOneCart } from '../../services/apiServices';
+import { CheckoutContext } from '../../utils/CheckoutContext';
 
 const CheckoutBarang = () => {
-    const [products, setProducts] = useState([])
-
-    const fetchData = async () => {
-        const response = await getOneCart();
-        console.log(response);
-    }
+    const { checkoutProducts } = useContext(CheckoutContext)
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -42,31 +37,17 @@ const CheckoutBarang = () => {
                             <Table.HeadCell>Total</Table.HeadCell>
                         </Table.Head>
                         <Table.Body className="divide-y">
-                            <Table.Row className=" dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    {'Apple MacBook Pro 17"'}
-                                </Table.Cell>
-                                <Table.Cell>Sliver</Table.Cell>
-                                <Table.Cell>Laptop</Table.Cell>
-                                <Table.Cell>$2999</Table.Cell>
-                                <Table.Cell>$2999</Table.Cell>
-                            </Table.Row>
-                            <Table.Row className=" dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    Microsoft Surface Pro
-                                </Table.Cell>
-                                <Table.Cell>White</Table.Cell>
-                                <Table.Cell>Laptop PC</Table.Cell>
-                                <Table.Cell>$1999</Table.Cell>
-                                <Table.Cell>$1999</Table.Cell>
-                            </Table.Row>
-                            <Table.Row className=" dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">Magic Mouse 2</Table.Cell>
-                                <Table.Cell>Black</Table.Cell>
-                                <Table.Cell>Accessories</Table.Cell>
-                                <Table.Cell>$99</Table.Cell>
-                                <Table.Cell>$99</Table.Cell>
-                            </Table.Row>
+                            {checkoutProducts.map((products) => (
+                                <Table.Row key={products.product.id} className=" dark:border-gray-700 dark:bg-gray-800">
+                                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                        {products.product.namaBarang}
+                                    </Table.Cell>
+                                    <Table.Cell>{products.product.color}</Table.Cell>
+                                    <Table.Cell>{products.product.hargaBarang}</Table.Cell>
+                                    <Table.Cell>{products.product.quantity}</Table.Cell>
+                                    <Table.Cell>9999</Table.Cell>
+                                </Table.Row>
+                            ))}
                         </Table.Body>
                     </Table>
                 </div>
