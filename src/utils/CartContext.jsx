@@ -1,11 +1,16 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct } from '../services/apiServices';
+import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct, getCheckout } from '../services/apiServices';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [favorite, setFavorite] = useState(false);
+    const [checkedCart, setCheckedCart] = useState(() => {
+        const savedCheckedCart = localStorage.getItem('checkedCart');
+        return savedCheckedCart ? JSON.parse(savedCheckedCart) : [];
+    });
+    const [selectAll, setSelectAll] = useState(false);
 
     const fetchData = async () => {
         try {
@@ -74,7 +79,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const calculateTotal = () => {
-        return products.reduce((total, item) => {
+        return products.filter(item => checkedCart.includes(item.id)).reduce((total, item) => {
             const itemTotal = (item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity;
             return total + itemTotal;
         }, 0);
@@ -96,15 +101,54 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+    // checkout
+    useEffect(() => {
+        localStorage.setItem('checkedCart', JSON.stringify(checkedCart));
+        setSelectAll(checkedCart.length === products.length);
+    }, [checkedCart, products]);
+
+    const handleOneCart = (id) => {
+        setCheckedCart((prevChecked) => prevChecked.includes(id) ? prevChecked.filter((itemId) => itemId !== id) : [...prevChecked, id]);
+    };
+
+    const handleSelectAllChange = () => {
+        if (selectAll) {
+            setCheckedCart([]);
+        } else {
+            setCheckedCart(products.map(item => item.id));
+        }
+    };
+
+    const handleCheckout = async () => {
+        const selectedItems = products.filter(item => checkedCart.includes(item.id));
+        const userId = selectedItems.length > 0 ? selectedItems[0].userId : null;
+
+        if (!userId || selectedItems.length === 0) {
+            return console.error('User ID is empty or no items selected');
+        }
+
+        try {
+            const response = await getCheckout(userId, selectedItems);
+            console.log('Success checkout', response);
+        } catch (error) {
+            console.error('Checkout failed', error);
+        }
+    };
+
     return (
         <CartContext.Provider value={{
             products,
             favorite,
+            checkedCart,
+            selectAll,
             handleFavorite,
             handleIncrement,
             handleDecrement,
             handleDelete,
             handleQuantityChange,
+            handleOneCart,
+            handleSelectAllChange,
+            handleCheckout,
             calculateTotal,
             totalQuantity,
             handleAddToCart

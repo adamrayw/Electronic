@@ -4,7 +4,6 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { CartContext } from "../../utils/CartContext";
 import { formatter } from '../../utils/formatIDR';
 import { Link } from 'react-router-dom';
-import { getCheckout } from '../../services/apiServices';
 
 const CartComponent = () => {
     const {
@@ -15,60 +14,16 @@ const CartComponent = () => {
         handleDecrement,
         handleDelete,
         handleQuantityChange,
-        calculateTotal
+        calculateTotal,
+        handleOneCart,
+        handleSelectAllChange,
+        handleCheckout,
+        checkedCart,
+        selectAll,
     } = useContext(CartContext);
-    const [checkedCart, setCheckedCart] = useState(() => {
-        const savedCheckedCart = localStorage.getItem('checkedCart');
-        return savedCheckedCart ? JSON.parse(savedCheckedCart) : [];
-    });
-    const [selectAll, setSelectAll] = useState(false);
-
-    useEffect(() => {
-        localStorage.setItem('checkedCart', JSON.stringify(checkedCart));
-    }, [checkedCart]);
-
-    const handleOneCart = (id) => {
-        setCheckedCart((prevChecked) => prevChecked.includes(id) ? prevChecked.filter((itemId) => itemId !== id) : [...prevChecked, id]);
-    };
-
-    const handleSelectAllChange = () => {
-        if (selectAll) {
-            setCheckedCart([]);
-        } else {
-            setCheckedCart(products.map(item => item.id));
-        }
-    };
-
-    console.log(checkedCart);
-
-
-    useEffect(() => {
-        setSelectAll(checkedCart.length === products.length);
-    }, [handleSelectAllChange]);
-
-    const handleCheckout = async () => {
-        const selectedItems = products.filter(item => checkedCart.includes(item.id));
-
-        const userId = selectedItems.length > 0 ? selectedItems[0].userId : null;
-
-        if (!userId || selectedItems.length === 0) {
-            return console.error('User ID is empty or no items selected');
-        }
-
-        try {
-            const response = await getCheckout(userId, selectedItems);
-            console.log('Success checkout', response);
-        } catch (error) {
-            console.error('Checkout failed', error);
-        }
-    };
-
-
-
-    console.log(selectAll)
 
     return (
-        <div className='container mx-auto px-8 h-screen'>
+        <div className='container mx-auto px-8'>
             <div className='py-[6rem]'>
                 <p className='font-bold text-2xl'>Keranjang</p>
                 <div className='grid grid-cols-3 gap-5'>
