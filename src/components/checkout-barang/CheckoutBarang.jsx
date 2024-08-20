@@ -1,21 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 import { TiMessage } from "react-icons/ti";
 import { Table } from 'flowbite-react';
-import { getCheckoutProducts, getOneCart } from '../../services/apiServices';
+import { CheckoutContext } from '../../utils/CheckoutContext';
 
 const CheckoutBarang = () => {
-    const [products, setProducts] = useState([])
-
-    const fetchData = async () => {
-        const response = await getCheckoutProducts();
-        console.log('response checkout:', response);
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
+    const { checkoutProducts } = useContext(CheckoutContext)
 
     return (
         <div className='py-[100px] container mx-auto'>
