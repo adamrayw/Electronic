@@ -131,6 +131,7 @@ export const login = async (user) => {
 export const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userid");
+  localStorage.removeItem("checkedCart");
   window.location.href = "/";
 };
 export const forgotPassword = async (email) => {
