@@ -3,7 +3,6 @@ import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { CartContext } from "../../utils/CartContext";
 import { formatter } from '../../utils/formatIDR';
-import { Link } from 'react-router-dom';
 
 const CartComponent = () => {
     const {

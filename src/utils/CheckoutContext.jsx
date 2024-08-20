@@ -8,8 +8,9 @@ export const CheckoutProvider = ({ children }) => {
 
     const fetchData = async () => {
         const response = await getCheckoutProducts();
-        console.log('response checkout:', response);
-        setCheckoutProducts(response)
+        const data = response.data.checkoutProduct[0].items;
+        setCheckoutProducts(data)
+        console.log('response checkout:', data);
     }
 
     useEffect(() => {

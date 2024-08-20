@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct, getCheckout } from '../services/apiServices';
+import { useNavigate } from 'react-router-dom';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [favorite, setFavorite] = useState(false);
     const [checkedCart, setCheckedCart] = useState(() => {
@@ -21,6 +23,7 @@ export const CartProvider = ({ children }) => {
             setProducts(filteredCart);
             console.log('response', response);
             console.log('cartItems', cartItems);
+
 
 
         } catch (error) {
@@ -130,6 +133,9 @@ export const CartProvider = ({ children }) => {
         try {
             const response = await getCheckout(userId, selectedItems);
             console.log('Success checkout', response);
+            setTimeout(() => {
+                window.location.href = '/checkout'
+            }, 1000)
         } catch (error) {
             console.error('Checkout failed', error);
         }
