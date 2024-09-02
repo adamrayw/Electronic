@@ -22,10 +22,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search-product" element={<SearchProductPages />} />
+        <Route path="/detail/:id" element={<DetailProductPage />} />
 
         {/* must login first to access */}
         <Route element={<ProtectRoutes />}>
-          <Route path="/detail/:id" element={<DetailProductPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/cart" element={<CartPages />} />
         </Route>
