@@ -76,7 +76,7 @@ const DetailProduct = () => {
     };
 
     if (!detailProduct) {
-        return <div>Loading...</div>; // or a placeholder UI
+        return <div>no such product...</div>; // or a placeholder UI
     }
 
     return (
