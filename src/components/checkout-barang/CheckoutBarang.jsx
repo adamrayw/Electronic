@@ -10,7 +10,8 @@ const CheckoutBarang = () => {
     const { checkoutProducts, calculateTotalCheckout } = useContext(CheckoutContext)
     const [visibleModal, setVisibleModal] = useState(false)
 
-    const handelVisibleModal = () => {
+    const handelVisibleModal = (e) => {
+        e.preventDefault();
         setVisibleModal(!visibleModal)
     }
 
@@ -28,19 +29,19 @@ const CheckoutBarang = () => {
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800' />
+                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kota:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800' />
+                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800' />
+                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Alamat:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800' />
+                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
                         </div>
                         <div className='text-end p-3'>
                             <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>

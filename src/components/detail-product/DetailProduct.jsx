@@ -71,7 +71,7 @@ const DetailProduct = () => {
             }
         } catch (error) {
             console.error("Error adding to cart", error);
-            toast.error('Failed to add to cart', { autoClose: 2000 });
+            toast.error('Failed to add product to cart', { autoClose: 2000 });
         }
     };
 
