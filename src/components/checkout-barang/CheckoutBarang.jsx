@@ -5,10 +5,27 @@ import { Modal, Table } from 'flowbite-react';
 import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
+import { useForm } from 'react-hook-form';
+import { createAlamat } from '../../services/apiServices';
 
 const CheckoutBarang = () => {
     const { checkoutProducts, calculateTotalCheckout } = useContext(CheckoutContext)
     const [visibleModal, setVisibleModal] = useState(false)
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+
+    const onSubmit = async (data) => {
+        try {
+            const response = await createAlamat(data);
+            reset();
+            setVisibleModal(false);
+            console.log(response);
+
+        } catch (error) {
+            console.error('Failed to create address:', error);
+        }
+
+    };
 
     const handelVisibleModal = (e) => {
         e.preventDefault();
@@ -23,25 +40,41 @@ const CheckoutBarang = () => {
                     <button className='text-blue-400 font-semibold ms-2 text-xl' onClick={handelVisibleModal}>Pilih Alamat</button>
                 </div>
                 <div className={`${visibleModal ? 'absolute' : 'hidden'} bg-slate-600 w-[500px] z-10 rounded border-2 border-slate-800 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2`}>
-                    <form className='text-white'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='text-white'>
                         <div className='text-end px-3 py-2'>
                             <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handelVisibleModal}>X</button>
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
+                            <input
+                                {...register('provinsi', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kota:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
+                            <input
+                                {...register('kota', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
+                            <input
+                                {...register('kodePos', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Alamat:</label>
-                            <input type="text" className='rounded col-span-4 border-2 border-slate-800 text-black' />
+                            <input
+                                {...register('alamat', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
                         </div>
                         <div className='text-end p-3'>
                             <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>

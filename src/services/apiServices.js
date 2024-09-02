@@ -134,6 +134,7 @@ export const handleLogout = () => {
   localStorage.removeItem("checkedCart");
   window.location.href = "/";
 };
+
 export const forgotPassword = async (email) => {
   try {
     const response = await apiService.post("/forgot-password", email);
@@ -173,5 +174,22 @@ export const searchProduct = async (product) => {
   } catch (error) {
     console.error('failed get searched product', error)
     throw error
+  }
+}
+
+export const createAlamat = async (data) => {
+  const userId = localStorage.getItem('userid');
+  try {
+    const response = await apiService.post(`/createAlamat`, {
+      userId: userId,
+      alamat: data.alamat,
+      kota: data.kota,
+      provinsi: data.provinsi,
+      kodePos: data.kodePos,
+    });
+    return response;
+  } catch (error) {
+    console.error('failed to create alamat', error);
+    throw error;
   }
 }
