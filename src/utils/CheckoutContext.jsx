@@ -16,7 +16,15 @@ export const CheckoutProvider = ({ children }) => {
     useEffect(() => {
         fetchData()
     }, [])
+
+    const calculateTotalCheckout = () => {
+        return checkoutProducts.reduce((total, item) => {
+            const itemTotal = (item.product.hargaBarang - item.product.hargaBarang * item.product.diskon / 100) * item.quantity;
+            return total + itemTotal;
+        }, 0);
+    };
+
     return (
-        <CheckoutContext.Provider value={{ checkoutProducts }}>{children}</CheckoutContext.Provider>
+        <CheckoutContext.Provider value={{ checkoutProducts, calculateTotalCheckout }}>{children}</CheckoutContext.Provider>
     )
 }

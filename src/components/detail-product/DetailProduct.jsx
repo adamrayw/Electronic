@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
@@ -19,6 +19,7 @@ const DetailProduct = () => {
     const imgRef = useRef(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const { handleAddToCart } = useContext(CartContext);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -59,17 +60,23 @@ const DetailProduct = () => {
     };
 
     const handleAddToCartClick = async () => {
+        const userid = localStorage.getItem('userid');
         try {
-            const message = await handleAddToCart(detailProduct);
-            toast.success(`${message}`, { autoClose: 2000 });
+            if (!userid) {
+                localStorage.setItem('redirectAfterLogin', location.pathname);
+                window.location.href = '/login';
+            } else {
+                const message = await handleAddToCart(detailProduct);
+                toast.success(`${message}`, { autoClose: 2000 });
+            }
         } catch (error) {
             console.error("Error adding to cart", error);
-            toast.error('Failed to add to cart', { autoClose: 2000 });
+            toast.error('Failed to add product to cart', { autoClose: 2000 });
         }
     };
 
     if (!detailProduct) {
-        return <div>Loading...</div>; // or a placeholder UI
+        return <div>no such product...</div>; // or a placeholder UI
     }
 
     return (

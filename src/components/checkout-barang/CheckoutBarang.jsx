@@ -1,21 +1,85 @@
 import { useState, useEffect, useContext } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 import { TiMessage } from "react-icons/ti";
-import { Table } from 'flowbite-react';
+import { Modal, Table } from 'flowbite-react';
 import { CheckoutContext } from '../../utils/CheckoutContext';
+import { formatter } from '../../utils/formatIDR';
+import AlamatModal from './AlamatModal';
+import { useForm } from 'react-hook-form';
+import { createAlamat } from '../../services/apiServices';
 
 const CheckoutBarang = () => {
-    const { checkoutProducts } = useContext(CheckoutContext)
+    const { checkoutProducts, calculateTotalCheckout } = useContext(CheckoutContext)
+    const [visibleModal, setVisibleModal] = useState(false)
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+
+    const onSubmit = async (data) => {
+        try {
+            const response = await createAlamat(data);
+            reset();
+            setVisibleModal(false);
+            console.log(response);
+
+        } catch (error) {
+            console.error('Failed to create address:', error);
+        }
+
+    };
+
+    const handelVisibleModal = (e) => {
+        e.preventDefault();
+        setVisibleModal(!visibleModal)
+    }
 
     return (
         <div className='py-[100px] container mx-auto'>
             <div className='alamat-checkout bg-white rounded p-5 mb-4'>
                 <div className='flex mb-4'>
                     <IoLocationOutline size={25} />
-                    <p className='font-bold'>Alamat Pengiriman</p>
+                    <button className='text-blue-400 font-semibold ms-2 text-xl' onClick={handelVisibleModal}>Pilih Alamat</button>
                 </div>
-                <div>
-                    <button className=' text-blue-400 rounded p-1 font-semibold'>tambah alamat</button>
+                <div className={`${visibleModal ? 'absolute' : 'hidden'} bg-slate-600 w-[500px] z-10 rounded border-2 border-slate-800 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2`}>
+                    <form onSubmit={handleSubmit(onSubmit)} className='text-white'>
+                        <div className='text-end px-3 py-2'>
+                            <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handelVisibleModal}>X</button>
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Provinsi:</label>
+                            <input
+                                {...register('provinsi', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Kota:</label>
+                            <input
+                                {...register('kota', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
+                            <input
+                                {...register('kodePos', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Alamat:</label>
+                            <input
+                                {...register('alamat', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='text-end p-3'>
+                            <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -43,9 +107,12 @@ const CheckoutBarang = () => {
                                         {products.product.namaBarang}
                                     </Table.Cell>
                                     <Table.Cell>{products.product.color}</Table.Cell>
-                                    <Table.Cell>{products.product.hargaBarang}</Table.Cell>
-                                    <Table.Cell>{products.product.quantity}</Table.Cell>
-                                    <Table.Cell>9999</Table.Cell>
+                                    <Table.Cell>{formatter.format(products.product.hargaBarang - products.product.hargaBarang * products.product.diskon / 100)}</Table.Cell>
+                                    <Table.Cell>{products.quantity}</Table.Cell>
+                                    <Table.Cell>
+                                        {formatter.format((products.product.hargaBarang - (products.product.hargaBarang * products.product.diskon / 100)) * products.quantity)}
+                                    </Table.Cell>
+
                                 </Table.Row>
                             ))}
                         </Table.Body>
@@ -72,7 +139,7 @@ const CheckoutBarang = () => {
                 </div>
                 <div className='flex justify-end'>
                     <p className='me-4'>Total Pesanan (3 produk):</p>
-                    <p className='text-slate-600 font-semibold'>$99999</p>
+                    <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
                 </div>
             </div>
 
@@ -90,19 +157,11 @@ const CheckoutBarang = () => {
                     <div className='pembungkus'>
                         <div className='flex mb-3 text-gray-600 justify-between'>
                             <p className='me-16'>Subtotal untuk produk</p>
-                            <p>$999</p>
-                        </div>
-                        <div className='flex mb-3 text-gray-600 justify-between'>
-                            <p className='me-16'>Total ongkos kirim</p>
-                            <p>$999</p>
-                        </div>
-                        <div className='flex mb-3 text-gray-600 justify-between'>
-                            <p className='me-16'>Biaya penanganan</p>
-                            <p>$999</p>
+                            <p>{formatter.format(calculateTotalCheckout())}</p>
                         </div>
                         <div className='flex justify-between'>
                             <p className='text-gray-600 me-16'>Total Pembayaran</p>
-                            <p className='font-bold text-2xl text-slate-600'>$999</p>
+                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(calculateTotalCheckout())}</p>
                         </div>
                     </div>
                 </div>
