@@ -168,7 +168,7 @@ const CheckoutBarang = () => {
                     </div>
                 </div>
                 <div className='flex justify-end'>
-                    <p className='me-4'>Total Pesanan (3 produk):</p>
+                    <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
                     <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
                 </div>
             </div>
