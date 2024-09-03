@@ -193,3 +193,14 @@ export const createAlamat = async (data) => {
     throw error;
   }
 }
+
+export const getAlamat = async () => {
+  try {
+    const response = await apiService.get(`/getAlamat`);
+    return response
+  } catch (error) {
+    console.error('failed to get alamat', error)
+    throw error;
+
+  }
+}
