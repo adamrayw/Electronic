@@ -47,7 +47,7 @@ const CheckoutBarang = () => {
                 </div>
                 <div className={`${visibleModal ? 'absolute' : 'hidden'} bg-slate-600 w-[500px] h-[400px] overflow-auto z-10 rounded border-2 border-slate-800 left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2`}>
                     <div className='text-end px-4 py-2'>
-                        <button onClick={handelVisibleModal} className={`${visibleCreateAlamat ? 'hidden' : ''} font-bold py-1 px-3 text-white rounded-full border-2 border-white `}>X</button>
+                        <button onClick={handelVisibleModal} className={`${visibleCreateAlamat ? 'hidden' : 'visible'} font-bold py-1 px-3 text-white rounded-full border-2 border-white `}>X</button>
                     </div>
                     <div className={`mb-6 mx-5 card-alamat ${visibleCreateAlamat ? 'hidden' : 'visible'}`}>
                         <div className='mb-4 py-2 rounded flex justify-center bg-slate-100 border-2 border-slate-500'>
@@ -70,7 +70,7 @@ const CheckoutBarang = () => {
                             </div>
                         ))}
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? '' : 'hidden'}`}>
+                    <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
                         <div className='text-end px-3 py-2'>
                             <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleVisibleCreateAlamat}>X</button>
                         </div>
