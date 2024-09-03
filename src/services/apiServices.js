@@ -6,7 +6,7 @@ export const apiService = axios.create({
   baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem('user')}`,
+    "Authorization": `Bearer ${localStorage.getItem('token')}`,
   },
 });
 
@@ -191,5 +191,16 @@ export const createAlamat = async (data) => {
   } catch (error) {
     console.error('failed to create alamat', error);
     throw error;
+  }
+}
+
+export const getAlamat = async () => {
+  try {
+    const response = await apiService.get(`/getAlamat`);
+    return response
+  } catch (error) {
+    console.error('failed to get alamat', error)
+    throw error;
+
   }
 }

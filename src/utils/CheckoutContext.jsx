@@ -1,20 +1,28 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { getCheckoutProducts } from '../services/apiServices';
+import { getAlamat, getCheckoutProducts } from '../services/apiServices';
 
 export const CheckoutContext = createContext();
 
 export const CheckoutProvider = ({ children }) => {
-    const [checkoutProducts, setCheckoutProducts] = useState([])
+    const [checkoutProducts, setCheckoutProducts] = useState([]);
+    const [alamatPengirim, setAlamatPengirim] = useState([]);
 
-    const fetchData = async () => {
+    const fetchcheckoutProducts = async () => {
         const response = await getCheckoutProducts();
         const data = response.data.checkoutProduct[0].items;
         setCheckoutProducts(data)
         console.log('response checkout:', data);
     }
 
+    const fetchAlamatPengirim = async () => {
+        const response = await getAlamat();
+        setAlamatPengirim(response.data.Alamat);
+        console.log('alamat pengirim', response.data.Alamat);
+    }
+
     useEffect(() => {
-        fetchData()
+        fetchcheckoutProducts();
+        fetchAlamatPengirim();
     }, [])
 
     const calculateTotalCheckout = () => {
@@ -25,6 +33,6 @@ export const CheckoutProvider = ({ children }) => {
     };
 
     return (
-        <CheckoutContext.Provider value={{ checkoutProducts, calculateTotalCheckout }}>{children}</CheckoutContext.Provider>
+        <CheckoutContext.Provider value={{ checkoutProducts, calculateTotalCheckout, alamatPengirim }}>{children}</CheckoutContext.Provider>
     )
 }
