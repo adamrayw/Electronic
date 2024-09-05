@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct, getCheckout } from '../services/apiServices';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const CartContext = createContext();
 
@@ -127,7 +129,7 @@ export const CartProvider = ({ children }) => {
         const userId = selectedItems.length > 0 ? selectedItems[0].userId : null;
 
         if (!userId || selectedItems.length === 0) {
-            return console.error('User ID is empty or no items selected');
+            return toast.error('User ID is empty or no items selected');
         }
 
         try {
