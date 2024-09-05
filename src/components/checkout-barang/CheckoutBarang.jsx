@@ -9,8 +9,9 @@ import { useForm } from 'react-hook-form';
 import { createAlamat } from '../../services/apiServices';
 
 const CheckoutBarang = () => {
-    const { checkoutProducts, calculateTotalCheckout, alamatPengirim } = useContext(CheckoutContext)
-    const [visibleModal, setVisibleModal] = useState(false)
+    const { checkoutProducts, calculateTotalCheckout, alamatPengirim } = useContext(CheckoutContext);
+    const [visibleModal, setVisibleModal] = useState(false);
+    const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
 
@@ -20,6 +21,7 @@ const CheckoutBarang = () => {
             reset();
             setVisibleModal(false);
             console.log(response);
+            window.location.reload();
 
         } catch (error) {
             console.error('Failed to create address:', error);
@@ -32,6 +34,11 @@ const CheckoutBarang = () => {
         setVisibleModal(!visibleModal)
     }
 
+    const handleVisibleCreateAlamat = (e) => {
+        e.preventDefault();
+        setVisibleCreateAlamat(!visibleCreateAlamat)
+    }
+
     return (
         <div className='py-[100px] container mx-auto'>
             <div className='alamat-checkout bg-white rounded p-5 mb-4'>
@@ -41,11 +48,11 @@ const CheckoutBarang = () => {
                 </div>
                 <div className={`${visibleModal ? 'absolute' : 'hidden'} bg-slate-600 w-[500px] h-[400px] overflow-auto z-10 rounded border-2 border-slate-800 left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2`}>
                     <div className='text-end px-4 py-2'>
-                        <button onClick={handelVisibleModal} className='font-bold py-1 px-3 text-white rounded-full border-2 border-white '>X</button>
+                        <button onClick={handelVisibleModal} className={`${visibleCreateAlamat ? 'hidden' : 'visible'} font-bold py-1 px-3 text-white rounded-full border-2 border-white `}>X</button>
                     </div>
-                    <div className='mb-6 mx-5 card-alamat'>
+                    <div className={`mb-6 mx-5 card-alamat ${visibleCreateAlamat ? 'hidden' : 'visible'}`}>
                         <div className='mb-4 py-2 rounded flex justify-center bg-slate-100 border-2 border-slate-500'>
-                            <button className='font-semibold'>Tambah Alamat Baru</button>
+                            <button onClick={handleVisibleCreateAlamat} className='font-semibold'>Tambah Alamat Baru</button>
                         </div>
                         {alamatPengirim.map((data) => (
                             <div key={data.id} className='p-3 rounded border-2 border-slate-500 bg-slate-100 mb-3'>
@@ -56,7 +63,7 @@ const CheckoutBarang = () => {
                                 </div>
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
-                                        <input className='me-2' type="checkbox" />
+                                        <input className='me-2' type="checkbox" checked={data.isDefault} />
                                         <label className='me-7' >Pilih</label>
                                         <button>Ubah Alamat</button>
                                     </div>
@@ -64,9 +71,9 @@ const CheckoutBarang = () => {
                             </div>
                         ))}
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)} className='text-white hidden'>
+                    <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
                         <div className='text-end px-3 py-2'>
-                            <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handelVisibleModal}>X</button>
+                            <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleVisibleCreateAlamat}>X</button>
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Provinsi:</label>
@@ -162,7 +169,7 @@ const CheckoutBarang = () => {
                     </div>
                 </div>
                 <div className='flex justify-end'>
-                    <p className='me-4'>Total Pesanan (3 produk):</p>
+                    <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
                     <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
                 </div>
             </div>

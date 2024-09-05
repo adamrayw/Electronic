@@ -3,6 +3,7 @@ import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { CartContext } from "../../utils/CartContext";
 import { formatter } from '../../utils/formatIDR';
+import { ToastContainer } from 'react-toastify';
 
 const CartComponent = () => {
     const {
@@ -23,6 +24,7 @@ const CartComponent = () => {
 
     return (
         <div className='container mx-auto px-8'>
+            <ToastContainer />
             <div className='py-[6rem]'>
                 <p className='font-bold text-2xl'>Keranjang</p>
                 <div className='grid grid-cols-3 gap-5'>
