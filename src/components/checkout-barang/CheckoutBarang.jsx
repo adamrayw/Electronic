@@ -21,6 +21,7 @@ const CheckoutBarang = () => {
             reset();
             setVisibleModal(false);
             console.log(response);
+            window.location.reload();
 
         } catch (error) {
             console.error('Failed to create address:', error);
@@ -62,7 +63,7 @@ const CheckoutBarang = () => {
                                 </div>
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
-                                        <input className='me-2' type="checkbox" />
+                                        <input className='me-2' type="checkbox" checked={data.isDefault} />
                                         <label className='me-7' >Pilih</label>
                                         <button>Ubah Alamat</button>
                                     </div>
