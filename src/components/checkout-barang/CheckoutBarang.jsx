@@ -13,7 +13,12 @@ const CheckoutBarang = () => {
     const [visibleModal, setVisibleModal] = useState(false);
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [selectedAlamat, setSelectedAlamat] = useState(null);
 
+
+    const handleCardAlamat = (data) => {
+        setSelectedAlamat(data);
+    };
 
     const onSubmit = async (data) => {
         try {
@@ -39,6 +44,7 @@ const CheckoutBarang = () => {
         setVisibleCreateAlamat(!visibleCreateAlamat)
     }
 
+
     return (
         <div className='py-[100px] container mx-auto'>
             <div className='alamat-checkout bg-white rounded p-5 mb-4'>
@@ -55,7 +61,7 @@ const CheckoutBarang = () => {
                             <button onClick={handleVisibleCreateAlamat} className='font-semibold'>Tambah Alamat Baru</button>
                         </div>
                         {alamatPengirim.map((data) => (
-                            <div key={data.id} className='p-3 rounded border-2 border-slate-500 bg-slate-100 mb-3'>
+                            <div key={data.id} onClick={() => handleCardAlamat(data)} className={`card-alamat ${data.isDefault === true ? 'border-green-500' : 'border-slate-400'} p-3 rounded border-4 bg-slate-100 mb-3`}>
                                 <div>
                                     <p className='font-semibold'>{data.User.username}</p>
                                     <p className='my-1'>{data.User.no_telp}</p>
@@ -63,8 +69,7 @@ const CheckoutBarang = () => {
                                 </div>
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
-                                        <input className='me-2' type="checkbox" checked={data.isDefault} />
-                                        <label className='me-7' >Pilih</label>
+                                        <p className={`me-4 ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</p>
                                         <button>Ubah Alamat</button>
                                     </div>
                                 </div>
