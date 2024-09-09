@@ -13,6 +13,7 @@ const CheckoutBarang = () => {
     const { checkoutProducts, calculateTotalCheckout, alamatPengirim } = useContext(CheckoutContext);
     const [visibleModal, setVisibleModal] = useState(false);
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
+    const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
 
@@ -44,12 +45,17 @@ const CheckoutBarang = () => {
 
     const handelVisibleModal = (e) => {
         e.preventDefault();
-        setVisibleModal(!visibleModal)
+        setVisibleModal(!visibleModal);
     }
 
     const handleVisibleCreateAlamat = (e) => {
         e.preventDefault();
-        setVisibleCreateAlamat(!visibleCreateAlamat)
+        setVisibleCreateAlamat(!visibleCreateAlamat);
+    }
+
+    const handleUpdateAlamat = (e) => {
+        e.preventDefault();
+        setVisibleUpdateModal(!visibleUpdateModal);
     }
 
 
@@ -61,7 +67,7 @@ const CheckoutBarang = () => {
                     <IoLocationOutline size={25} />
                     <button className='text-blue-400 font-semibold ms-2 text-xl' onClick={handelVisibleModal}>Pilih Alamat</button>
                 </div>
-                <div className={`${visibleModal ? 'absolute' : 'hidden'} bg-slate-600 w-[500px] h-[400px] overflow-auto z-10 rounded border-2 border-slate-800 left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2`}>
+                <div className={`${visibleModal ? 'absolute' : 'hidden'} alamat-card-container bg-slate-600 w-[500px] h-[400px] overflow-auto z-10 rounded border-2 border-slate-800 left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2`}>
                     <div className='text-end px-4 py-2'>
                         <button onClick={handelVisibleModal} className={`${visibleCreateAlamat ? 'hidden' : 'visible'} font-bold py-1 px-3 text-white rounded-full border-2 border-white `}>X</button>
                     </div>
@@ -70,7 +76,7 @@ const CheckoutBarang = () => {
                             <button onClick={handleVisibleCreateAlamat} className='font-semibold'>Tambah Alamat Baru</button>
                         </div>
                         {alamatPengirim.map((data) => (
-                            <div key={data.id} onClick={() => handleCardAlamat(data)} className={`card-alamat ${data.isDefault === true ? 'border-green-500' : 'border-slate-400'} p-3 rounded border-4 bg-slate-100 mb-3`}>
+                            <div key={data.id} className={`card-alamat ${data.isDefault === true ? 'border-green-500' : 'border-slate-400'} p-3 rounded border-4 bg-slate-100 mb-3`}>
                                 <div>
                                     <p className='font-semibold'>{data.User.username}</p>
                                     <p className='my-1'>{data.User.no_telp}</p>
@@ -78,16 +84,62 @@ const CheckoutBarang = () => {
                                 </div>
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
-                                        <p className={`me-4 cursor-pointer ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</p>
-                                        <button>Ubah Alamat</button>
+                                        <button onClick={() => handleCardAlamat(data)} className={`me-4 cursor-pointer ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</button>
+                                        <button onClick={handleUpdateAlamat}>Ubah Alamat</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
+                    <form className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} bg-slate-600 w-full h-full top-0 z-50`}>
+                        <div className='text-end px-3 py-2'>
+                            <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleUpdateAlamat}>X</button>
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='font-bold'>Update Alamat</p>
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Provinsi:</label>
+                            <input
+                                {...register('provinsi', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Kota:</label>
+                            <input
+                                {...register('kota', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
+                            <input
+                                {...register('kodePos', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='grid grid-cols-5 items-center p-2'>
+                            <label className='me-2 font-semibold text-lg'>Alamat:</label>
+                            <input
+                                {...register('alamat', { required: true })}
+                                type="text"
+                                className='rounded col-span-4 border-2 border-slate-800 text-black'
+                            />
+                        </div>
+                        <div className='text-end p-3'>
+                            <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>
+                        </div>
+                    </form>
                     <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
                         <div className='text-end px-3 py-2'>
                             <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleVisibleCreateAlamat}>X</button>
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='font-bold'>Tambah Alamat</p>
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Provinsi:</label>
