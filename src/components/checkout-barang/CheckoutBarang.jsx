@@ -6,19 +6,27 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { createAlamat } from '../../services/apiServices';
+import { createAlamat, setAlamat } from '../../services/apiServices';
+import { toast, ToastContainer } from 'react-toastify';
 
 const CheckoutBarang = () => {
     const { checkoutProducts, calculateTotalCheckout, alamatPengirim } = useContext(CheckoutContext);
     const [visibleModal, setVisibleModal] = useState(false);
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const [selectedAlamat, setSelectedAlamat] = useState(null);
 
 
-    const handleCardAlamat = (data) => {
-        setSelectedAlamat(data);
+    const handleCardAlamat = async (data) => {
+        try {
+            await setAlamat(data);
+            console.log('successfully choose alamat');
+            toast.success('successfully choose alamat')
+            window.location.reload();
+        } catch (error) {
+            console.error('Failed to set address:', error);
+        }
     };
+
 
     const onSubmit = async (data) => {
         try {
@@ -47,6 +55,7 @@ const CheckoutBarang = () => {
 
     return (
         <div className='py-[100px] container mx-auto'>
+            <ToastContainer />
             <div className='alamat-checkout bg-white rounded p-5 mb-4'>
                 <div className='flex mb-4'>
                     <IoLocationOutline size={25} />
@@ -69,7 +78,7 @@ const CheckoutBarang = () => {
                                 </div>
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
-                                        <p className={`me-4 ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</p>
+                                        <p className={`me-4 cursor-pointer ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</p>
                                         <button>Ubah Alamat</button>
                                     </div>
                                 </div>
