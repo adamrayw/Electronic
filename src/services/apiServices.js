@@ -204,3 +204,13 @@ export const getAlamat = async () => {
 
   }
 }
+
+export const setAlamat = async (data) => {
+  try {
+    const response = await apiService.patch(`/choosenAlamat`, { data });
+    return response;
+  } catch (error) {
+    console.error('failed to set default alamat', error);
+    throw error;
+  }
+}
