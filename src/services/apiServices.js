@@ -214,3 +214,13 @@ export const setAlamat = async (data) => {
     throw error;
   }
 }
+
+export const updateAlamat = async (updateData) => {
+  try {
+    const response = await apiService.put(`/updateAlamat`, { updateData });
+    return response;
+  } catch (error) {
+    console.error('failed update alamat', error);
+    throw error;
+  }
+}
