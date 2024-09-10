@@ -91,49 +91,6 @@ const CheckoutBarang = () => {
                             </div>
                         ))}
                     </div>
-                    <form className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} bg-slate-600 w-full h-full top-0 z-50`}>
-                        <div className='text-end px-3 py-2'>
-                            <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleUpdateAlamat}>X</button>
-                        </div>
-                        <div className='flex justify-center'>
-                            <p className='font-bold'>Update Alamat</p>
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                            <input
-                                {...register('provinsi', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Kota:</label>
-                            <input
-                                {...register('kota', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
-                            <input
-                                {...register('kodePos', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Alamat:</label>
-                            <input
-                                {...register('alamat', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='text-end p-3'>
-                            <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>
-                        </div>
-                    </form>
                     <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
                         <div className='text-end px-3 py-2'>
                             <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleVisibleCreateAlamat}>X</button>
@@ -178,6 +135,49 @@ const CheckoutBarang = () => {
                         </div>
                     </form>
                 </div>
+                <form className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} w-[500px] h-[400px] rounded border-2 border-black bg-slate-600 left-1/2 top-[55%] z-50 transform -translate-x-1/2 -translate-y-1/2`}>
+                    <div className='text-end px-3 py-2'>
+                        <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleUpdateAlamat}>X</button>
+                    </div>
+                    <div className='flex justify-center'>
+                        <p className='font-bold'>Update Alamat</p>
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Provinsi:</label>
+                        <input
+                            {...register('provinsi', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Kota:</label>
+                        <input
+                            {...register('kota', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
+                        <input
+                            {...register('kodePos', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Alamat:</label>
+                        <input
+                            {...register('alamat', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='text-end p-3'>
+                        <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>
+                    </div>
+                </form>
             </div>
 
             <div className='produk-checkout bg-white rounded mb-4'>
