@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { createAlamat, setAlamat } from '../../services/apiServices';
+import { createAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 
 const CheckoutBarang = () => {
@@ -14,13 +14,13 @@ const CheckoutBarang = () => {
     const [visibleModal, setVisibleModal] = useState(false);
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [selectedAlamat, setSelectedAlamat] = useState(null);
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
 
     const handleCardAlamat = async (data) => {
         try {
             await setAlamat(data);
-            console.log('successfully choose alamat');
             toast.success('successfully choose alamat')
             window.location.reload();
         } catch (error) {
@@ -53,9 +53,34 @@ const CheckoutBarang = () => {
         setVisibleCreateAlamat(!visibleCreateAlamat);
     }
 
-    const handleUpdateAlamat = (e) => {
-        e.preventDefault();
+    const handleUpdateAlamat = (data) => {
+        setSelectedAlamat(data);
+        setValue('provinsi', data.provinsi);
+        setValue('kota', data.kota);
+        setValue('kodePos', data.kodePos);
+        setValue('alamat', data.alamat);
         setVisibleUpdateModal(!visibleUpdateModal);
+    }
+
+    const onSubmitUpdate = async (formData) => {
+
+        const updateData = {
+            id: selectedAlamat.id,
+            provinsi: formData.provinsi,
+            kota: formData.kota,
+            kodePos: formData.kodePos,
+            alamat: formData.alamat,
+        };
+        try {
+            const response = await updateAlamat(updateData);
+            console.log('onsubmitupdate', response);
+            setSelectedAlamat(null);
+            reset();
+            toast.success('successfully update alamat')
+            window.location.reload();
+        } catch (error) {
+            console.error('failed update alamat', error)
+        }
     }
 
 
@@ -85,55 +110,12 @@ const CheckoutBarang = () => {
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
                                         <button onClick={() => handleCardAlamat(data)} className={`me-4 cursor-pointer ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</button>
-                                        <button onClick={handleUpdateAlamat}>Ubah Alamat</button>
+                                        <button onClick={() => handleUpdateAlamat(data)}>Ubah Alamat</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <form className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} bg-slate-600 w-full h-full top-0 z-50`}>
-                        <div className='text-end px-3 py-2'>
-                            <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleUpdateAlamat}>X</button>
-                        </div>
-                        <div className='flex justify-center'>
-                            <p className='font-bold'>Update Alamat</p>
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                            <input
-                                {...register('provinsi', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Kota:</label>
-                            <input
-                                {...register('kota', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
-                            <input
-                                {...register('kodePos', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='grid grid-cols-5 items-center p-2'>
-                            <label className='me-2 font-semibold text-lg'>Alamat:</label>
-                            <input
-                                {...register('alamat', { required: true })}
-                                type="text"
-                                className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
-                        </div>
-                        <div className='text-end p-3'>
-                            <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>
-                        </div>
-                    </form>
                     <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
                         <div className='text-end px-3 py-2'>
                             <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleVisibleCreateAlamat}>X</button>
@@ -178,6 +160,49 @@ const CheckoutBarang = () => {
                         </div>
                     </form>
                 </div>
+                <form onSubmit={handleSubmit(onSubmitUpdate)} className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} w-[500px] h-[400px] rounded border-2 border-black bg-slate-600 left-1/2 top-[55%] z-50 transform -translate-x-1/2 -translate-y-1/2`}>
+                    <div className='text-end px-3 py-2'>
+                        <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleUpdateAlamat}>X</button>
+                    </div>
+                    <div className='flex justify-center'>
+                        <p className='font-bold'>Update Alamat</p>
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Provinsi:</label>
+                        <input
+                            {...register('provinsi', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Kota:</label>
+                        <input
+                            {...register('kota', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
+                        <input
+                            {...register('kodePos', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='grid grid-cols-5 items-center p-2'>
+                        <label className='me-2 font-semibold text-lg'>Alamat:</label>
+                        <input
+                            {...register('alamat', { required: true })}
+                            type="text"
+                            className='rounded col-span-4 border-2 border-slate-800 text-black'
+                        />
+                    </div>
+                    <div className='text-end p-3'>
+                        <button className='border-2 border-white text-white font-semibold px-2 py-1 rounded bg-slate-600'>Submit</button>
+                    </div>
+                </form>
             </div>
 
             <div className='produk-checkout bg-white rounded mb-4'>

@@ -108,6 +108,15 @@ export const deleteOneProduct = async (id) => {
   }
 }
 
+export const changeQuantityCart = async (id, newQuantity) => {
+  try {
+    const response = await apiService.patch('/cart/changeQuantity', { id, newQuantity });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const register = async (newUser) => {
   try {
     const response = await apiService.post("/register", newUser);
@@ -211,6 +220,16 @@ export const setAlamat = async (data) => {
     return response;
   } catch (error) {
     console.error('failed to set default alamat', error);
+    throw error;
+  }
+}
+
+export const updateAlamat = async (updateData) => {
+  try {
+    const response = await apiService.put(`/updateAlamat`, { updateData });
+    return response;
+  } catch (error) {
+    console.error('failed update alamat', error);
     throw error;
   }
 }
