@@ -67,6 +67,7 @@ const CartComponent = () => {
                                                     id="number-input"
                                                     type="number"
                                                     value={item.quantity}
+                                                    min="1"
                                                     className="text-center w-16 border border-gray-300 py-2"
                                                     onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
                                                 />
