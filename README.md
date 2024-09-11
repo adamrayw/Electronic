@@ -7,7 +7,7 @@ website untuk penjualan barang-barang elektronik
 **Step 1:** Fork and clone this repository.
 
 ```bash
-git clone https://github.com/{user}/shopping-cart-redux-toolkit.git
+git clone https://github.com/{user}/Electronic.git
 ```
 
 **Step 2:** Install dependencies.
