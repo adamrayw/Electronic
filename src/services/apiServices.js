@@ -108,6 +108,15 @@ export const deleteOneProduct = async (id) => {
   }
 }
 
+export const changeQuantityCart = async (id, newQuantity) => {
+  try {
+    const response = await apiService.patch('/cart/changeQuantity', { id, newQuantity });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const register = async (newUser) => {
   try {
     const response = await apiService.post("/register", newUser);

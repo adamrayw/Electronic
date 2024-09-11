@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct, getCheckout } from '../services/apiServices';
+import { getOneCart, incrementCartItemQuantity, decrementCartItemQuantity, deleteOneProduct, addOneCartProduct, getCheckout, changeQuantityCart } from '../services/apiServices';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -77,7 +77,8 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const handleQuantityChange = (id, newQuantity) => {
+    const handleQuantityChange = async (id, newQuantity) => {
+        await changeQuantityCart(id, newQuantity);
         setProducts(products.map(product =>
             product.id === id ? { ...product, quantity: newQuantity } : product
         ));
