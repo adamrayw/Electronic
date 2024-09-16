@@ -16,8 +16,11 @@ export const CheckoutProvider = ({ children }) => {
 
     const fetchAlamatPengirim = async () => {
         const response = await getAlamat();
-        setAlamatPengirim(response.data.Alamat);
-        console.log('alamat pengirim', response.data.Alamat);
+        const alamat = response.data.Alamat;
+        const userid = localStorage.getItem('userid');
+        const alamatUser = alamat.filter(item => item.userId === userid);
+        setAlamatPengirim(alamatUser);
+        console.log('alamat pengirim', alamatUser);
     }
 
     useEffect(() => {
