@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { createAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
+import { createAlamat, deleteAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 
 const CheckoutBarang = () => {
@@ -15,7 +15,10 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+    const [jasaKirim, setJasaKirim] = useState([])
+    const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
+    const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
+
 
 
     const handleCardAlamat = async (data) => {
@@ -31,16 +34,14 @@ const CheckoutBarang = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await createAlamat(data);
-            reset();
+            await createAlamat(data);
+            resetCreate();
+            toast.success('successfully create alamat')
             setVisibleModal(false);
-            console.log(response);
             window.location.reload();
-
         } catch (error) {
             console.error('Failed to create address:', error);
         }
-
     };
 
     const handelVisibleModal = (e) => {
@@ -53,14 +54,6 @@ const CheckoutBarang = () => {
         setVisibleCreateAlamat(!visibleCreateAlamat);
     }
 
-    const handleUpdateAlamat = (data) => {
-        setSelectedAlamat(data);
-        setValue('provinsi', data.provinsi);
-        setValue('kota', data.kota);
-        setValue('kodePos', data.kodePos);
-        setValue('alamat', data.alamat);
-        setVisibleUpdateModal(!visibleUpdateModal);
-    }
 
     const onSubmitUpdate = async (formData) => {
 
@@ -72,14 +65,33 @@ const CheckoutBarang = () => {
             alamat: formData.alamat,
         };
         try {
-            const response = await updateAlamat(updateData);
-            console.log('onsubmitupdate', response);
+            await updateAlamat(updateData);
             setSelectedAlamat(null);
-            reset();
+            resetUpdate();
             toast.success('successfully update alamat')
             window.location.reload();
         } catch (error) {
             console.error('failed update alamat', error)
+        }
+    }
+
+    const handleUpdateAlamat = (data) => {
+        setSelectedAlamat(data);
+        setValueUpdate('provinsi', data.provinsi);
+        setValueUpdate('kota', data.kota);
+        setValueUpdate('kodePos', data.kodePos);
+        setValueUpdate('alamat', data.alamat);
+        setVisibleUpdateModal(!visibleUpdateModal);
+    }
+
+    const handleDeleteAlamat = async (data) => {
+        const id = data.id
+        try {
+            await deleteAlamat(id)
+            toast.success('success delete alamat')
+            window.location.reload();
+        } catch (error) {
+            console.error('failed delete alamat', error)
         }
     }
 
@@ -109,14 +121,15 @@ const CheckoutBarang = () => {
                                 </div>
                                 <div className='flex items-center space-x-3 font-semibold mb-2 mt-8'>
                                     <div className='flex items-center'>
-                                        <button onClick={() => handleCardAlamat(data)} className={`me-4 cursor-pointer ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</button>
-                                        <button onClick={() => handleUpdateAlamat(data)}>Ubah Alamat</button>
+                                        <button onClick={() => handleCardAlamat(data)} className={`cursor-pointer ${data.isDefault === true ? 'text-green-500' : 'text-black'}`}>{data.isDefault ? 'Default' : 'Pilih'}</button>
+                                        <button onClick={() => handleUpdateAlamat(data)} className='mx-4 '>Ubah Alamat</button>
+                                        <button onClick={() => handleDeleteAlamat(data)}>Delete</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
+                    <form onSubmit={handleSubmitCreate(onSubmit)} className={`text-white ${visibleCreateAlamat ? 'visible' : 'hidden'}`}>
                         <div className='text-end px-3 py-2'>
                             <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleVisibleCreateAlamat}>X</button>
                         </div>
@@ -126,7 +139,7 @@ const CheckoutBarang = () => {
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Provinsi:</label>
                             <input
-                                {...register('provinsi', { required: true })}
+                                {...registerCreate('provinsi', { required: true })}
                                 type="text"
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             />
@@ -134,7 +147,7 @@ const CheckoutBarang = () => {
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kota:</label>
                             <input
-                                {...register('kota', { required: true })}
+                                {...registerCreate('kota', { required: true })}
                                 type="text"
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             />
@@ -142,7 +155,7 @@ const CheckoutBarang = () => {
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
                             <input
-                                {...register('kodePos', { required: true })}
+                                {...registerCreate('kodePos', { required: true })}
                                 type="text"
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             />
@@ -150,7 +163,7 @@ const CheckoutBarang = () => {
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Alamat:</label>
                             <input
-                                {...register('alamat', { required: true })}
+                                {...registerCreate('alamat', { required: true })}
                                 type="text"
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             />
@@ -160,7 +173,7 @@ const CheckoutBarang = () => {
                         </div>
                     </form>
                 </div>
-                <form onSubmit={handleSubmit(onSubmitUpdate)} className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} w-[500px] h-[400px] rounded border-2 border-black bg-slate-600 left-1/2 top-[55%] z-50 transform -translate-x-1/2 -translate-y-1/2`}>
+                <form onSubmit={handleSubmitUpdate(onSubmitUpdate)} className={`text-white ${visibleUpdateModal ? 'absolute' : 'hidden'} w-[500px] h-[400px] rounded border-2 border-black bg-slate-600 left-1/2 top-[55%] z-50 transform -translate-x-1/2 -translate-y-1/2`}>
                     <div className='text-end px-3 py-2'>
                         <button className='font-bold text-white border-2 border-white rounded-full px-2' onClick={handleUpdateAlamat}>X</button>
                     </div>
@@ -170,7 +183,7 @@ const CheckoutBarang = () => {
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Provinsi:</label>
                         <input
-                            {...register('provinsi', { required: true })}
+                            {...registerUpdate('provinsi', { required: true })}
                             type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
                         />
@@ -178,7 +191,7 @@ const CheckoutBarang = () => {
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kota:</label>
                         <input
-                            {...register('kota', { required: true })}
+                            {...registerUpdate('kota', { required: true })}
                             type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
                         />
@@ -186,7 +199,7 @@ const CheckoutBarang = () => {
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
                         <input
-                            {...register('kodePos', { required: true })}
+                            {...registerUpdate('kodePos', { required: true })}
                             type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
                         />
@@ -194,7 +207,7 @@ const CheckoutBarang = () => {
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Alamat:</label>
                         <input
-                            {...register('alamat', { required: true })}
+                            {...registerUpdate('alamat', { required: true })}
                             type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
                         />
@@ -251,11 +264,13 @@ const CheckoutBarang = () => {
                         </form>
                     </div>
                     <div className='col-span-2'>
-                        <div className='flex justify-between'>
-                            <p className='font-semibold'>Opsi Pengiriman:</p>
-                            <p>Hemat</p>
-                            <button className='text-blue-400 font-semibold'>Ubah</button>
-                            <p>$2</p>
+                        <div className='flex '>
+                            <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
+                            <select id="jasa-pengiriman">
+                                <option >Volvo</option>
+                                <option >Saab</option>
+                                <option >Opel</option>
+                            </select>
                         </div>
                     </div>
                 </div>

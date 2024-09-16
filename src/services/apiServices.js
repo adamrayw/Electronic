@@ -233,3 +233,16 @@ export const updateAlamat = async (updateData) => {
     throw error;
   }
 }
+
+export const deleteAlamat = async (id) => {
+  const userId = localStorage.getItem('userid')
+  try {
+    const response = await apiService.delete(`/deleteAlamat/${id}`, {
+      data: { userId }
+    });
+    return response;
+  } catch (error) {
+    console.error('failed delete alamat', error);
+    throw error;
+  }
+}
