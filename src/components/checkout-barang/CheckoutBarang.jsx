@@ -8,6 +8,8 @@ import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
 import { createAlamat, deleteAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
+import ProvinsiOption from './ProvinsiOption';
+import CityOption from './CityOption';
 
 const CheckoutBarang = () => {
     const { checkoutProducts, calculateTotalCheckout, alamatPengirim } = useContext(CheckoutContext);
@@ -15,7 +17,7 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    const [jasaKirim, setJasaKirim] = useState([])
+    const [jasaKirim, setJasaKirim] = useState([]);
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -138,19 +140,21 @@ const CheckoutBarang = () => {
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                            <input
+                            <select
                                 {...registerCreate('provinsi', { required: true })}
-                                type="text"
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
+                            >
+                                <ProvinsiOption />
+                            </select>
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kota:</label>
-                            <input
+                            <select
                                 {...registerCreate('kota', { required: true })}
-                                type="text"
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
-                            />
+                            >
+                                <CityOption />
+                            </select>
                         </div>
                         <div className='grid grid-cols-5 items-center p-2'>
                             <label className='me-2 font-semibold text-lg'>Kode Pos:</label>
@@ -264,12 +268,12 @@ const CheckoutBarang = () => {
                         </form>
                     </div>
                     <div className='col-span-2'>
-                        <div className='flex '>
+                        <div className='flex items-center space-x-3'>
                             <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
-                            <select id="jasa-pengiriman">
-                                <option >Volvo</option>
-                                <option >Saab</option>
-                                <option >Opel</option>
+                            <select id="jasa-pengiriman" className='w-1/2'>
+                                <option value="jne">JNE</option>
+                                <option value="pos">POS</option>
+                                <option value="tiki">TIKI</option>
                             </select>
                         </div>
                     </div>
