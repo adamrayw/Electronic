@@ -246,3 +246,23 @@ export const deleteAlamat = async (id) => {
     throw error;
   }
 }
+
+export const getProvinceRajaOngkir = async () => {
+  try {
+    const response = await apiService.get(`/getProvince`);
+    return response;
+  } catch (error) {
+    console.error('failed get province', error);
+    throw error;
+  }
+}
+
+export const getCityRajaOngkir = async () => {
+  try {
+    const response = await apiService.get(`/getCity`);
+    return response;
+  } catch (error) {
+    console.error('failed get city', error);
+    throw error;
+  }
+}
