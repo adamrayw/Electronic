@@ -21,8 +21,6 @@ const CheckoutBarang = () => {
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
-
-
     const handleCardAlamat = async (data) => {
         try {
             await setAlamat(data);
@@ -32,7 +30,6 @@ const CheckoutBarang = () => {
             console.error('Failed to set address:', error);
         }
     };
-
 
     const onSubmit = async (data) => {
         try {
@@ -55,7 +52,6 @@ const CheckoutBarang = () => {
         e.preventDefault();
         setVisibleCreateAlamat(!visibleCreateAlamat);
     }
-
 
     const onSubmitUpdate = async (formData) => {
 
@@ -96,7 +92,6 @@ const CheckoutBarang = () => {
             console.error('failed delete alamat', error)
         }
     }
-
 
     return (
         <div className='py-[100px] container mx-auto'>

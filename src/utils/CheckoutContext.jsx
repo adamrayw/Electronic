@@ -8,19 +8,29 @@ export const CheckoutProvider = ({ children }) => {
     const [alamatPengirim, setAlamatPengirim] = useState([]);
 
     const fetchcheckoutProducts = async () => {
-        const response = await getCheckoutProducts();
-        const data = response.data.checkoutProduct[0].items;
-        setCheckoutProducts(data)
-        console.log('response checkout:', data);
+        const userid = localStorage.getItem('userid')
+        try {
+            const response = await getCheckoutProducts();
+            const datas = response.data.checkoutProduct[0].items;
+            const dataCheckout = datas.filter(data => data.userId === userid);
+            setCheckoutProducts(dataCheckout)
+            console.log('response checkout:', dataCheckout);
+        } catch (error) {
+            console.error('failed get checkout products', error);
+        }
     }
 
     const fetchAlamatPengirim = async () => {
-        const response = await getAlamat();
-        const alamat = response.data.Alamat;
         const userid = localStorage.getItem('userid');
-        const alamatUser = alamat.filter(item => item.userId === userid);
-        setAlamatPengirim(alamatUser);
-        console.log('alamat pengirim', alamatUser);
+        try {
+            const response = await getAlamat();
+            const alamat = response.data.Alamat;
+            const alamatUser = alamat.filter(item => item.userId === userid);
+            setAlamatPengirim(alamatUser);
+            console.log('alamat pengirim', alamatUser);
+        } catch (error) {
+            console.error('failed get alamat', error)
+        }
     }
 
     useEffect(() => {
