@@ -21,8 +21,6 @@ const CheckoutBarang = () => {
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
-
-
     const handleCardAlamat = async (data) => {
         try {
             await setAlamat(data);
@@ -32,7 +30,6 @@ const CheckoutBarang = () => {
             console.error('Failed to set address:', error);
         }
     };
-
 
     const onSubmit = async (data) => {
         try {
@@ -55,7 +52,6 @@ const CheckoutBarang = () => {
         e.preventDefault();
         setVisibleCreateAlamat(!visibleCreateAlamat);
     }
-
 
     const onSubmitUpdate = async (formData) => {
 
@@ -96,7 +92,6 @@ const CheckoutBarang = () => {
             console.error('failed delete alamat', error)
         }
     }
-
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -144,6 +139,7 @@ const CheckoutBarang = () => {
                                 {...registerCreate('provinsi', { required: true })}
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             >
+                                <option value="" disabled>Pilih Provinsi</option>
                                 <ProvinsiOption />
                             </select>
                         </div>
@@ -153,6 +149,7 @@ const CheckoutBarang = () => {
                                 {...registerCreate('kota', { required: true })}
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             >
+                                <option value="" disabled>Pilih Kota</option>
                                 <CityOption />
                             </select>
                         </div>
@@ -186,19 +183,23 @@ const CheckoutBarang = () => {
                     </div>
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                        <input
+                        <select
                             {...registerUpdate('provinsi', { required: true })}
-                            type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
-                        />
+                        >
+                            <option value="" disabled>Pilih Provinsi</option>
+                            <ProvinsiOption />
+                        </select>
                     </div>
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kota:</label>
-                        <input
+                        <select
                             {...registerUpdate('kota', { required: true })}
-                            type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
-                        />
+                        >
+                            <option value="" disabled>Pilih Kota</option>
+                            <CityOption />
+                        </select>
                     </div>
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kode Pos:</label>

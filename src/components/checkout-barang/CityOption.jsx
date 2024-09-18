@@ -20,9 +20,8 @@ const CityOption = () => {
 
     return (
         <>
-            <option value="" disabled selected>Pilih Kota</option>
             {getCity.map(cities => (
-                <option key={cities.city_id} value={cities.city_id}>
+                <option key={cities.city_id} value={cities.city_name}>
                     {cities.city_name}
                 </option>
             ))}
