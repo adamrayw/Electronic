@@ -136,6 +136,7 @@ export const CartProvider = ({ children }) => {
         try {
             const response = await getCheckout(userId, selectedItems);
             console.log('Success checkout', response);
+            toast.success('berhasil checkout')
             setTimeout(() => {
                 window.location.href = '/checkout'
             }, 1000)

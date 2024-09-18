@@ -139,6 +139,7 @@ const CheckoutBarang = () => {
                                 {...registerCreate('provinsi', { required: true })}
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             >
+                                <option value="" disabled>Pilih Provinsi</option>
                                 <ProvinsiOption />
                             </select>
                         </div>
@@ -148,6 +149,7 @@ const CheckoutBarang = () => {
                                 {...registerCreate('kota', { required: true })}
                                 className='rounded col-span-4 border-2 border-slate-800 text-black'
                             >
+                                <option value="" disabled>Pilih Kota</option>
                                 <CityOption />
                             </select>
                         </div>
@@ -181,19 +183,23 @@ const CheckoutBarang = () => {
                     </div>
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Provinsi:</label>
-                        <input
+                        <select
                             {...registerUpdate('provinsi', { required: true })}
-                            type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
-                        />
+                        >
+                            <option value="" disabled>Pilih Provinsi</option>
+                            <ProvinsiOption />
+                        </select>
                     </div>
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kota:</label>
-                        <input
+                        <select
                             {...registerUpdate('kota', { required: true })}
-                            type="text"
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
-                        />
+                        >
+                            <option value="" disabled>Pilih Kota</option>
+                            <CityOption />
+                        </select>
                     </div>
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kode Pos:</label>

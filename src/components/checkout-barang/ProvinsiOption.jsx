@@ -21,9 +21,8 @@ const ProvinsiOption = () => {
 
     return (
         <>
-            <option value="" disabled selected>Pilih Provinsi</option>
             {getProvince.map(provinces => (
-                <option key={provinces.province_id} value={provinces.province_id}>
+                <option key={provinces.province_id} value={provinces.province}>
                     {provinces.province}
                 </option>
             ))}
