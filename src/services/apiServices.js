@@ -192,8 +192,8 @@ export const createAlamat = async (data) => {
     const response = await apiService.post(`/createAlamat`, {
       userId: userId,
       alamat: data.alamat,
-      kota: data.kota,
-      provinsi: data.provinsi,
+      kotaId: data.kota,
+      provinsiId: data.provinsi,
       kodePos: data.kodePos,
     });
     return response;

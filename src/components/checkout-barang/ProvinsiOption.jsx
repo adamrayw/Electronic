@@ -22,7 +22,7 @@ const ProvinsiOption = () => {
     return (
         <>
             {getProvince.map(provinces => (
-                <option key={provinces.province_id} value={provinces.province}>
+                <option key={provinces.province_id} value={provinces.province_id}>
                     {provinces.province}
                 </option>
             ))}
