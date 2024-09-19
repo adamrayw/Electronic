@@ -57,8 +57,8 @@ const CheckoutBarang = () => {
 
         const updateData = {
             id: selectedAlamat.id,
-            provinsi: formData.provinsi,
-            kota: formData.kota,
+            provinsiId: formData.provinsiId,
+            kotaId: formData.kotaId,
             kodePos: formData.kodePos,
             alamat: formData.alamat,
         };
@@ -75,8 +75,8 @@ const CheckoutBarang = () => {
 
     const handleUpdateAlamat = (data) => {
         setSelectedAlamat(data);
-        setValueUpdate('provinsi', data.provinsi);
-        setValueUpdate('kota', data.kota);
+        setValueUpdate('provinsiId', data.provinsiId);
+        setValueUpdate('kotaId', data.kotaId);
         setValueUpdate('kodePos', data.kodePos);
         setValueUpdate('alamat', data.alamat);
         setVisibleUpdateModal(!visibleUpdateModal);
@@ -184,7 +184,7 @@ const CheckoutBarang = () => {
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Provinsi:</label>
                         <select
-                            {...registerUpdate('provinsi', { required: true })}
+                            {...registerUpdate('provinsiId', { required: true })}
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
                         >
                             <option value="" disabled>Pilih Provinsi</option>
@@ -194,7 +194,7 @@ const CheckoutBarang = () => {
                     <div className='grid grid-cols-5 items-center p-2'>
                         <label className='me-2 font-semibold text-lg'>Kota:</label>
                         <select
-                            {...registerUpdate('kota', { required: true })}
+                            {...registerUpdate('kotaId', { required: true })}
                             className='rounded col-span-4 border-2 border-slate-800 text-black'
                         >
                             <option value="" disabled>Pilih Kota</option>
