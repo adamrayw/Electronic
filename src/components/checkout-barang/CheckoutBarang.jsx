@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { createAlamat, deleteAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
+import { apiService, createAlamat, deleteAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
@@ -20,6 +20,8 @@ const CheckoutBarang = () => {
     const [jasaKirim, setJasaKirim] = useState([]);
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
+
+    console.log(checkoutProducts)
 
     const handleCardAlamat = async (data) => {
         try {
@@ -91,6 +93,13 @@ const CheckoutBarang = () => {
         } catch (error) {
             console.error('failed delete alamat', error)
         }
+    }
+
+    const handleSelectService = async (event, products) => {
+        const selectedService = event.target.value;
+        const selectedProducts = products.product.user.AlamatPengiriman[0];
+        console.log('Selected Shipping Method:', selectedService);
+        console.log('Selected products:', selectedProducts);
     }
 
     return (
@@ -257,10 +266,19 @@ const CheckoutBarang = () => {
                         </Table>
                         <div className='ps-6 space-x-3 my-3'>
                             <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
-                            <select id="jasa-pengiriman" className='w-1/2'>
+                            <select className='w-1/2' defaultValue="" onChange={(event) => handleSelectService(event, products)}>
+                                <option value="" disabled>Pilih Pengiriman</option>
                                 <option value="jne">JNE</option>
                                 <option value="pos">POS</option>
-                                <option value="tiki">TIKI</option>
+                            </select>
+                            <select >
+                                <option value="JTR">JNE Trucking</option>
+                                <option value="REG">Layanan Reguler</option>
+                                <option value="YES">Yakin Esok Sampai</option>
+                            </select>
+                            <select >
+                                <option value="Pos Reguler">Pos Reguler</option>
+                                <option value="Pos Nextday">Pos Nextday</option>
                             </select>
                         </div>
                     </div>
@@ -268,22 +286,12 @@ const CheckoutBarang = () => {
             </div>
 
             <div className='catatan-pelanggan bg-white rounded p-5 mb-4'>
-                <div className='grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 mb-10'>
+                <div className='grid mb-10'>
                     <div className='pesan mb-6'>
                         <form>
                             <label htmlFor="text" className='me-3 font-semibold'>Pesan:</label>
-                            <input type="text" placeholder='(opsional)' className='rounded-sm' />
+                            <input type="text" placeholder='(opsional)' className='rounded-sm w-[90%]' />
                         </form>
-                    </div>
-                    <div className='col-span-2'>
-                        <div className='flex items-center space-x-3'>
-                            <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
-                            <select id="jasa-pengiriman" className='w-1/2'>
-                                <option value="jne">JNE</option>
-                                <option value="pos">POS</option>
-                                <option value="tiki">TIKI</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div className='flex justify-end'>
