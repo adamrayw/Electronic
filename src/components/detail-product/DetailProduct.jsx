@@ -8,7 +8,7 @@ import RelatedProduct from './RelatedProduct';
 import CheckoutFooter from './CheckoutFooter';
 import { getDetailProduct } from '../../services/apiServices';
 import { formatter } from '../../utils/formatIDR';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CartContext } from '../../utils/CartContext';
 
@@ -81,6 +81,7 @@ const DetailProduct = () => {
 
     return (
         <>
+            <ToastContainer />
             <div className="container mx-auto px-5 pt-[6rem] pb-20 overflow-hidden">
                 <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-4 mb-10'>
                     <div className="img-detail overflow-hidden lg:h-60 w-full"
