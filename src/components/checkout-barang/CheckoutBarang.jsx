@@ -226,23 +226,23 @@ const CheckoutBarang = () => {
             <div className='produk-checkout bg-white rounded mb-4'>
                 <div className='p-6'>
                     <p className='font-bold mb-3'>Produk Dipesan</p>
-                    <div className='flex'>
-                        <p className='font-semibold me-4'>nama toko</p>
-                        <span className='flex text-blue-400'><TiMessage size={25} /> <p className='font-semibold'>chat sekarang</p></span>
-                    </div>
                 </div>
-                <div className="overflow-x-scroll">
-                    <Table>
-                        <Table.Head className='text-left'>
-                            <Table.HeadCell>Produk</Table.HeadCell>
-                            <Table.HeadCell>Variasi</Table.HeadCell>
-                            <Table.HeadCell>Harga Satuan</Table.HeadCell>
-                            <Table.HeadCell>Jumlah</Table.HeadCell>
-                            <Table.HeadCell>Total</Table.HeadCell>
-                        </Table.Head>
-                        <Table.Body className="divide-y">
-                            {checkoutProducts.map((products) => (
-                                <Table.Row key={products.product.id} className=" dark:border-gray-700 dark:bg-gray-800">
+                {checkoutProducts.map((products) => (
+                    <div key={products.id} className="overflow-x-scroll mb-3">
+                        <div className='flex ps-6'>
+                            <p className='font-semibold me-4 mb-3'>{products.product.user.username}</p>
+                            <span className='flex text-blue-400'><TiMessage size={25} /> <p className='font-semibold'>chat sekarang</p></span>
+                        </div>
+                        <Table>
+                            <Table.Head className='text-left'>
+                                <Table.HeadCell>Produk</Table.HeadCell>
+                                <Table.HeadCell>Variasi</Table.HeadCell>
+                                <Table.HeadCell>Harga Satuan</Table.HeadCell>
+                                <Table.HeadCell>Jumlah</Table.HeadCell>
+                                <Table.HeadCell>Total</Table.HeadCell>
+                            </Table.Head>
+                            <Table.Body className="divide-y">
+                                <Table.Row className=" dark:border-gray-700 dark:bg-gray-800">
                                     <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                         {products.product.namaBarang}
                                     </Table.Cell>
@@ -252,12 +252,19 @@ const CheckoutBarang = () => {
                                     <Table.Cell>
                                         {formatter.format((products.product.hargaBarang - (products.product.hargaBarang * products.product.diskon / 100)) * products.quantity)}
                                     </Table.Cell>
-
                                 </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
-                </div>
+                            </Table.Body>
+                        </Table>
+                        <div className='ps-6 space-x-3 my-3'>
+                            <label className='font-semibold' htmlFor="jasa-pengiriman">Opsi Pengiriman:</label>
+                            <select id="jasa-pengiriman" className='w-1/2'>
+                                <option value="jne">JNE</option>
+                                <option value="pos">POS</option>
+                                <option value="tiki">TIKI</option>
+                            </select>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <div className='catatan-pelanggan bg-white rounded p-5 mb-4'>
