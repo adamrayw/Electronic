@@ -96,10 +96,18 @@ const CheckoutBarang = () => {
     }
 
     const handleSelectService = async (event, products) => {
+        const userId = localStorage.getItem('userid');
         const selectedService = event.target.value;
-        const selectedProducts = products.product.user.AlamatPengiriman[0];
-        console.log('Selected Shipping Method:', selectedService);
-        console.log('Selected products:', selectedProducts);
+        const alamatPenjual = products.product.user.AlamatPengiriman[0];
+        const checkout = products.product;
+        const data = {
+            service: selectedService,
+            alamatPenjual: alamatPenjual,
+            checkoutProduct: checkout,
+            userId: userId
+        };
+        console.log('combined', data);
+
     }
 
     return (
