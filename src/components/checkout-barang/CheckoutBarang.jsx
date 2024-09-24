@@ -6,7 +6,7 @@ import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
 import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { apiService, createAlamat, deleteAlamat, setAlamat, updateAlamat } from '../../services/apiServices';
+import { apiService, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
@@ -17,7 +17,7 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    const [jasaKirim, setJasaKirim] = useState([]);
+    const [selectedServices, setSelectedServices] = useState(false);
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -107,7 +107,14 @@ const CheckoutBarang = () => {
             userId: userId
         };
         console.log('combined', data);
+        const ongkir = await getOngkir(data);
+        const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
+        console.log('services', services);
 
+        setSelectedServices(true);
+        const selectServiceOngkir = async () => {
+
+        }
     }
 
     return (
@@ -278,15 +285,6 @@ const CheckoutBarang = () => {
                                 <option value="" disabled>Pilih Pengiriman</option>
                                 <option value="jne">JNE</option>
                                 <option value="pos">POS</option>
-                            </select>
-                            <select >
-                                <option value="JTR">JNE Trucking</option>
-                                <option value="REG">Layanan Reguler</option>
-                                <option value="YES">Yakin Esok Sampai</option>
-                            </select>
-                            <select >
-                                <option value="Pos Reguler">Pos Reguler</option>
-                                <option value="Pos Nextday">Pos Nextday</option>
                             </select>
                         </div>
                     </div>

@@ -266,3 +266,13 @@ export const getCityRajaOngkir = async () => {
     throw error;
   }
 }
+
+export const getOngkir = async (data) => {
+  try {
+    const response = await apiService.post('/getOngkir', { data });
+    return response;
+  } catch (error) {
+    console.error('failed fetch ongkir', error);
+    throw error;
+  }
+}
