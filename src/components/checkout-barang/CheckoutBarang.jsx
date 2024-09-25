@@ -17,11 +17,9 @@ const CheckoutBarang = () => {
     const [visibleCreateAlamat, setVisibleCreateAlamat] = useState(false);
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
-    const [selectedServices, setSelectedServices] = useState(false);
+    const [shippingCosts, setShippingCosts] = useState({});
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
-
-    console.log(checkoutProducts)
 
     const handleCardAlamat = async (data) => {
         try {
@@ -106,16 +104,18 @@ const CheckoutBarang = () => {
             checkoutProduct: checkout,
             userId: userId
         };
-        console.log('combined', data);
         const ongkir = await getOngkir(data);
-        const services = ongkir.data.ongkir.rajaongkir.results[0].costs;
-        console.log('services', services);
-
-        setSelectedServices(true);
-        const selectServiceOngkir = async () => {
-
-        }
+        const biaya = ongkir.data.ongkir.rajaongkir.results[0].costs[0].cost[0].value;
+        setShippingCosts((prevCosts) => ({
+            ...prevCosts,
+            [products.id]: biaya
+        }));
     }
+
+    const totalShippingCost = Object.values(shippingCosts).reduce((acc, cost) => acc + cost, 0);
+
+    let totalAmountCheckout = calculateTotalCheckout() + totalShippingCost;
+
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -324,7 +324,7 @@ const CheckoutBarang = () => {
                         </div>
                         <div className='flex justify-between'>
                             <p className='text-gray-600 me-16'>Total Pembayaran</p>
-                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(calculateTotalCheckout())}</p>
+                            <p className='font-bold text-2xl text-slate-600'>{formatter.format(totalAmountCheckout)}</p>
                         </div>
                     </div>
                 </div>
