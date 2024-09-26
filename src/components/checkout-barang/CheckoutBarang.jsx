@@ -1,12 +1,11 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 import { TiMessage } from "react-icons/ti";
-import { Modal, Table } from 'flowbite-react';
+import { Table } from 'flowbite-react';
 import { CheckoutContext } from '../../utils/CheckoutContext';
 import { formatter } from '../../utils/formatIDR';
-import AlamatModal from './AlamatModal';
 import { useForm } from 'react-hook-form';
-import { apiService, createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
+import { createAlamat, deleteAlamat, getOngkir, setAlamat, updateAlamat } from '../../services/apiServices';
 import { toast, ToastContainer } from 'react-toastify';
 import ProvinsiOption from './ProvinsiOption';
 import CityOption from './CityOption';
@@ -18,6 +17,8 @@ const CheckoutBarang = () => {
     const [visibleUpdateModal, setVisibleUpdateModal] = useState(false);
     const [selectedAlamat, setSelectedAlamat] = useState(null);
     const [shippingCosts, setShippingCosts] = useState({});
+    const [selectedService, setSelectedService] = useState({});
+    const [daftarLayananOngkir, setDaftarLayananOngkir] = useState({});
     const { register: registerCreate, handleSubmit: handleSubmitCreate, reset: resetCreate, setValue: setValueCreate } = useForm();
     const { register: registerUpdate, handleSubmit: handleSubmitUpdate, reset: resetUpdate, setValue: setValueUpdate } = useForm();
 
@@ -106,16 +107,39 @@ const CheckoutBarang = () => {
         };
         const ongkir = await getOngkir(data);
         const biaya = ongkir.data.ongkir.rajaongkir.results[0].costs[0].cost[0].value;
+
+        // updated select service
+        setDaftarLayananOngkir((prevState) => ({
+            ...prevState,
+            [products.id]: ongkir.data.ongkir.rajaongkir.results[0].costs
+        }))
+
         setShippingCosts((prevCosts) => ({
             ...prevCosts,
             [products.id]: biaya
         }));
     }
 
+    const handleSelectedService = (data, productId) => {
+        setSelectedService((prevState) => ({
+            ...prevState,
+            [productId]: data
+        }));
+    }
+
     const totalShippingCost = Object.values(shippingCosts).reduce((acc, cost) => acc + cost, 0);
 
-    let totalAmountCheckout = calculateTotalCheckout() + totalShippingCost;
+    const handleCalculateOngkir = () => {
+        let totalCost = 0;
 
+        Object.values(selectedService).forEach(service => {
+            totalCost += service.cost[0].value;
+        });
+
+        return totalCost;   
+    }
+
+    let totalAmountCheckout = calculateTotalCheckout() + totalShippingCost + handleCalculateOngkir();
 
     return (
         <div className='py-[100px] container mx-auto'>
@@ -287,6 +311,32 @@ const CheckoutBarang = () => {
                                 <option value="pos">POS</option>
                             </select>
                         </div>
+                        {daftarLayananOngkir[products.id] && (
+                            <div className='ps-6'>
+                                <h1 className='font-semibold mb-2'>Pilih Layanan Pengiriman</h1>
+                                {daftarLayananOngkir[products.id].map((data) => (
+                                    <div
+                                        key={data.service}
+                                        className={`p-4 border border-gray-200 flex items-center space-x-2 w-1/2 mb-3 hover:cursor-pointer transition ${selectedService[products.id] === data.service ? 'bg-blue-100' : 'bg-white'
+                                            }`}
+                                        onClick={() => handleSelectedService(data, products.id)}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={`shipping_${products.id}`}
+                                            value={data.service}
+                                            checked={selectedService[products.id]?.service === data.service}
+                                            onChange={() => handleSelectedService(data, products.id)}
+                                            className="mr-2"
+                                        />
+                                        <label>
+                                            <p>{data.service}</p>
+                                            <p>{formatter.format(data.cost[0].value)}</p>
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
@@ -303,6 +353,10 @@ const CheckoutBarang = () => {
                 <div className='flex justify-end'>
                     <p className='me-4'>Total Pesanan ({checkoutProducts.length} produk):</p>
                     <p className='text-slate-600 font-semibold'>{formatter.format(calculateTotalCheckout())}</p>
+                </div>
+                <div className='flex justify-end'>
+                    <p className='me-4'>Total Ongkos Kirim:</p>
+                    <p className='text-slate-600 font-semibold'>{formatter.format(handleCalculateOngkir())}</p>
                 </div>
             </div>
 
